@@ -37,6 +37,16 @@
     transform: translate(-50%, -50%);
 }
 
+//绝对居中,兼容IE
+@mixin center-com {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
 //随机边框颜色进行调试
 @mixin border($border-width:1) {
     $color: green blue purple red orange #81BC03 #D35D26 #0B8383 #AE9E69 #E09A91;
@@ -46,7 +56,6 @@
     $border-width: $border-width+px;
     border: $border-width solid $border-color;
 }
-
 
 //链接的混入
 @mixin links ($link, $visited, $hover, $active) {
@@ -58,13 +67,12 @@
         &:hover {
             color: $hover;
         }
-        &:active, &:focus {
+        &:active,
+        &:focus {
             color: $active;
         }
     }
 }
-
-
 
 //制造模糊文本
 @mixin blurry-text() {
@@ -117,8 +125,6 @@
     background-position: 0 100%;
     transition: background-position 0.5s;
     &::hover {
-    background-position: 0 0;
+        background-position: 0 0;
+    }
 }
-}
-
-
