@@ -1,0 +1,52 @@
+
+[{
+	'title':[
+		{
+		'value':"Zootopia"
+		}
+	],
+	
+	'uid':[
+		{
+		'target_id':"3",
+		'url':"/user/3"
+		}
+	],
+
+	'field_actors':[
+		{
+		'value':"Ginnifer Goodwin"
+		},
+		{
+		'value':"Jason Bateman"
+		},
+		{
+		'value':" Idris Elba"
+		}
+		],
+	
+	'field_director':[
+		{
+		'value':"Byron Howard"
+		}
+		],
+
+	'field_moive_poster':[
+		{
+		'target_id':"3",
+		'alt':"Zootopia",
+		'title':"",
+		'width':"214",
+		'height':"317",
+		'url':"image/Zootopia.jpg"
+		}
+		],
+	'field_genres':[
+		{
+		'value':'SciFi'
+		},
+		{
+		'value':'Comedy'
+		}
+		]
+}]

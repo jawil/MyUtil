@@ -1,0 +1,266 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    <style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    #moveul {
+        width: 600px;
+        height: 300px;
+        border: 1px solid red;
+    }
+
+    #moveul li {
+        width: 100px;
+        height: 100px;
+        border: 1px solid blue;
+        float: left;
+        margin: 5px;
+        background: red;
+        list-style: none;
+    }
+
+    a {
+        margin: 5px;
+    }
+    </style>
+</head>
+
+<body>
+    <ul id="moveul"></ul>
+    <div id="div1">
+    </div>
+</body>
+<script src="move.js"></script>
+<script language="javascript">
+var title = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34'];
+var arr = [];
+page({
+    id: 'div1',
+    nowPage: 1,
+    allPage: Math.ceil(title.length / 10),
+    callBack: function(now, all) {
+
+            var omoveul = document.getElementById('moveul');
+
+            //alert(num);
+            var omoveli = omoveul.getElementsByTagName('li');
+            var num = now * 10 < title.length ? 10 : all % 10;
+
+            var iNow = 9;
+            if (omoveul.innerHTML == '') {
+
+                for (var i = 0; i < num; i++) {
+
+                    var oLi = document.createElement('li');
+                    oLi.innerHTML = title[(now - 1) * 10 + i];
+                    omoveul.appendChild(oLi);
+                }
+
+                for (var i = 0; i < omoveli.length; i++) {
+                    arr.push([omoveli[i].offsetLeft, omoveli[i].offsetTop]);
+                }
+
+
+
+                for (var i = 0; i < omoveli.length; i++) {
+                    //alert(omoveli[i].offsetLeft);
+                    omoveli[i].style.left = omoveli[i].offsetLeft + 'px';
+                    omoveli[i].style.top = omoveli[i].offsetTop + 'px';
+                }
+                for (var i = 0; i < omoveli.length; i++) {
+                    omoveli[i].style.position = 'absolute';
+                    omoveli[i].margin = '0px';
+                }
+
+
+
+            } //如果ul里面没有li就动态创建立
+            else {
+
+                var timer = setInterval(function() {
+
+                    startMove(omoveli[iNow], {
+                        left: 300,
+                        top: 300,
+                        opacity: 0
+                    });
+                    if (iNow == 0) {
+                        clearInterval(timer);
+                        iNow = num - 1;
+                        for (var i = 0; i < num; i++) {
+                            omoveli[i].innerHTML = title[(now - 1) * 10 + i];
+                        }
+                        var timer2 = setInterval(function() {
+                            startMove(omoveli[iNow], {
+                                left: arr[iNow][0],
+                                top: arr[iNow][1],
+                                opacity: 100
+                            });
+
+                            if (iNow == 0) {
+                                clearInterval(timer2);
+                                iNow = num - 1;
+                            } else {
+                                iNow--;
+                            }
+
+                        }, 100);
+
+
+                    } else {
+                        iNow--;
+                    }
+                }, 100);
+
+
+            }
+
+
+
+            //var omoveli=omoveul.getElementsByTagName('li');//把浮动转化成绝对定位
+
+
+
+
+        } //回调函数结束
+
+
+
+
+
+
+});
+
+
+
+function page(opt) {
+
+    if (!opt.id)
+        return false;
+
+    var oDiv = document.getElementById('div1');
+    var nowPage = opt.nowPage || 1;
+    var allPage = opt.allPage || 5;
+    var callBack = opt.callBack || function() {};
+    if (nowPage >= 4 && allPage >= 6) {
+        var oA = document.createElement('a');
+        oA.href = '#1';
+        oA.innerHTML = '首页';
+        oDiv.appendChild(oA);
+    }
+
+    if (nowPage >= 2) {
+
+        var oA = document.createElement('a');
+        oA.href = '#' + (nowPage - 1);
+        oA.innerHTML = '上一页';
+        oDiv.appendChild(oA);
+
+    }
+
+
+
+
+    if (allPage <= 5) {
+        for (var i = 1; i <= allPage; i++) {
+            var oA = document.createElement('a');
+            oA.href = '#' + i;
+            if (nowPage == i)
+                oA.innerHTML = i;
+            else
+                oA.innerHTML = '[' + i + ']';
+
+            oDiv.appendChild(oA);
+        }
+    } else {
+        //alert(nowPage);
+        for (var i = 1; i <= 5; i++) {
+
+            var oA = document.createElement('a');
+            if (nowPage == 1 || nowPage == 2) {
+                oA.href = '#' + i;
+                if (nowPage == i) {
+                    oA.innerHTML = i;
+                } else {
+                    oA.innerHTML = '[' + i + ']';
+                }
+
+            } else if ((allPage - nowPage == 0) || (allPage - nowPage == 1)) {
+                oA.href = '#' + (allPage - 5 + i);
+                if (allPage - 5 + i == nowPage) {
+                    oA.innerHTML = (allPage - 5 + i);
+                } else {
+                    oA.innerHTML = '[' + (allPage - 5 + i) + ']';
+                }
+            } else {
+                oA.href = '#' + (nowPage - 3 + i);
+                if (i == 3) {
+                    oA.innerHTML = (nowPage - 3 + i);
+                } else {
+                    oA.innerHTML = '[' + (nowPage - 3 + i) + ']';
+                }
+
+            }
+            oDiv.appendChild(oA);
+
+
+        }
+
+
+    }
+
+
+
+    if (allPage - nowPage >= 1) {
+
+        var oA = document.createElement('a');
+        oA.href = '#' + (nowPage + 1);
+        oA.innerHTML = '下一页';
+        oDiv.appendChild(oA);
+    }
+
+
+    if (allPage - nowPage >= 3 && allPage >= 6) {
+        var oA = document.createElement('a');
+        oA.href = '#' + (allPage);
+        oA.innerHTML = '尾页';
+        oDiv.appendChild(oA);
+
+    }
+
+    callBack(nowPage, allPage);
+
+
+
+    var aA = oDiv.getElementsByTagName('a');
+    for (var i = 0; i < aA.length; i++) {
+        aA[i].onclick = function() {
+            var nowPage = parseInt(this.getAttribute('href').substring(1));
+            oDiv.innerHTML = '';
+            page({
+
+                id: opt.id,
+                nowPage: nowPage,
+                allPage: allPage,
+                callBack: callBack
+            });
+
+            return false;
+        }
+
+    }
+
+}
+</script>
+
+</html>
+
+
+

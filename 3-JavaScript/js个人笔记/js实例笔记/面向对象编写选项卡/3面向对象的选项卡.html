@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 div,#div2 div{ width:200px; height:200px; border:1px #000 solid; display:none;}
+.active{ background:red;}
+</style>
+<script>
+
+/*var arr = [4,7,1,3];
+arr.sort();  // 1 3 4 7
+
+var arr2 = [4,7,1,3];
+arr2.push(5);
+arr2.sort(); // 1 3 4 5 7
+*/
+
+window.onload = function(){
+	
+	var t1 = new Tab('div1');
+	t1.init();
+	t1.autoPlay();
+	
+	var t2 = new Tab('div2');
+	t2.init();
+	t2.autoPlay();
+	
+};
+
+function Tab(id){
+	this.oParent = document.getElementById(id);
+	this.aInput = this.oParent.getElementsByTagName('input');
+	this.aDiv = this.oParent.getElementsByTagName('div');
+	this.iNow = 0;
+}
+
+Tab.prototype.init = function(){
+	var This = this;
+	for(var i=0;i<this.aInput.length;i++){
+		this.aInput[i].index = i;
+		this.aInput[i].onclick = function(){
+			This.change(this);
+		};
+	}
+};
+
+Tab.prototype.change = function(obj){
+	for(var i=0;i<this.aInput.length;i++){
+		this.aInput[i].className = '';
+		this.aDiv[i].style.display = 'none';
+	}
+	obj.className = 'active';
+	this.aDiv[obj.index].style.display = 'block';
+	this.iNow=obj.index;
+};
+
+Tab.prototype.autoPlay = function(){
+	
+	var This = this;
+	
+	setInterval(function(){
+		
+		if(This.iNow == This.aInput.length-1){
+			This.iNow = 0;
+		}
+		else{
+			This.iNow++;
+		}
+		
+		for(var i=0;i<This.aInput.length;i++){
+			This.aInput[i].className = '';
+			This.aDiv[i].style.display = 'none';
+		}
+		This.aInput[This.iNow].className = 'active';
+		This.aDiv[This.iNow].style.display = 'block';
+		
+		
+	},2000);
+	
+};
+
+</script>
+</head>
+
+<body>
+<div id="div1">
+	<input class="active" type="button" value="1">
+    <input type="button" value="2">
+    <input type="button" value="3">
+    <div style="display:block">11111</div>
+    <div>22222</div>
+    <div>33333</div>
+</div>
+
+<div id="div2">
+	<input class="active" type="button" value="1">
+    <input type="button" value="2">
+    <input type="button" value="3">
+    <div style="display:block">11111</div>
+    <div>22222</div>
+    <div>33333</div>
+</div>
+</body>
+</html>

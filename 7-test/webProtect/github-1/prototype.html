@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!-- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "
+http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "
+http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "
+http://www.w3.org/TR/html4/frameset.dtd"> -->
+<html>
+    <head>
+      <meta name="renderer" content="webkit">
+      <!--x-ua-compatible(浏览器兼容模式)
+      仅对IE8+有效
+      告诉浏览器以什么版本的IE的兼容模式来显示网页
+      <meta http-equiv="X-UA-Compatible" content="IE=5" >
+      <meta http-equiv="X-UA-Compatible" content="IE=7" >
+      <meta http-equiv="X-UA-Compatible" content="IE=8" >
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+      其中最后一行是永远以最新的IE版本模式来显示网页的。
+      另外加上Emulate模式
+      <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" >
+      <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" >
+      Emulate模式后则更重视<!DOCTYPE>
+      （细心的人会注意到，用IE9去访问带有x-ua-compatible的页面时是不会出现兼容视图按钮的）
+      
+      IE=8
+      <meta http-equiv="X-UA-Compatible" content="IE=8" />
+      This forces IE 8 to display the page in Internet Explorer Standards mode.
+      IE=EmulateIE8
+      <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+      This forces IE 8 to use the !DOCTYPE declaration in the page to determine the rendering mode.
+      -->
+      <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/>
+      <meta charset="utf-8">
+      <title>
+        原型理解
+      </title>
+      <!-- 关于favicon.ico的两三事 http://www.cnblogs.com/LoveJenny/archive/2012/05/22/2512683.html -->
+      <link rel="icon" href="favicon.ico" type="image/x-icon" />
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    </head>
+    
+    <body>
+      <h3>原型理解</h3>
+      <canvas id="canvas"></canvas>
+
+      <script type="text/javascript" src="utils/base.js"></script>
+      <script>
+        // 来源： http://www.zhihu.com/question/31824560/answer/53528151
+        // 因为实例__proto__属性指向它构造函数的原型对象，
+        // 所以Foo.__proto__.age相当于给其Function构造函数添加了age属性。
+        // 我想问的问题是，通过Foo.age访问到的age的属性值是从Function继承而来的？
+        // 还是因为Foo是Function构造函数的实例，age属性是通过“实例.属性”访问得来的？
+        function Foo(){
+
+        };
+        var foo = new Foo(); 
+
+        Foo.__proto__.age = 10;
+
+        // alert(Foo.age);//10 
+
+        // 实现继承的简单方法
+        function object(o){
+          function F () {};
+          F.prototype = o;
+          return new F();
+        }
+        // 寄生继承
+        function inheritPrototype(subType, superType){
+          var prototype = object(superType.prototype);
+          prototype.constructor = subType;
+          subType.prototype = prototype;
+        }
+        function testObject() {
+          var A = function(){}, B = function(){}, a, b;
+          A.prototype.test_array = [1,2];
+          A.test_array2 = [3, 4];
+          
+          inheritPrototype(B, A);
+          a = new A();
+          b = new B();
+          b.test_array.push(45);
+          console.log(a.test_array);
+        }
+
+        // 测试知乎问题：
+        testObject();
+
+        // 实际开发 继承写法:
+        var CreateClassDemo = createClass(function(){
+          this.init();
+        },{
+          init: function() {
+            this.otherMethods();
+          },
+          otherMethods: function() {
+            console.log('这种写法略繁琐， 前端没那么多东东继承！');
+          }
+        });
+        var createClassDemo = new CreateClassDemo();
+
+      </script>
+
+    </body>
+</html>

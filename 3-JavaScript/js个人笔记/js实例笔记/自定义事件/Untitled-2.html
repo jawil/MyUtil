@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<div id="div1">
+div1
+</div>
+
+<span id="span1">span</span>
+
+<script language="javascript">
+
+window.onload = function(){
+	var oDiv = document.getElementById('div1');
+	var oSpan = document.getElementById('span1');
+	
+	bindEvent(oDiv , 'click',function(){
+		alert(1);
+	});
+	
+	bindEvent(oDiv , 'click',function(){
+		alert(2);
+	});
+	
+	bindEvent(oSpan , 'show',function(){
+		alert(3);
+	});
+	
+	bindEvent(oSpan , 'show',function(){
+		alert(4);
+	});
+	
+	bindEvent(oSpan , 'hide',function(){
+		alert(5);
+	});
+	
+	
+	fireEvent(oSpan , 'show');  //3 , 4
+	fireEvent(oDiv , 'click');
+	
+};
+function bindEvent(obj,events,fn){
+	
+	obj.listeners = obj.listeners || {};
+	obj.listeners[events]=obj.listeners[events] || [];
+	obj.listeners[events].push(fn);
+	if(obj.addEventListener){
+		obj.addEventListener(events,fn,false);
+	}
+	else{
+		obj.attachEvent('on'+events,fn);
+	}
+	
+	
+}
+
+function fireEvent(obj,events){   //主动触发自定义事件
+	
+	for(var i=0;i<obj.listeners[events].length;i++){
+		 obj.listeners[events][i]();
+	}
+	
+}
+
+</script>
+</body>
+</html>

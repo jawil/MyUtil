@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<div>1</div>
+<div>2</div>
+<div>3</div>
+<div>4</div>
+<div>5</div>
+<script language="javascript">
+function Foo(){
+getName=function(){console.log(1);}
+return this;	
+}
+
+Foo.getName=function(){console.log(2);}
+
+Foo.prototype.getName=function(){console.log(3);}
+
+var getName=function(){console.log(4);}//函数表达式
+
+function getName(){console.log(5);}//函数声明
+
+Foo.getName();//2
+console.log('a');
+getName();//4
+console.log('b');
+Foo().getName();//1
+console.log('c');
+getName();//1
+console.log('d');
+new Foo.getName();//2
+console.log('e');
+new Foo().getName();//3(new Foo()).getName();
+console.log('f');
+new new Foo().getName();//3new ((new Foo()).getName)();
+console.log('g');
+
+function a(){
+	console.log(444);
+}
+new a();
+
+
+
+var myObject = {
+    foo: "bar",
+    func: function() {
+        var self = this;
+        console.log("outer func:  this.foo = " + this.foo);
+        console.log("outer func:  self.foo = " + self.foo);
+        (function() {
+            console.log("inner func:  this.foo = " + this.foo);
+            console.log("inner func:  self.foo = " + self.foo);
+        }());
+    }
+};
+myObject.func();
+//bar
+//bar
+//undefined
+//bar*/
+
+
+for(var i = 0; i < 5; i++) {
+    setTimeout(function() {
+        console.log(i);  
+    }, 1000);
+}
+
+for(var i=0;i<5;i++){
+(function(i){
+	setTimeout(function(){console.log(i);},5000);
+	})(i);	
+}
+
+var oDiv=document.getElementsByTagName('div');
+for(var i=0;i<5;i++){
+	oDiv[i].onclick=(function(i){
+		return function(){
+			alert(i);
+			}
+		})(i)	}
+		
+		
+		
+		
+		
+		
+function foo1()
+{
+  return {
+      bar: "hello"
+  };
+}
+
+function foo2()
+{
+  return
+  {
+      bar: "hello"
+  };
+}
+console.log(foo1());
+console.log(foo2());
+
+/*在编程语言中，基本都是使用分号（;）将语句分隔开，这可以增加代码的可读性和整洁性。而在JS中，如若语句各占独立一行，通常可以省略语句间的分号（;），JS 解析器会根据能否正常编译来决定是否自动填充分号：
+
+var test = 1 + 
+2
+console.log(test);  //3
+在上述情况下，为了正确解析代码，就不会自动填充分号了，但是对于 return 、break、continue 等语句，如果后面紧跟换行，解析器一定会自动在后面填充分号(;)，所以上面的第二个函数就变成了这样：
+
+function foo2()
+{
+  return;
+  {
+      bar: "hello"
+  };
+}
+所以第二个函数是返回 undefined.*/
+
+(function() {
+    console.log(1); 
+    setTimeout(function(){console.log(2)}, 1000); 
+    setTimeout(function(){console.log(3)}, 0); 
+    console.log(4);
+})();
+
+
+
+//写一个少于 80 字符的函数，判断一个字符串是不是回文字符串
+
+function isPalindrome(str) {
+    str = str.replace(/\W/g, '').toLowerCase();
+    return (str == str.split('').reverse().join(''));
+}
+//这个题我在 codewars 上碰到过，并收录了一些不错的解决方式，可以戳这里：Palindrome For Your Dome
+
+
+
+
+//如果 list 很大，下面的这段递归代码会造成堆栈溢出。如果在不改变递归模式的前提下修善这段代码？
+
+//var list = readHugeList();
+
+var nextListItem = function() {
+    var item = list.pop();
+
+    if (item) {
+        // process the list item...
+        nextListItem();
+    }
+};
+//原文上的解决方式是加个定时器：
+
+//var list = readHugeList();
+
+var nextListItem = function() {
+    var item = list.pop();
+
+    if (item) {
+        // process the list item...
+        setTimeout( nextListItem, 0);
+    }
+};
+
+
+var a={},
+    b={key:'b'},
+    c={key:'c'};
+
+a[b]=123;
+a[c]=456;
+
+console.log(a[b]);
+console.log("分界线");
+</script>
+</body>
+</html>

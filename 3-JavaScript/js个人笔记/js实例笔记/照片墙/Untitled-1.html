@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script src="move.js"></script>
+<style>
+*{padding:0;margin:0;}
+
+ul{width:930px;margin:100px auto;padding:20px;}
+ul li{float:left;list-style:none;margin:5px;}
+ul li img{width:300px;height:200px;vertical-align:top}
+.clear{zoom:1;}
+.clear:after{content:""; display:block;clear:both;}
+</style>
+</head>
+
+<body>
+<div id="div1">
+<ul class="clear">
+<li><img src="1.gif"/></li>
+<li><img src="2.gif"/></li>
+<li><img src="3.gif"/></li>
+<li><img src="4.gif"/></li>
+<li><img src="5.gif"/></li>
+<li><img src="6.gif"/></li>
+<li><img src="7.gif"/></li>
+<li><img src="8.gif"/></li>
+<li><img src="9.gif"/></li>
+</ul>
+</div>
+
+<script language="javascript">
+	var oLi=document.getElementsByTagName('li');
+	var arrUrl=[];
+	var izIndex = 2;
+	for(var i=0;i<oLi.length;i++){
+		oLi[i].index=i;
+		arrUrl.push([oLi[i].offsetLeft,oLi[i].offsetTop]);
+		
+	}
+	
+	for(var i=0;i<oLi.length;i++){
+		oLi[i].style.position='absolute';
+		oLi[i].style.left=arrUrl[i][0]+'px';
+		oLi[i].style.top=arrUrl[i][1]+'px';
+		oLi[i].style.margin=0;
+		Drag(oLi[i]);
+	
+	}
+ 
+ 
+ function Drag(Li){
+	 
+	 Li.onmousedown=function (ev){
+		Li.style.zIndex = izIndex++;
+		 var ev=ev||window.event;
+		 var disX=ev.clientX-Li.offsetLeft;
+		 var disY=ev.clientY-Li.offsetTop;
+	document.onmousemove=function (ev){
+		var ev=ev||window.event;
+		Li.style.left=ev.clientX-disX+'px';
+		Li.style.top=ev.clientY-disY+'px';
+		
+				for(var i=0;i<oLi.length;i++){
+					oLi[i].style.border = '';
+				}
+				
+				var nL = nearest(Li);
+				
+				if(nL){
+					nL.style.border = '2px red solid';
+				}
+		
+		
+	}
+	document.onmouseup=function(){
+		document.onmousemove=null;
+		document.onmouseup=null;
+		var nL=nearest(Li);
+		var temp=0;
+		if(nL){
+			startMove( nL , { left : arrUrl[Li.index][0] , top : arrUrl[Li.index][1] } );
+					startMove( Li , { left : arrUrl[nL.index][0] , top : arrUrl[nL.index][1] } );
+					nL.style.border = '';
+					
+					tmp = Li.index;
+					Li.index = nL.index;
+					nL.index = tmp;
+			}
+			else{
+				startMove( Li , { left : arrUrl[Li.index][0] , top : arrUrl[Li.index][1] } );
+			}
+		
+	}
+		 
+		return false; 
+	 }
+	 
+ }
+ 
+ function nearest(obj){
+	 
+	 var value = 9999;
+		var index = -1;
+		
+		for(var i=0;i<oLi.length;i++){
+			if( crash(obj,oLi[i]) && obj!=oLi[i] ){
+				
+				var c = distance(obj,oLi[i]);
+				
+				if( c < value ){
+					value = c;
+					index = i;
+				}
+				
+			}
+		}
+		
+		if(index != -1){
+			return oLi[index];
+		}
+		else{
+			return false;
+		}
+	 
+ }
+ 
+ function distance(obj1,obj2){
+	 var a = obj1.offsetLeft - obj2.offsetLeft;
+		var b = obj1.offsetTop - obj2.offsetTop;
+		
+		return Math.sqrt(a*a + b*b);
+	 
+ }
+ function crash(obj,oLi){
+	 var obj_L=obj.offsetLeft;
+	 var obj_T=obj.offsetTop;
+	 var obj_R=obj.offsetLeft+obj.offsetWidth;
+	 var obj_B=obj.offsetTop+obj.offsetHeight;
+	 
+	 
+	 var oLi_L=oLi.offsetLeft;
+	 var oLi_T=oLi.offsetTop;
+	 var oLi_R=oLi.offsetLeft+oLi.offsetWidth;
+	 var oLi_B=oLi.offsetTop+oLi.offsetHeight;
+	 
+	 if(obj_L>oLi_R||obj_R<oLi_L||obj_T>oLi_B||obj_B<oLi_T){
+		return false; 
+	 }
+	 else
+	 {
+		 return true;
+	 }
+	 
+	 
+	 
+ }
+ 
+</script>
+</body>
+</html>

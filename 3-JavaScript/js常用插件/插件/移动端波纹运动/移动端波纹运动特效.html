@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no">
+    <title>移动端模拟hover效果</title>
+    <link rel="stylesheet" href="">
+</head>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.ishover {
+    position: relative;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.hover {
+    color: blue;
+}
+
+.isactive {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.ripple {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+}
+</style>
+
+<body>
+    <div class="ishover">
+        点击我吧
+    </div>
+    <script>
+    (function(window) {
+        "use strict";
+
+        function ripple(obj) {
+            var myLinks = document.querySelectorAll(obj);
+            //创建span元素，实现波纹效果
+            function touchstart(ev) {
+                var oSpan = document.createElement('span');
+                oSpan.className = 'ripple';
+                this.appendChild(oSpan);
+                this.className = "hover ishover isactive";
+                var touch = ev.targetTouches[0] || ev; //移动端专用
+                var downX = touch.pageX;
+                oSpan.style.left = downX + 'px';
+                var _this = this;
+                doMove(oSpan, {
+                    left: 0,
+                    width: myLinks[0].offsetWidth,
+                    opacity: 70
+                }, 400, 'easeOut', function() {
+                    _this.removeChild(oSpan);
+                });
+            }
+
+            function touchend() {
+                this.className = "isactive ishover";
+            }
+            for (var i = 0; i < myLinks.length; i++) {　 //绑定事件　
+                myLinks[i].addEventListener('touchstart', touchstart, false);　　
+                myLinks[i].addEventListener('touchend', touchend, false);
+            }
+            //模拟jquery的运动框架效果
+            function doMove(obj, json, times, fx, fn) {
+                var iCur = {};
+                for (var attr in json) {
+                    iCur[attr] = 0;
+                    if (attr == 'opacity') {
+                        iCur[attr] = Math.round(getStyle(obj, attr) * 100);
+                    } else {
+                        iCur[attr] = parseInt(getStyle(obj, attr));
+                    }
+                }
+                var startTime = now();
+                clearInterval(obj.timer);
+                obj.timer = setInterval(function() {
+                    var changeTime = now();
+                    var t = times - Math.max(0, startTime - changeTime + times);
+                    /*0到2000*/
+                    for (var attr in json) {
+                        var value = Tween[fx](t, iCur[attr], json[attr] - iCur[attr], times);
+                        if (attr == 'opacity') {
+                            obj.style.opacity = value / 100;
+                            obj.style.filter = 'alpha(opacity=' + value + ')';
+                        } else {
+                            obj.style[attr] = value + 'px';
+                        }
+                    }
+                    if (t == times) {
+                        clearInterval(obj.timer);
+                        if (fn) {
+                            fn.call(obj);
+                        }
+                    }
+                }, 13);
+
+                function getStyle(obj, attr) {
+                    if (obj.currentStyle) {
+                        return obj.currentStyle[attr];
+                    } else {
+                        return getComputedStyle(obj, false)[attr];
+                    }
+                }
+
+                function now() {
+                    return (new Date()).getTime();
+                }
+            }
+            var Tween = {
+                linear: function(t, b, c, d) { /*匀速*/
+                    return c * t / d + b;
+                },
+                easeIn: function(t, b, c, d) { /*加速曲线*/
+                    return c * (t /= d) * t + b;
+                },
+                easeOut: function(t, b, c, d) { /*减速曲线*/
+                    return -c * (t /= d) * (t - 2) + b;
+                }
+            }
+        }
+        window.ripple = ripple;
+
+    })(window);
+
+    ripple('.ishover');
+    </script>
+</body>
+
+</html>

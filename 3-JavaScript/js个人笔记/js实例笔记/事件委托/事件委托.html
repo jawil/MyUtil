@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<ul id="faceul">
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+<script language="javascript">
+	var oUl=document.getElementById('faceul');
+	oUl.onmouseover=function(ev){
+	ev=ev||window.event;
+	var target=ev.target||ev.srcElement;
+	if(target.nodeName.toLowerCase()=='li')
+	target.style.backgroundColor='red';
+	}
+
+	oUl.onmouseout=function(ev){
+	ev=ev||window.event;
+	var target=ev.target||ev.srcElement;
+		if(target.nodeName.toLowerCase()=='li')
+
+	target.style.cssText='';
+	}
+
+</script>
+</body>
+</html>

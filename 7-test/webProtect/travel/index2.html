@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/vue/1.0.17/vue.min.js"></script>
+    <script src='https://cdn.bootcss.com/vue-resource/0.7.0/vue-resource.min.js'></script>
+    <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<style>
+    /*样式重置*/
+    html, body, div, span,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    img, ins, kbd, q, s, samp,
+    small, strike, strong,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+
+        vertical-align: baseline;
+        background: transparent;
+        font-family:Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+    }
+    body {
+        line-height: 1;
+    }
+    ol, ul {
+        list-style: none;
+    }
+    blockquote, q {
+        quotes: none;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    a{text-decoration:none;}
+    img{vertical-align:top;border:none;}
+    /*清除浮动，兼容IE6，淘宝就是这个清除浮动*/
+    .clear{
+        zoom:1;
+    }
+    .clear:after{display:block;content:"";clear:both;}
+    /*默认样式*/
+    html{ width:100%; height:100%;overflow:hidden;}
+    body{width:100%;height:100%;overflow:hidden;position:absolute;top:0;left:0;}/*解决微信兼容问题*/
+    /*个人信息样式表*/
+    .message-wrap{width:100%;height:100%;position:absolute;top:10%;left:0;overflow:hidden;margin:0 auto;}
+    .message-wrap .personal-info{position:relative;height:60px;width:100%;border:1px solid #EBEBEB;font:16px/60px "宋体";text-indent:1em;}
+    .message-wrap .personal-info input{height:90%;border:0;outline:none;font-size:15px;margin-left:3em;}
+    .message-wrap .personal-info:nth-of-type(3) input{margin-left:2em;}
+    /*错误提示样式*/
+    .message-wrap .personal-info span{position:absolute;top:0;right:0;height:100%;font:16px/60px "微软雅黑";color:red;}
+    /*底部按钮样式表*/
+    #nameList{position:relative;width:100%;border:1px solid #EBEBEB;margin-top:30px;}
+    #nameList li{text-align:center;width:90%;height:40px;font:16px/40px "宋体";background-color:#f16160;color:white;border-radius:10px;position:absolute;left:50%;-webkit-transform: translateX(-50%);  transform: translateX(-50%);}
+    #nameList li:hover{opacity:0.7;}
+    #nameList li span{position:absolute;height:100%;width:0;top:0;left:0;opacity:0;filter:Alpha(opacity=0);font-size:0;}
+    .active{background:red;}
+    /*    !*按钮样式表*!
+    .message-wrap .personal-info:nth-of-type(4){border:none;margin-top:30px;text-align:center;text-indent:0em;}
+    .message-wrap .btn{width:90%;height:40px;background-color:#f16160;color:white;border-radius:10px;border:0;outline:none;}
+    .active{background:gray;}*/
+</style>
+<body>
+<div class="message-wrap" id="userInfo">
+
+    <p class="personal-info">
+        <strong>姓名</strong><input id="name"  v-on:blur="checkName()" v-model="userName" type="text" placeholder="请输入您的姓名"/>
+        <span>{{errorName}}</span>
+    </p>
+
+    <p class="personal-info">
+        <strong>性别</strong><input id="sex" v-on:blur="checkSex()" v-model="userSex" type="text" placeholder="请输入您的性别"/>
+        <span>{{errorSex}}</span>
+    </p>
+
+    <p class="personal-info">
+        <strong>手机号</strong><input id="phone" v-on:blur="checkPhone()" v-model="userPhone"  type="text" placeholder="请输入您的手机号"/>
+        <span>{{errorPhone}}</span>
+    </p>
+    <!--  <p class="personal-info"  id="nameList">
+    <a class="btn" v-on:click="postMessage">登录</a>
+    </p>-->
+    <ul id="nameList" class="btnUl"><!--底部按钮-->
+            <li class="btn" v-on:click="postMessage">登录</li>
+        </ul>
+</div>
+<script>
+    var userInformation=new Vue({
+        el:'#userInfo',
+        data:{
+            userName:'',
+            userSex:'',
+            userPhone:'',
+            errorName:'',
+            errorSex:'',
+            errorPhone:'',
+            message:'',
+            success:''
+        },
+        ready:function(){
+            this.btnMove();
+        },
+        http:{//这里填http的头信息
+            headers:{
+              /*  'Accept':'json',
+                'Content-Type':'application/hal+json',
+                'Authorization':'Basic aXZhbjpwYXNzd29yZA=='*/
+            }
+        },
+        methods: {
+            checkName: function () {//验证名字
+                var oUserName = document.getElementById('name');
+                reg = /^[\u4e00-\u9fa5 ]{2,8}$/;//名字只能是2到8位的汉字和英文
+                reg1 = /^[a-zA-Z\/ ]{2,20}$/;
+                if (reg.test(this.userName) || reg1.test(this.userName)) {
+
+                    this.$set('errorName', '');
+
+                } else {
+                    //名字不能为空
+                    if (this.userName.length === 0) {
+                        this.$set('errorName', '姓名不能为空');
+                    } else {
+                        this.$set('errorName', '请输入正确的名字');
+                    }
+                    oUserName.focus();//如果格式不对跳到原来输入框的焦点
+
+                }
+            },
+            checkSex: function () {//验证性别
+                var oUserSex = document.getElementById('sex');
+                var reg = /^(男|女|man|woman)$/;
+                if (reg.test(this.userSex)) {
+
+                    this.$set('errorSex', '');
+
+                } else {
+                    //名字不能为空
+                    if (this.userSex.length === 0) {
+                        this.$set('errorSex', '性别不能为空');
+                    } else {
+                        this.$set('errorSex', '请输入正确的性别');
+                    }
+                    oUserSex.focus();//如果格式不对跳到原来输入框的焦点
+
+                }
+
+            },
+            checkPhone: function () {//验证手机号
+                var oUserPhone = document.getElementById('phone');
+                var reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+                if (reg.test(this.userPhone)) {
+
+                    this.$set('errorPhone', '');
+
+                } else {
+                    //名字不能为空
+                    if (this.userPhone.length === 0) {
+                        this.$set('errorPhone', '手机号不能为空');
+                    } else {
+                        this.$set('errorPhone', '请输入正确的手机号');
+                    }
+                    oUserPhone.focus();//如果格式不对跳到原来输入框的焦点
+
+                }
+
+            },
+            postMessage: function (event) {//提交个人信息,ajax提交,如果习惯用表单提交,可以找我改一下
+                event.preventDefault();
+                var data = {//保存用户数据
+                    '_links': {
+                        'type': {
+                            /*'href':'http://moviesapi.dev/rest/type/user/user'*/
+                        }
+                    },
+                    'userName': [
+                        {
+                            'value': this.userName
+                        }
+                    ],
+                    'userSex': [
+                        {
+                            'value': this.userSex
+                        }
+                    ],
+                    'userPhone': [
+                        {
+                            'value': this.userPhone
+                        }
+                    ],
+                    'status': [
+                        {
+                            'value': '1'
+                        }
+                    ]
+                };
+                //vue.js的post方法跟jQuery中ajax的post一个用法
+                this.$http.post('http://userapi.dev/entity/user', data,
+                        function (response) {//成功
+                            // this.$set('message','You have regoistered! Yaaaay!:');设置成功的信息提示
+                            // this.$set('success',true);
+                            window.location.href = "https://www.baidu.com/";
+                        }).error(function (response) {//失败
+                    // this.$set('message','Something went wrong!  Please check your info and try again!');
+                    //this.$set('error',true);
+                    //window.location.href = "https://www.baidu.com/";
+                });
+            },
+            btnMove: function () {//运动阴影按钮特效
+                var $nameList = $('#nameList');
+                var $li = $('#nameList').find('li');
+                var offbtn = true;//增加一个开关防止一次没运动完接着进行下一次运动
+                $nameList.delegate('li', 'click', function (ev) {
+                    if (offbtn) {
+                        offbtn = false;
+                        var origLeft = ev.pageX - $nameList.offset().left;
+                        var origRight = $nameList.offset().left + $li.outerWidth() - ev.pageX;
+                        var widthR = $li.outerWidth() - origLeft;
+                        $(this).append('<span></span>').siblings().find('span').remove();
+                        var _this = $(this);
+                        $(this).find('span').attr('class', 'active').end().siblings().find('span').attr('class', '');
+                        $(this).find('span').css({'opacity': 0.7, 'left': origLeft});
+                        $(this).find('span').animate({'width': $li.outerWidth(), 'left': 0}, 250, 'swing', function () {
+                            _this.find('span').css('opacity', 0.3);
+                            _this.find('span').remove();
+                            offbtn = true;
+                        });
+                    }
+                });
+            }
+        }
+
+    });
+</script>
+</body>
+</html>

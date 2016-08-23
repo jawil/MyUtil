@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <title>斗鱼云音乐</title>
+    <link rel="stylesheet" href="css/reset/cube.min.css">
+    <!-- 公共重置样式 -->
+    <link rel="stylesheet" href="css/bug/bug.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script>
+    document.getElementsByTagName("html")[0].style.fontSize = window.innerWidth / 3.2 + "px";
+    (function(doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function() {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                docEl.style.fontSize = 100 * (clientWidth / 320) + 'px';
+            };
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+    </script>
+    <style>
+    html {
+        font-size: 31.25vw;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <router-view></router-view>
+    </div>
+    <!--  进场动画组件 -->
+    <template id="loadingshow">
+        <div id="loadingshow">
+            <!--  进场动画 -->
+            <div id="loading">
+                <div id="load">
+                    <div id="loadIco1"></div>
+                    <div id="loadIco2"></div>
+                    <div id="loadtext">0%</div>
+                </div>
+                <div id="loadShadow"></div>
+            </div>
+        </div>
+    </template>
+    <!-- 网站主页展示组件 -->
+    <template id="index">
+        <!-- 首层路由 -->
+        <header>
+            <div class="search-wrap">
+                <!-- 顶部搜索功能 -->
+                <template v-if="!isId">
+                    <div><span class="register"><a href="login.html">登录</a></span></div>
+                </template>
+                <template v-else>
+                    <div><span class="register"><a href="javascript:;">{{username}}</a></span></div>
+                </template>
+                <div>
+                    <input type="text" placeholder="搜索音乐、歌词、电台☞" class="search-txt">
+                </div>
+                <div><span class="icon-sousuo"></span></div>
+            </div>
+        </header>
+        <router-view></router-view>
+        <!-- 第二层路由 -->
+    </template>
+    <!--  发现音乐组件 -->
+    <template id="discover">
+        <div id="discovermusic">
+            <article id="find-music">
+                <nav>
+                    <!-- 发现音乐的导航栏 -->
+                    <div class="nav-wrap">
+                        <div v-link="{name:'recommend'}">个性推荐</div>
+                        <div v-link="{name:'songlist'}">歌单</div>
+                        <div v-link="{name:'host'}">主播电台</div>
+                        <div v-link="{name:'rankinglist'}">排行榜</div>
+                    </div>
+                </nav>
+                <!-- 组件里面嵌套组件 -->
+                <router-view></router-view>
+                <!-- 第三层路由 -->
+                <footer>
+                    <div class="footer-nav">
+                        <!-- 底部导航栏 -->
+                        <div class="active" v-link="{name:'discover'}" style="color:#fff">
+                            <div><i class="icon-leida"></i></div>
+                            <div><span>发现音乐</span></div>
+                        </div>
+                        <div>
+                            <div><i class="icon-iconfontbiaozhunmoban01"></i></div>
+                            <div><span>我的音乐</span></div>
+                        </div>
+                        <div>
+                            <div><i class="icon-pengyouquan"></i></div>
+                            <div><span>朋友</span></div>
+                        </div>
+                        <div>
+                            <div><i class="icon-yonghuming"></i></div>
+                            <div><span>我的账号</span></div>
+                        </div>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </template>
+    <!-- 首页推荐内容组件 -->
+    <template id="recommend">
+        <section class="recommend">
+            <!-- 个性化推荐 -->
+            <div id="ad-slider-wrap">
+                <!-- banner广告展示 -->
+                <ul class="ad-slider-content">
+                    <li><a href="javascript:;"><span></span></a></li>
+                    <li><a href="javascript:;"><span></span></a></li>
+                    <li><a href="javascript:;"><span></span></a></li>
+                    <li><a href="javascript:;"><span></span></a></li>
+                </ul>
+                <ol class="ad-slider-indicators">
+                    <li class="current"></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ol>
+            </div>
+            <div class="music-tips">
+                <div>
+                    <div><i class="icon-yutoubaoicon"></i></div>
+                    <div>
+                        <div><span>私人FM</span></div>
+                    </div>
+                </div>
+                <div>
+                    <div><i class="icon-tuijian "></i></div>
+                    <div><span>开启个性化推荐</span></div>
+                </div>
+                <div>
+                    <div><i class="icon-canggezongbang"></i></div>
+                    <div><span>新歌榜</span></div>
+                </div>
+            </div>
+            <!-- 发现音乐推荐 -->
+            <div class="content-wrap">
+                <h1 class="title">推荐歌单<i class="icon-gengduo"></i></h1>
+                <div class="music-content">
+                    <div class="song-detail" v-on:click="tiaozhuan">
+                        <img src="images/gedan/1.png" alt="">
+                        <p class="list-title">玩摇滚的柔情起来,酥到骨头里</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>223万</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/2.png" alt="">
+                        <p class="list-title">Show Me The Money</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>8966</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/3.png" alt="">
+                        <p class="list-title">我想和你在水族馆诉说浪漫</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>36万</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/4.png" alt="">
+                        <p class="list-title">台湾金曲奖，历届歌王歌后们</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>22万</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/5.png" alt="">
+                        <p class="list-title">错的时间遇见错的人叫青春</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>9699</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/6.png" alt="">
+                        <p class="list-title">清新歌曲很轻，思念很重</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>368万</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrap">
+                <h1 class="title">独家放送<i class="icon-gengduo"></i></h1>
+                <div class="music-content flex-diff">
+                    <div>
+                        <img src="images/gedan/7.png" alt="">
+                        <p class="list-title">钢琴前奏*穿透灵魂的韩式抒情曲</p>
+                    </div>
+                    <div>
+                        <img src="images/gedan/8.png" alt="">
+                        <p class="list-title">日系~相信我的思恋会传达到你的心里</p>
+                    </div>
+                    <div class='div-diff'>
+                        <img src="images/gedan/9.png" alt="">
+                        <p>玩摇滚的柔情起来,酥到骨头里</p>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrap">
+                <h1 class="title">最新音乐<i class="icon-gengduo"></i></h1>
+                <div class="music-content">
+                    <div class="song-detail">
+                        <img src="images/gedan/10.png" alt="">
+                        <p class="list-title">叶塞尼娅</p>
+                        <p class="number">
+                            <i class="icon-ttpodicon"></i><span>王晰</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/11.png" alt="">
+                        <p class="list-title">乐作人生</p>
+                        <p class="number">
+                            <i class="icon-ttpodicon"></i><span>那吾</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/12.png" alt="">
+                        <p class="list-title">谢谢你</p>
+                        <p class="number">
+                            <i class="icon-ttpodicon"></i><span>Demon Li</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/13.png" alt="">
+                        <p class="list-title">哈利路亚</p>
+                        <p class="number">
+                            <i class="icon-ttpodicon"></i><span>那吾</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/14.png" alt="">
+                        <p class="list-title">有理想</p>
+                        <p class="number">
+                            <i class="icon-ttpodicon"> </i><span>陈柏宇</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/15.png" alt="">
+                        <p class="list-title">微醺岁月</p>
+                        <p class="number">
+                            <i class="icon-ttpodicon"></i><span>jawil</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrap">
+                <h1 class="title">推荐MV<i class="icon-gengduo"></i></h1>
+                <div class="music-content flex-diff">
+                    <div class="song-detail">
+                        <img src="images/gedan/16.png" alt="">
+                        <p class="list-title nowrap">玩摇滚的柔情起来,酥到骨头里</p>
+                        <p class="number">
+                            <i class="singer-name">范玮琪</i><i class="icon-bofang"></i><span>36万</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/17.png" alt="">
+                        <p class="list-title nowrap">最富有生机的时节当听最先锋的音乐</p>
+                        <p class="number">
+                            <i class="singer-name">南征北战</i><i class="icon-bofang"></i><span>228万</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/18.png" alt="">
+                        <p class="list-title nowrap">钢琴前奏*穿透灵魂的韩式抒情曲</p>
+                        <p class="number">
+                            <i class="singer-name">魏晨</i><i class="icon-bofang"></i><span>399万</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/19.png" alt="">
+                        <p class="list-title nowrap">错的时间遇见错的人叫青春</p>
+                        <p class="number">
+                            <i class="singer-name">那吾</i><i class="icon-bofang"></i><span>36万</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrap">
+                <h1 class="title">主播电台<i class="icon-gengduo"></i></h1>
+                <div class="music-content">
+                    <div class="song-detail">
+                        <img src="images/gedan/1.png" alt="">
+                        <p class="list-title">真正的放下是一种怎样的体验</p>
+                        <p class="number">
+                            <i class="icon-diantai"></i><span>抒情英文歌</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/2.png" alt="">
+                        <p class="list-title">Many of the erotic voive</p>
+                        <p class="number">
+                            <i class="icon-diantai"></i><span>晓苏电台</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/3.png" alt="">
+                        <p class="list-title">我想和你在水族馆诉说浪漫</p>
+                        <p class="number">
+                            <i class="icon-diantai"></i><span>港乐精选</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/4.png" alt="">
+                        <p class="list-title">台湾金曲奖，历届歌王歌后们</p>
+                        <p class="number">
+                            <i class="icon-diantai"></i><span>海盗电台</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/5.png" alt="">
+                        <p class="list-title">错的时间遇见错的人叫青春</p>
+                        <p class="number">
+                            <i class="icon-diantai"></i><span>阿Yue Yue</span>
+                        </p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/6.png" alt="">
+                        <p class="list-title">清新歌曲很轻，思念很重</p>
+                        <p class="number">
+                            <i class="icon-diantai"></i><span>一个人听</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="foot-msg">
+                <p>现在可以个人喜好，自由调整首页栏目顺序了~</p>
+                <button class="btn-adjust">调整栏目顺序</button>
+            </div>
+        </section>
+    </template>
+    <!-- 歌单组件 -->
+    <template id="songlist">
+        <section class="song-list">
+            <div class="content-wrap">
+                <div class="high-quality">
+                    <div><img src="images/gedan/24.png" alt=""></div>
+                    <div class="goog-list">
+                        <p>精品歌单</p><span>玩摇滚的柔情起来酥到骨头里</span></div>
+                    <div><i class="icon-gengduo1"></i></div>
+                </div>
+                <h1 class="title title-left">全部歌单<i class="icon-gedan" ></i></h1>
+                <div class="music-content">
+                    <div class="song-detail list-diff">
+                        <img src="images/gedan/20.png" alt="">
+                        <p class="list-title">你的世界，我只路过了幸福，剩下的你都留给了</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>223万</span>
+                        </p>
+                    </div>
+                    <div class="song-detail list-diff">
+                        <img src="images/gedan/21.png" alt="">
+                        <p class="list-title">玩摇滚的柔情起来,酥到骨头里</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>8966</span>
+                        </p>
+                    </div>
+                    <div class="song-detail list-diff">
+                        <img src="images/gedan/22.png" alt="">
+                        <p class="list-title">我想和你在水族馆诉说浪漫啊，怎么办</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>36万</span>
+                        </p>
+                    </div>
+                    <div class="song-detail list-diff">
+                        <img src="images/gedan/23.png" alt="">
+                        <p class="list-title">台湾金曲奖，历届歌王歌后们，看看骚货</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>22万</span>
+                        </p>
+                    </div>
+                    <div class="song-detail list-diff">
+                        <img src="images/gedan/20.png" alt="">
+                        <p class="list-title">你的世界，我只路过了幸福，剩下的你都留给了</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>223万</span>
+                        </p>
+                    </div>
+                    <div class="song-detail list-diff">
+                        <img src="images/gedan/21.png" alt="">
+                        <p class="list-title">玩摇滚的柔情起来,酥到骨头里</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>8966</span>
+                        </p>
+                    </div>
+                    <div class="song-detail list-diff">
+                        <img src="images/gedan/22.png" alt="">
+                        <p class="list-title">我想和你在水族馆诉说浪漫啊，怎么办</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>36万</span>
+                        </p>
+                    </div>
+                    <div class="song-detail list-diff">
+                        <img src="images/gedan/23.png" alt="">
+                        <p class="list-title">台湾金曲奖，历届歌王歌后们，看看骚货</p>
+                        <p class="number">
+                            <i class="icon-mianxingtubiao1yinlediantai"></i><span>22万</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+    <!-- 主播电台组件 -->
+    <template id="hoststation">
+        <section class="host-station">
+            <div id="ad-slider-wrap">
+                <!-- banner广告展示 -->
+                <ul class="ad-slider-content">
+                    <li><a href="javascript:;"><span></span></a></li>
+                    <li><a href="javascript:;"><span></span></a></li>
+                    <li><a href="javascript:;"><span></span></a></li>
+                </ul>
+                <ol class="ad-slider-indicators">
+                    <li class="current"></li>
+                    <li></li>
+                    <li></li>
+                </ol>
+            </div>
+            <div class="content-wrap host-diff">
+                <div class="high-quality">
+                    <div class="song">
+                        <p>主播电台排行榜</p>
+                        <span>最火的节目和电台，每天更新</span>
+                    </div>
+                    <div class="img">
+                        <img src="images/gedan/25.png" alt="">
+                    </div>
+                    <div><i class="icon-gengduo1"></i></div>
+                </div>
+            </div>
+            <div class="host-list-remmond">
+                <div>
+                    <hr class="circle"><span>精彩节目推荐</span></div>
+                <div>
+                    <img src="images/gedan/5.png" " alt=" ">
+                    <div class="good-items ">
+                        <p>遇见温暖的人，听着美好的歌</p><span>总有一些人是你生命中欢乐温暖的阳光</span>
+                    </div>
+                </div>
+                <div>
+                    <img src="images/gedan/2.png "" alt="">
+                    <div class="good-items">
+                        <p>初春轻音 清新的味道</p><span>好几个电视剧的纯音插曲，很喜欢情调</span>
+                    </div>
+                </div>
+                <div>
+                    <img src="images/gedan/3.png" " alt=" ">
+                    <div class="good-items ">
+                        <p>为爱勇敢的跨出那一步</p><span>练习了微笑，练习了礼貌，练习了拥抱</span>
+                    </div>
+                </div>
+                <div>
+                    <img src="images/gedan/4.png "" alt="">
+                    <div class="good-items">
+                        <p>喜欢是不离开，爱是离不开</p><span>喜欢是放纵，爱却是克制。傻逼玩意</span>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrap bgc-fff">
+                <h1 class="title"><span class="circle"></span>&nbsp;外语讲堂，订阅更精彩</h1>
+                <div class="music-content">
+                    <div class="song-detail" v-link="{name:'playlist',params:{playlistID:2}}">
+                        <img src="images/gedan/1.png" alt="">
+                        <p class="list-title">玩摇滚的柔情起来,酥到骨头里</p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/2.png" alt="">
+                        <p class="list-title">Show Me The Money</p>
+                        <br>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/3.png" alt="">
+                        <p class="list-title">我想和你在水族馆诉说浪漫</p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/4.png" alt="">
+                        <p class="list-title">台湾金曲奖，历届歌王歌后们</p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/5.png" alt="">
+                        <p class="list-title">错的时间遇见错的人叫青春</p>
+                    </div>
+                    <div class="song-detail">
+                        <img src="images/gedan/6.png" alt="">
+                        <p class="list-title">清新歌曲很轻，思念很重</p>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrap bgc-fff">
+                <h1 class="title"><span class="circle"></span>&nbsp;热门电台</h1>
+                <div class="music-content">
+                    <div class="song-detail list-diff">
+                        <img src="images/gedan/20.png" alt="">
+                        <p class="list-title">你的世界，我只路过了幸福，剩下的你都留给了</p>
+                        <p class="number">
+                            <i class="icon-dingyueicon01"></i><span>223万订阅</span>
+                        </p>
+                    </div>
+                    <div class="song-detail list-diff">
+                        <img src="images/gedan/21.png" alt="">
+                        <p class="list-title">玩摇滚的柔情起来,酥到骨头里</p>
+                        <p class="number">
+                            <i class="icon-dingyueicon01"></i><span>8966订阅</span>
+                        </p>
+                    </div>
+                    <div class="song-detail list-diff">
+                        <img src="images/gedan/22.png" alt="">
+                        <p class="list-title">我想和你在水族馆诉说浪漫啊，怎么办</p>
+                        <p class="number">
+                            <i class="icon-dingyueicon01"></i><span>36万订阅</span>
+                        </p>
+                    </div>
+                    <div class="song-detail list-diff">
+                        <img src="images/gedan/23.png" alt="">
+                        <p class="list-title">台湾金曲奖，历届歌王歌后们，看看骚货</p>
+                        <p class="number">
+                            <i class="icon-dingyueicon01"></i><span>22万订阅</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+    <!-- 排行榜组件-->
+    <template id="rankinglist">
+        <section class="ranking-list-wrap">
+            <div class="ranking-list">
+                <span class="title-list">官方榜</span>
+                <ul class="guanfang">
+                    <li>
+                        <img src="images/gedan/30.png" alt="">
+                        <ol>
+                            <li>1.初学者-薛之谦</li>
+                            <li>2.画-G.E.M.邓紫棋</li>
+                            <li>3.Wherever I Go-OnePeublic</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <img src="images/gedan/26.png" alt="">
+                        <ol>
+                            <li>1.初学者-薛之谦</li>
+                            <li>2.画-G.E.M.邓紫棋</li>
+                            <li>3.雅俗共赏-许嵩</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <img src="images/gedan/27.png" alt="">
+                        <ol>
+                            <li>1.大风吹-草东没有派对</li>
+                            <li>2.蓝色的窗外-小娟&山谷里的居民</li>
+                            <li>3.Wherever I Go-OnePeublic</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <img src="images/gedan/28.png" alt="">
+                        <ol>
+                            <li>1.演员-薛之谦</li>
+                            <li>2.丑八怪-薛之谦</li>
+                            <li>3.绅士-薛之谦</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <img src="images/gedan/29.png" alt="">
+                        <ol>
+                            <li>1.周杰伦<i class="icon-huo"></i><span>2043820</span></li>
+                            <li>2.薛之谦<i class="icon-huo"></i><span>1573098</span></li>
+                            <li>3.陈奕迅<i class="icon-huo"></i><span>1465018</span></li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+            <div class="ranking-list">
+                <span class="title-list">全球榜</span>
+                <ul class="guanfang">
+                    <li>
+                        <img src="images/gedan/31.png" alt="">
+                        <ol>
+                            <li class="diff1">云音乐电音榜<i class="icon-huo"></i></li>
+                            <li class="diff2">每周五周更新</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <img src="images/gedan/32.png" alt="">
+                        <ol>
+                            <li class="diff1">UK排行榜周榜<i class="icon-huo"></i></li>
+                            <li class="diff2">每周一周更新</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <img src="images/gedan/33.png" alt="">
+                        <ol>
+                            <li class="diff1">美国Billboard周榜<i class="icon-huo"></i></li>
+                            <li class="diff2">每周三周更新</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <img src="images/gedan/34.png" alt="">
+                        <ol>
+                            <li class="diff1">法国NRJ Vos Hits周榜</li>
+                            <li class="diff2">每周五周更新</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <img src="images/gedan/35.png" alt="">
+                        <ol>
+                            <li class="diff1">ITunes榜</li>
+                            <li class="diff2">每周一周更新</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <img src="images/gedan/36.png" alt="">
+                        <ol>
+                            <li class="diff1">云音乐ACG音乐榜</li>
+                            <li class="diff2">每周四周更新</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <img src="images/gedan/37.png" alt="">
+                        <ol>
+                            <li class="diff1">韩国Melon排行榜周榜</li>
+                            <li class="diff2">每周一周更新</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <img src="images/gedan/38.png" alt="">
+                        <ol>
+                            <li class="diff1">韩国Menet排行榜周榜</li>
+                            <li class="diff2">每周三周更新</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <img src="images/gedan/39.png" alt="">
+                        <ol>
+                            <li class="diff1">日本Oricon周榜</li>
+                            <li class="diff2">刚刚更新</li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+            <div class="ranking-list">
+                <span class="title-list">用户榜</span>
+                <ul class="guanfang">
+                    <li>
+                        <img src="images/gedan/40.png" alt="">
+                        <ol>
+                            <li class="diff1">音乐达人榜<i class="icon-huo"></i></li>
+                            <li class="diff2">每周一周更新</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <img src="images/gedan/41.png" alt="">
+                        <ol>
+                            <li class="diff1">音乐新人榜<i class="icon-huo"></i></li>
+                            <li class="diff2">每周三周更新</li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </template>
+    <!-- 歌单列表的歌曲和信息组件 -->
+    <template id="playlist">
+        <section class="playlist">
+        </section>
+    </template>
+    <!-- 音乐播放器播放功能组件 -->
+    <template id="playing">
+        <section class="playing">
+        </section>
+    </template>
+    <script src="script/libs/vue.min.js"></script>
+    <script src="script/libs/vue-resource.min.js"></script>
+    <script src="script/libs/vue-router.min.js"></script>
+    <script src="script/views/js/common.js"></script>
+    <script src="script/plugs/slider.js"></script>
+    <!-- 轮播图插件 -->
+    <script src="script/views/js/app.js"></script>
+</body>
+
+</html>

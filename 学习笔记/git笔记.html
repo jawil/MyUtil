@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <script>
+    git diff的三个命令
+    git diff:
+    工作区与暂存区之间的差异对比
+    git diff --cached:
+    暂存区与版本库之间的差异对比
+    git diff master
+    工作区与版本库之间的差异对比
+
+
+    让暂存区撤销还原到工作区:
+    git reset HEAD file.name(暂存区被清空)
+
+
+    让工作区内容还原跟版本库一样:
+    git checkout -- filename(工作区被清空,跟版本区一样)
+
+
+
+    撤销提交commit
+    git commit  -m  "changed" --amend
+
+
+
+    打印提交版本信息
+    git log
+
+
+    查看日志记录信息
+    git reflog
+
+
+
+    git的删除恢复命令:
+    *删除
+
+    删除暂存区的文件（工作区文件已经删掉）
+    git  rm filerame
+
+
+    （强制删除暂存区文件，即使工作区文件没有先删掉，但是会删掉工作区和暂存区文件）
+    git rm -f filename
+
+
+    删除暂存区文件，但不会删除工作区文件
+    git rm --cached filename
+
+
+    *恢复
+    恢复工作区删除的文件（针对指定文件）
+    git checkout commitID filename
+
+
+    恢复到版本号（针对版本）
+    git reset --hard commitID
+    >>HEAD^
+    git reset --hard HEAD^回到上一个版本
+
+    >>HEAD~<num>
+    git reset --hard HEAD~2回到上上个版本
+
+
+
+
+
+
+
+    同步到远程仓库:
+    git remote:查看远程仓库的名字
+
+    git remote -v:查看远程仓库的地址
+
+
+    git config --global user.name:查看当前用户名
+    git config --global user.name ''更改当前用户名
+
+
+
+
+    多人协作解决冲突:
+    --git fetch:
+
+    >>Git diff master origin/master
+
+
+    >>Git merge orgin/master
+
+
+    - git pull相当于一次性执行git fetch的两步操作
+
+
+
+    Git下的分支处理:
+    git branch:查看当前的分支
+
+    git branch newName:创建一个新的分支
+
+    git checkout name:切换到新的分支
+
+    git merge new:快速合并分支
+
+
+
+
+    git branch --merged:查看当前master合并的分支
+
+    git branch --no-merged:查看当前没有跟master的分支
+
+
+    git branch -d branchName:删除当前已经合并没有用的分支
+
+    git branch -D branchName:强制删除没有合并的分支
+
+
+
+    github上的分支:
+    git tag
+    git tag v1.0:给完成的项目打标签
+    git tag
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+.DS_Store
+dest/*
+gulp/node_modules/*
+gulp/dist/*
+gulp/images/*
+grunt/node_modules/*
+grunt/dist/*
+grunt/images/*
+npm-debug.log
+webpack/node_modules/*
+socket.io/server/node_modules/*

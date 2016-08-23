@@ -1,0 +1,183 @@
+@charset "UTF-8";
+* {
+    box-sizing: border-box;
+}
+
+input {
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    background: #F9F1EE;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding: 0 0.5rem;
+    background: #F9F1EE;
+}
+
+#app .tab-wrap {
+    height: 0.2rem;
+}
+
+#app .tab-wrap .tips {
+    color: gray;
+    font-size: 0.13rem;
+    position: absolute;
+    right: 5%;
+    top: 5%;
+}
+
+#app .tab-wrap i {
+    color: red;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 0.2rem;
+    display: inline-block;
+    vertical-align: -0.06rem;
+}
+
+#app .logo-tab {
+    height: 100%;
+    width: 0.5rem;
+    float: right;
+}
+
+#app .logo-tab div {
+    width: 0.08rem;
+    height: 0.08rem;
+    border-radius: 50%;
+    float: left;
+    margin-top: 0.1rem;
+    margin-left: 0.15rem;
+}
+
+#app .logo-tab div {
+    background: #DE3031;
+}
+
+#app .logo-tab .current {
+    background: #4AD280;
+}
+
+#app section .title {
+    margin-left: 0.05rem;
+    color: #D50001;
+    font-size: 0.2rem;
+}
+
+#app section label {
+    display: inline-block;
+    vertical-align: middle;
+    color: #ACA8A5;
+    margin-left: 0.06rem;
+}
+
+#app section .form-list {
+    border-bottom: 1px solid #D4DADA;
+    width: 100%;
+    height: 0.3rem;
+    line-height: 0.3rem;
+    color: #000;
+}
+
+#app section .form {
+    margin-bottom: 0.1rem;
+    position: relative;
+}
+
+#app section .form span {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0.2rem;
+    height: 0.2rem;
+    transform: translateY(-50%);
+    font-size: 0.20rem;
+    color: #f00;
+    border-radius: 50%;
+    /* background: #21CA65; */
+    text-align: center;
+    line-height: 0.2rem;
+    font-weight: bold;
+}
+
+input[type=password] {
+    font-size: 0.3rem;
+    color: #f00;
+}
+
+#app footer .footer {
+    position: relative;
+    width: 100%;
+    margin-top: 0.1rem;
+}
+
+#app footer .login-res {
+    height: 0.8rem;
+    display: box;
+    display: -webkit-box;
+}
+
+#app footer .login-res div {
+    height: 100%;
+    width: 50%;
+    text-align: center;
+    line-height: 0.8rem;
+}
+
+#app footer .login-res input {
+    width: 0.8rem;
+    height: 0.3rem;
+    border-radius: 25px;
+    background: #D60000;
+    color: #fff;
+    border: 2px solid red;
+}
+
+#app footer .login-res .active {
+    background: #FBF6F0;
+    color: #D60001;
+}
+
+#app footer div {
+    text-align: center;
+    margin-bottom: 0.1rem;
+}
+
+#app footer .third-logo i {
+    color: #A09F9B;
+    font-style: normal;
+}
+
+#app footer .third-logo span {
+    color: #989697;
+}
+
+#app footer .thirdparty {
+    height: 0.4rem;
+    display: box;
+    display: -webkit-box;
+}
+
+#app footer .thirdparty p {
+    width: 33%;
+    height: 100%;
+    text-align: center;
+    line-height: 0.4rem;
+}
+
+.error {
+    border-bottom: 1px solid red;
+}
+
+.error::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: red;
+}
+
+#app section em.codemsg {
+    background-color: gray;
+}

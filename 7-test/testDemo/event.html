@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+          事件理解
+        </title>
+        <link rel="stylesheet" type="text/css" href="common.css"/>
+        <style>
+          .demo1{ display: none; }
+        </style>
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    </head>
+    
+    <body>
+        <h3>事件理解</h3>
+        <input id="a" type="radio" name="a" value="a" class="demo1">aaaaaaa
+        <input id="b" type="radio" name="a" value="b" class="demo1">bbbbbbb
+        
+        <button id="aBtn" class="radius-btn">按钮A</button>
+        <button id="bBtn" class="radius-btn">按钮B</button>
+        <script type="text/javascript" src="utils/base.js"></script>
+        <script type="text/javascript" src="lib/jquery-1.10.2.min.js"></script>
+        <script>
+          // 来源 http://www.zhihu.com/question/31964586
+          // 根据当前规范，顺序应该是 click -> input -> change...（详见知乎回答）
+          function demo1(){
+            var btn_a = document.getElementById('a');
+            var btn_b = document.getElementById('b');
+            btn_a.style.display = 'inline';
+            btn_b.style.display = 'inline';
+
+            // btn_a.addEventListener('change', function() {
+            //   alert('change---change');
+            // }, false);
+            // btn_a.addEventListener('click', function() {
+            //   alert('click---click');
+            // }, false);
+            // 改用兼容事件类实现
+            EventUtil.addHandler(btn_a, 'change', function(){
+              alert('change---change');
+            });
+            EventUtil.addHandler(btn_a, 'click', function(){
+              alert('click---click');
+            });
+          }
+          // demo1();
+
+          // dom 0级别相同类型事件（例如点击相关）只能一个有效，不同类型事件可以共存
+          function demo2(){
+            var btn_a = document.getElementById('a');
+            btn_a.style.display = 'inline';
+            btn_a.onClick = click1;
+            btn_a.onmousedown = mouseDown1;
+            // 关于 mouseover 与 mouseenter区别：http://www.cnblogs.com/kingwell/archive/2012/09/09/2677258.html
+            // mouseover与mouseenter
+            // 不论鼠标指针穿过被选元素或其子元素，都会触发 mouseover 事件。
+            // 只有在鼠标指针穿过被选元素时，才会触发 mouseenter 事件。
+
+            // mouseout与mouseleave
+            // 不论鼠标指针离开被选元素还是任何子元素，都会触发 mouseout 事件。
+            // 只有在鼠标指针离开被选元素时，才会触发 mouseleave 事件。
+
+            btn_a.onmouseover = mouseOver1;
+            btn_a.onmouseup = mouseUp1;
+
+            function mouseDown1(){
+              alert('mouseDown 1');
+            }
+            function click1(){
+              alert('click 1');
+            }
+            function mouseOver1(){
+              // alert('mouseOver 1');
+              console.log('mouseOver 1');
+            }
+            function mouseUp1(){
+              // alert('mouseUp 1');
+              console.log('mouseUp 1');
+            }
+          }
+          // demo2();
+          
+          // 浏览器关闭前事件
+          // window.onbeforeunload = function (e) {
+          //   e = e || window.event; 
+          //   // For IE and Firefox prior to version 4 
+          //   if (e) { 
+          //     e.returnValue = '确定退出吗？'; 
+          //   } 
+          //   // For Safari 
+          //   return '确定退出吗？'; 
+          // };
+
+          // jq click、on调用的分别是 addEventListener 、onclick事件？ 其实它们是一样的：http://www.cnblogs.com/aaronjs/p/3444874.html
+          function demo3(){
+            var $a = $('#aBtn'),
+                $b = $('#bBtn');
+
+            $a.on('click', testAClick);
+            $a.on('click', testAClick);
+
+            $b.click(testBClick);
+            $b.click(testBClick);
+
+            function testAClick(){
+              alert('A 点击啦！');
+            }
+            function testBClick(){
+              alert('B 点击啦！');
+            }
+          } 
+          // demo3();
+
+          // 测试屏幕变化事件
+          function testWindowResize(){
+            window.onresize = function(){
+              innerResize();
+            }
+
+            function innerResize() {
+              console.log('屏幕尺寸改变！');
+              // window.onresize 是一个方法， 可以随时被改变
+              window.onresize = function () {
+                console.log('新的屏幕尺寸改变2！');
+              }
+            }
+          }
+          testWindowResize();
+        </script>
+
+    </body>
+</html>

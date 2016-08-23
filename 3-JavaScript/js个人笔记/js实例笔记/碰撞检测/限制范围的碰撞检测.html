@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+.div1{width:100px;height:100px;background-color:red;position:absolute;left:100px;top:100px;z-index:2;}
+img{position:absolute;top:400px;left:800px;}
+</style>
+</head>
+
+<body>
+<div class="div1" id="div2">
+</div>
+<img src="1.jpg"/>
+
+<script language="javascript">
+var oDiv=document.getElementById('div2');
+var oImg=document.getElementsByTagName('img')[0];
+drag(oDiv);
+function drag(obj){
+oDiv.onmousedown=function (ev){
+	var ev=ev||event;
+	disX=ev.clientX-this.offsetLeft;
+	disY=ev.clientY-this.offsetTop;
+	if ( obj.setCapture ) {
+				obj.setCapture();
+			}
+
+document.onmousemove=function (ev){
+	
+	var ev=ev||event;
+	
+	var L=ev.clientX-disX;
+	var T=ev.clientY-disY;
+	var dL=L;
+	var dT=T;
+	var dR=L+obj.offsetWidth;
+	var dB=T+obj.offsetHeight;
+	
+	var pL=oImg.offsetLeft;
+	var pT=oImg.offsetTop;
+	var pR=pL+oImg.offsetWidth;;
+	var pB=pT+oImg.offsetHeight;
+	
+	if(dR<pL||dL>pR||dB<pT||dT>pB){
+		oImg.src='1.jpg'
+	}else{
+		oImg.src='2.jpg'
+		}
+		if(L<0){L=0;}
+		
+		 else if ( L > document.documentElement.clientWidth - obj.offsetWidth ) {
+					L = document.documentElement.clientWidth - obj.offsetWidth;
+				}
+				
+		if ( T < 0 ) {
+					T = 0;
+				} 
+				
+	   else if ( T > document.documentElement.clientHeight - obj.offsetHeight ) {
+					T = document.documentElement.clientHeight - obj.offsetHeight;
+				}
+
+				obj.style.left=L+'px';
+	    obj.style.top=T+'px';
+	}
+	
+	
+	document.onmouseup=function (){
+		if ( obj.releaseCapture ) {
+					obj.releaseCapture();
+				}
+		document.onmousemove=document.onmouseup=null;
+		}
+		
+		return false;
+}
+
+}
+</script>
+
+</body>
+</html>

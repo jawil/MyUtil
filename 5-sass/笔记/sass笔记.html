@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+</body>
+<script>
+@charset "utf-8";
+
+h1 {
+    color: red;
+}
+
+/* sass变量 */
+$color: red;
+
+
+/* sass嵌套 */
+body {
+    header {
+        color: red;
+    }
+    section {}
+}
+
+/* sass混入也就是函数 */
+@mixin alert($color: blue) {
+    color: $color;
+}
+
+
+
+/* sass的继承 */
+.block {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    @extend.block;
+}
+
+
+/* sass的基本语法 */
+初始化一个功能：npm init
+
+创建一个compass的工程
+
+使用命令compass  create hello;
+
+创建一个纯净的工程：compass  create --bare;
+
+编译单个sass命令：sass test.scss test.css
+监视单个sass命令：sass --watch test.scss:test.css
+
+
+编译和监视整个文件加命令：
+sass --watch sass:css
+
+/*compass的基本语法*/
+
+
+用compass编译sass：
+compass compile
+
+监视            compass watch
+强制编译成css  compass watch -force
+
+把sass编译成一行形式的css：
+compass watch -force -s compact
+
+
+/*sass的注释方法*/
+//单行注释，不会编译到css文件中
+/*多行注释，会编译到css文件中   */
+/*!强制把注释写进css文件，不会compass的compact压缩模式被清除*/
+
+
+局部变量：
+body{
+    $color:red;
+    color:$color;
+}
+footer{
+    color:$color;
+}
+
+
+全局变量：加上global就行
+body{
+    $color:red !global;
+}
+footer{
+    color:$color;
+}
+
+
+变量默认值：
+$font-size:14px;
+$font-size:12px !default;
+body{
+    font-size: $font-size;编译后的font-size为14px；
+}
+
+
+多值变量：
+$paddings:3px 7px 5px 10px;
+body{
+    padding-left:nth($paddings,1);
+}
+
+
+$maps:(color: red,borderColor: blue);
+footer{
+    color:$color;
+    background-color:map-get($maps,color);
+    border-color:map-get($maps,borderColor);
+}
+
+
+变量的特殊用法：
+
+$className:main;
+
+.#{$className}{
+    width:10px;
+}
+
+
+
+sass的样式导入
+_reset.scss只用来引入，不用来编译，用来减少css文件
+
+sass的样式导入
+@import  "_reset";
+
+
+
+sass的继承与嵌套语法
+选择器嵌套
+body{
+    background:red;
+    header{
+        background:green;
+    }
+}
+
+属性嵌套
+body footer{
+    background-color:red;
+    backgroud-size:100% 50%;
+
+}
+
+引用父选择器
+a{
+    color:red;
+    &:hover{
+        color:blue;
+    }
+}
+div{
+    color:red;
+    &.content span{
+        color:green;
+    }
+}
+
+@at-root跳出嵌套
+默认@at-root只会跳出选择器嵌套，而不会跳出@media和@support，如果要跳出这两种，则需要@at-root（without：media），@at-root（without-support）。这个语法的关键词有四个，：all（表示所有），
+rule（表示常规css），media，support。我们默认@at-root其实就是@at-root（without：rule）。
+
+
+跳出普通的css选择器
+body｛
+color:red;
+@at-root span{
+    color:yellow;
+}
+｝
+
+跳出media选择器的方法：
+@media screen and (max-width:600px){
+    @at-root(without:media rule){
+        .container{跳出内容放在里面
+            color:red;
+        }
+    }
+}
+
+
+@at-root灵活运用
+.text-info{
+    color:red;
+    @at-root nav &{
+        color:yellow;
+    }
+}
+
+
+了解sass 的各种继承
+
+①简单继承
+.alert{
+    font-size:14px;
+}
+
+.alert-info{
+    @extend .alert;
+    color:red;
+}
+
+②多继承,多个@extend，@extend selector1，selector2
+.alert{
+    font-size:14px;
+}
+
+.small{
+    background: red;;
+}
+.alert-info{
+    @extend .alert,.small;
+    color:red;
+}
+
+
+③链型继承
+虽然能继承的选择器很多，但也有很多不被支持的。如包含选择器(.one .two)或者是相邻兄弟选择器(.one+.two);
+
+.one{
+    border:1px solid red;
+}
+
+.two{
+    @extend .one;
+    color:blue;
+}
+.tree{
+    @extend .two;
+    color:yellow;
+}
+如果继承的元素是a，恰好这个元素a又有hover状态的形式，那么hover状态也会被继承。
+
+
+④继承交叉合并
+没有在同一个父级下，会产生交叉合并的编译结果。
+a span{
+    font-weight: bold;
+}
+
+div .content{
+    @extend span;
+}
+编译后结果，产生不可预料的结果，应该避免交叉继承
+a span, a div .content, div a .content {
+  font-weight: bold; }
+
+
+⑤继承的作用域
+@media screen and (max-width:1024px){
+    .two2{
+        color:red;
+    }
+    .text{
+        @extend .two2;
+        color:green;
+    }
+}
+
+⑥占位选择器
+%zhanwei{
+    color:green;
+}
+
+.four{
+    @extend %zhanwei;
+    color:orange;
+}
+
+
+
+
+sass 的数据类型
+
+数字类型
+$n1:1.2;
+$n2:12;
+$n3:13px;
+
+
+字符串类型
+$s1:container;
+$s2:'container';
+$s3:"container";
+.#{$s3}{
+    font-size: $n3;
+    color:red;
+}
+
+布尔类型
+$bt:true;
+$bf:false;
+
+
+Null空类型
+$null=null;
+body{
+    @if $null==null;{
+        color:red;
+    }
+}
+
+
+颜色Color类型
+
+$c1:blue;
+$c2:#fff;
+$c3:rgba(0,0,0,0);
+body{
+    color:$c3;
+}
+
+Sass 的变量操作
+$width1:10px;
+$width2:15px;
+
+span{
+    width:$width1 - $width2;
+}
+
+
+了解sass的约定俗成
+a:before{
+    content:"A"+bc;
+}
+
+a:before{
+    conternt:A + 'bc';
+}
+编译后的结果依次为：
+a:before {
+  content: "Abc"; }
+
+a:before {
+  conternt: Abc; }
+
+例子1:
+p{
+    padding:3px + 4px auto;
+}
+编译后结果：
+p {
+  padding: 7px auto; }
+
+例子2:
+p:before{
+    content:'Hello ,Sass #{$c1}';
+}
+编译后结果：
+p:before {
+  content: "Hello ,Sass container"; }
+
+
+例子3:
+p{
+    font:20px/10px;
+    width:$width2/2;
+    width:round($width1)/2;
+    height:(100px/2);
+}
+
+
+
+mixin操作：
+@mixin cont{
+    color:red;
+}
+
+body{
+    include:cont;
+}
+
+mixin 还可以传递参数比较灵活
+@mixin cont($color:red,$font-size:14px){
+    color:$color;
+    font-size: $font-size;
+}
+
+body{
+    @include cont($font-size:10px);
+}
+
+
+传递多值参数：用...表示有多个值传递，非常好用
+@mixin box-shadow($shadow...){
+    -moz-box-shadow: $shadow;
+    -o-box-shadow: $shadow;
+    -webkit-box-shadow: $shadow;
+    box-shadow: $shadow;
+}
+
+.shadows{
+    @include box-shadow(0px 4px 4px #fff,2px 6px 10px #ff0);
+}
+
+
+用sass传递内容，必不可少，非常实用
+@mixin style-for-iphone{
+    @media only screen and(min-device-width:320px) and (max-device-width:568px){
+        @content;
+    }
+}
+
+@include style-for-iphone{
+    font-size:12px;
+}
+
+
+
+了解sass的一些函数
+rgba和rgb函数
+
+lighten()和darken()
+$color2:#ff0000;
+p {
+    color: darken($color2, 2);
+}
+
+str-length()和str-index();
+p{
+    z-index:str-length('11111111');
+    z-index: str-index('erwewj','j');
+}
+
+了解sass 的一些自定义函数
+@function double($width){
+    @return $width*2;
+}
+
+p{
+    width:double(5px);
+}
+
+
+@debug "this is a debug test";
+举个例子说明：
+@function double($width){
+    @if $width>3px{
+        @error '$width can not >3px';
+    }
+    @return $width*2;
+}
+
+p{
+    width:double(3px);
+}
+
+
+@debug "this is a debug test";
+@warn "Warn";
+@error 'Error';
+
+Sass 的高级进阶，条件控制
+@function getzIndex($layer:default){
+    $zindexMap:(default:1,modal:1000,dropdown:500,grid:300);
+    $zindex:0;
+    @if map-has-key($zindexMap,$layer){
+        $zindex:map-get($zindexMap,$layer);
+    }
+    @else{
+        $zindex:188;
+    }
+    @return $zindex;
+}
+@debug getzIndex('m1odal');
+
+
+第一种if 用作三木运算是没有@符号的
+$screenWidth:800;
+body{
+    color:if($screenWidth>768,blue,red;)
+}
+
+
+第二种@if @else if @else
+@if $screenWidth>768{
+    body{
+        color:green;
+    }
+}
+@else if $screenWidth>400{
+    em{
+        color:orange;
+    }
+}
+@else{
+    p{
+        color:blue;
+    }
+}
+
+第三种for 循坏
+@for $i from 1 through 5{through从1到5，包含5
+    .span#{$i}{
+        width:20%*$i;
+    }
+}
+@for $i from 1 to 5{to从1到5，不包含5
+    .span#{$i}{
+        width:20%*$i;
+    }
+}
+
+
+
+第四种while 循坏
+$j:5;
+@while $j>0{
+    .span#{$j}{
+        width:20% * $j;
+    }
+    $j:$j - 3;//一定要有空格，不然计算失败报错
+}
+
+
+第五种each 循坏
+1.最简单的each循坏
+$k:1;
+@each $c in blue,red,green{
+    .div#{$k}{
+        color:$c;
+    }
+    $k:$k+1;
+}
+
+
+2.遍历list的用法
+@each $key,$color in (default,blue),(info,green),(danger,red){
+    .text-#{$key}{
+        color:$color;
+    }
+}
+
+
+3.map用法
+@each $key,$value in (default: blue,info: green,danger: red){
+   .label-#{$key}{
+    color:$value;
+   }
+}
+
+使用自定义的function和each 实现栅格布局
+
+@function bulidLayout($num:5){
+    $map:(defaultValue:0);
+    $rate:percentage(1 / $num);
+    @for $i from 1 through $num{
+        $tmpMap:(col#{$i}:$rate * $i);
+        $map:map-merge($map,$tmpMap);
+    }
+    $map:map-remove($map,defaultValue);
+    @return $map;
+}
+
+@mixin bulidLayout($num:5){
+    $map:bulidLayout($num);
+    @each $key,$value in $map{
+        .#{$key}{
+            width:$value;
+        }
+    }
+}
+
+@include bulidLayout();
+@debug bulidLayout();
+
+
+
+</script>
+
+</html>

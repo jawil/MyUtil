@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
+    <script src='https://cdn.bootcss.com/vue-resource/0.7.0/vue-resource.min.js'></script>
+
+</head>
+<style>
+    /*样式重置*/
+    html, body, div, span,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    img, ins, kbd, q, s, samp,
+    small, strike, strong,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+
+        vertical-align: baseline;
+        background: transparent;
+        font-family:Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+    }
+    body {
+        line-height: 1;
+    }
+    ol, ul {
+        list-style: none;
+    }
+    blockquote, q {
+        quotes: none;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    a{text-decoration:none;}
+    img{vertical-align:top;border:none;}
+    /*清除浮动，兼容IE6，淘宝就是这个清除浮动*/
+    .clear{
+        zoom:1;
+    }
+    .clear:after{display:block;content:"";clear:both;}
+
+
+    html{ width:100%; height:100%;overflow:hidden;}
+    body{width:100%;height:100%;overflow:hidden;position:absolute;top:0;left:0;}/*解决微信兼容问题*/
+    .article-wrap{width:100%;height:100%;position:relative;overflow:hidden;margin:0 auto;}
+    /*文章内容样式表*/
+    .article-wrap{background-color: #3d4047;color:white;}
+
+
+    .article-wrap h3{top:13.6%;position:absolute;left:0;left:50%;
+        -webkit-transform:translateX(-50%);transform:translateX(-50%);white-space:nowrap;}
+
+    .article-wrap img{top:22.6%;height:35.2%;position:absolute;left:0;left:50%;
+        -webkit-transform:translateX(-50%);transform:translateX(-50%);}
+
+
+    .article-wrap p{position:absolute;top:62.1%;width:78.6%;box-shadow:inset 1px 1px 1px gray;
+        border:1px solid #1E2022;left:50%; -webkit-transform:translateX(-50%);transform:translateX(-50%);
+        height:7.2%;border-radius:60px;background-color:#3c4045}
+
+
+    .article-wrap p span{position:absolute;width:100%;text-align:center;left:0;
+        top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);font-size:14px;;
+    }
+
+    .article-wrap .others{width:100%;position:absolute;bottom:8%;top:72%;border:1px solid green;
+        text-align:center;color:red;}
+
+
+    .article-wrap footer{position:absolute;bottom:2.7%;text-align:center;width:100%;font-size:13px;color:#BDBEC0;}
+</style>
+<body>
+<div class="article-wrap" id="microChannels">
+<article v-for="article in artContent">
+    <h3>{{article.title}}</h3>
+
+    <img v-bind:src="article.url">
+
+    <p>
+<span>{{article.token}}</span>
+    </p>
+
+
+    <div class="others"><!--预留内容接口-->
+        {{预留内容}}
+    </div>
+
+
+    <footer class="copyright">
+      {{{article.copyright}}}
+    </footer>
+</article>
+
+</div>
+<script>
+var weixin=new Vue({
+    el:'#microChannels',
+    data: {
+        artContent:''
+    },
+    ready:function(){
+        this.getMessage();
+    },
+    methods:{
+        getMessage:function(){
+            this.$http.get('data.json',function(data){
+                var artContent = eval('('+data+')');
+                this.$set('artContent',artContent);
+                 console.log(data);
+            }).error(function(data, status, request) {
+                console.log('fail' + status + "," + request);
+            });
+
+        }
+    }
+});
+</script>
+</body>
+</html>

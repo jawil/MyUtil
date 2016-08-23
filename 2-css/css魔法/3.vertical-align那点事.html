@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="description" content="vertical-align属性测试实验面板 >> 张鑫旭-鑫空间-鑫生活" />
+    <meta name="description" content="张鑫旭web前端学习实例页面" />
+    <meta name="keywords" content="张鑫旭,张鑫旭-鑫空间-鑫生活,web前端,css,jQuery,javascript,demo页面" />
+    <meta name="author" content="张鑫旭,zhangxixnu" />
+    <title>vertical-align属性测试实验面板 &gt;&gt; 张鑫旭-鑫空间-鑫生活</title>
+    <link rel="stylesheet" href="http://www.zhangxinxu.com/study/css/demo.css" type="text/css" />
+    <style type="text/css">
+    .demo {
+        width: 1000px;
+        margin: 30px auto;
+        position: relative;
+    }
+
+    .operate_box {
+        position: absolute;
+        width: 250px;
+        left: 0;
+        border-right: 1px dashed #a0b3d6;
+    }
+
+    .test_box {
+        background: green;
+        width: 600px;
+        margin-left: 310px;
+        line-height: 200px;
+    }
+
+    .line_box {
+        background: black;
+        color: white;
+        padding-left: 20px;
+        font-size: 14px;
+    }
+
+    .test_dot {
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        overflow: hidden;
+        background: red;
+        vertical-align: bottom;
+    }
+
+    .img {
+        vertical-align: middle;
+    }
+    </style>
+    <link rel="stylesheet" href="/csshide1.css" />
+    <style></style>
+    <link rel="stylesheet" href="/abprule.css" />
+    <style></style>
+    <style></style>
+    <script type="text/javascript">
+    window.onerror = function() {
+        return true;
+    }
+    </script>
+    <style type="text/css">
+    .ad {
+        display: none!important;
+        display: none
+    }
+    </style>
+</head>
+
+<body>
+    <div id="header">
+        <a href="http://www.zhangxinxu.com/" class="logo" title="回到鑫空间-鑫生活首页">
+            <img src="http://www.zhangxinxu.com/php/image/zxx_home_logo.png" border="0" />
+        </a>
+    </div>
+    <div id="main">
+        <h1>vertical-align属性测试实验面板</h1>
+        <div id="body" class="light">
+            <div id="content" class="show">
+                <h3>展示</h3>
+                <div class="article_new"><a href="http://www.zhangxinxu.com/wordpress/?p=813">&lt;&lt; 回到相关文章</a></div>
+                <div class="demo">
+                    <div class="operate_box">
+                        <p><strong>修改默认参数：</strong></p>
+                        <p>最外框背景色：
+                            <select id="outBoxColor">
+                                <option value="blue">蓝色&nbsp;</option>
+                                <option value="red">红色</option>
+                                <option value="gray">灰色</option>
+                                <option value="green" selected="selected">绿色</option>
+                                <option value="yellow">黄色</option>
+                                <option value="orange">橙色</option>
+                                <option value="pink">粉色</option>
+                            </select>
+                        </p>
+                        <p>内容的行高为：
+                            <input id="lineHeight" type="text" value="200" size="4" /> px</p>
+                        <p>图片垂直对齐：
+                            <select id="imgVerAlign">
+                                <option value="middle" selected="selected">middle</option>
+                                <option value="bottom">bottom</option>
+                                <option value="text-bottom">text-bottom</option>
+                                <option value="top">top</option>
+                                <option value="text-top">text-top</option>
+                                <option value="baseline">baseline</option>
+                            </select>
+                        </p>
+                        <p>小方点背景色：
+                            <select id="dotBgColor">
+                                <option value="black">黑色&nbsp;</option>
+                                <option value="red" selected="selected">红色</option>
+                                <option value="gray">灰色</option>
+                                <option value="green">绿色</option>
+                                <option value="yellow">黄色</option>
+                                <option value="orange">橙色</option>
+                                <option value="pink">粉色</option>
+                            </select>
+                        </p>
+                        <p>方点垂直对齐：
+                            <select id="dotVerAlign">
+                                <option value="middle">middle</option>
+                                <option value="bottom" selected="selected">bottom</option>
+                                <option value="text-bottom">text-bottom</option>
+                                <option value="top">top</option>
+                                <option value="text-top">text-top</option>
+                                <option value="baseline">baseline</option>
+                            </select>
+                        </p>
+                        <p>文字框背景色：
+                            <select id="textBoxBg">
+                                <option value="black">黑色&nbsp;</option>
+                                <option value="red">红色</option>
+                                <option value="gray">灰色</option>
+                                <option value="green">绿色</option>
+                                <option value="yellow">黄色</option>
+                                <option value="orange">橙色</option>
+                                <option value="pink">粉色</option>
+                            </select>
+                        </p>
+                        <p>文字大小修改：
+                            <input id="fontSize" type="text" value="20" size="4" /> px</p>
+                    </div>
+                    <div id="testBox" class="test_box">
+                        <span id="lineBox" class="line_box">
+                        <img id="testImage" class="img" src="http://image.zhangxinxu.com/image/study/s/s128/mm10.jpg" />
+                        <span id="testDot" class="test_dot"></span>
+                        <span id="testWord" style="font-size:20px;">我是卡哇伊文字！</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var $ = function(id) {
+        return document.getElementById(id);
+    };
+    var fn = {
+        fnBgChange: function(o, target) {
+            o.onchange = function() {
+                target.style.backgroundColor = o.value;
+            };
+        },
+        fnFontChange: function(o, target) {
+            o.onkeyup = function() {
+                var v = parseInt(o.value, 10);
+                target.style.fontSize = v + "px";
+            };
+        },
+        fnLineHChange: function(o, target) {
+            o.onkeyup = function() {
+                var v = parseInt(o.value, 10).toString();
+                target.style.lineHeight = v + "px";
+            };
+        },
+        fnVerChange: function(o, target) {
+            o.onchange = function() {
+                target.style.verticalAlign = o.value;
+            };
+        }
+    };
+    //绑定
+    fn.fnBgChange($("outBoxColor"), $("testBox"));
+    fn.fnBgChange($("textBoxBg"), $("lineBox"));
+    fn.fnBgChange($("dotBgColor"), $("testDot"));
+    fn.fnFontChange($("fontSize"), $("testWord"));
+    fn.fnVerChange($("imgVerAlign"), $("testImage"));
+    fn.fnVerChange($("dotVerAlign"), $("testDot"));
+    fn.fnLineHChange($("lineHeight"), $("testBox"));
+    </script>
+    <div id="footer">
+        Designed &amp; Powerd by <a href="http://www.zhangxinxu.com/">zhangxinxu</a>
+        <br /> Copyright© 张鑫旭-鑫空间-鑫生活
+        <br />
+        <a href="http://www.miibeian.gov.cn/" target="_blank">鄂ICP备09015569号</a>
+        <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-11205167-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+        </script>
+    </div>
+    <div id="ad">
+        <script type="text/javascript">
+        google_ad_client = "pub-0090627341039040";
+        google_ad_slot = "2041257798";
+        google_ad_width = 468;
+        google_ad_height = 60;
+        </script>
+        <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+    </div>
+</body>
+
+</html>

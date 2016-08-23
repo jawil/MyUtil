@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<script language="javascript">
+
+var arr=[25,45,26,96,254,4,6,84,27,66,88];
+
+function qsort(arr){
+	if(arr.length==1){
+	return arr;
+	}
+	var iMin=arr[0];
+	var index=0;
+	
+	for(var i=0;i<arr.length;i++){
+		if(arr[i]<iMin){
+	    iMin=arr[i];
+		index=i;                                                                                                                         
+		}
+		}
+	var arrUrl=arr.splice(index,1);	
+	return arrUrl.concat(qsort(arr));
+}
+	
+
+ alert(qsort(arr));
+	
+	
+	
+
+
+</script>
+</body>
+</html>

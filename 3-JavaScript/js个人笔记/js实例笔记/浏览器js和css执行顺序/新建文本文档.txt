@@ -1,0 +1,5 @@
+http://hikejun.com/blog/2012/02/02/js%E5%92%8Ccss%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%85%B3%E7%B3%BB/
+
+
+
+https://lifesinger.wordpress.com/2012/02/03/performance-impact-of-js-css-loading-order/

@@ -1,0 +1,290 @@
+/* 引入字体图标库 */
+@font-face {font-family: 'iconfont';
+    src: url('../../fonts/iconfont.eot'); /* IE9*/
+    src: url('../../fonts/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../fonts/iconfont.woff') format('woff'), /* chrome、firefox */
+    url('../../fonts/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('../../fonts/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+[class^="icon-"], [class*=" icon-"]{
+  font-family:"iconfont" !important;
+  font-size:0.14rem;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-yinlee17d83:before { content: "\e6a4"; }
+.icon-yonghuming:before { content: "\e617"; }
+.icon-mima:before { content: "\e610"; }
+.icon-querenmima:before { content: "\e66d"; }
+.icon-youxiang:before { content: "\e624"; }
+.icon-weixin:before { content: "\e636"; }
+.icon-qq:before { content: "\e616"; }
+.icon-weibo:before { content: "\e61e"; }
+.icon-canggezongbang:before { content: "\e62e"; }
+.icon-icontuijian:before { content: "\e603"; }
+.icon-diantai:before { content: "\e6f4"; }
+.icon-mianxingtubiao1yinlediantai:before { content: "\e6c9"; }
+.icon-gengduo:before { content: "\e667"; }
+.icon-bofang:before { content: "\e652"; }
+.icon-ttpodicon:before { content: "\e671"; }
+.icon-leida:before { content: "\e628"; }
+.icon-sousuo:before { content: "\e638"; }
+.icon-aixinxindiantu:before { content: "\e605"; }
+.icon-yutoubaoicon:before { content: "\e601"; }
+.icon-iconfontbiaozhunmoban01:before { content: "\e612"; }
+.icon-pengyouquan:before { content: "\e66f"; }
+.icon-tuijian:before { content: "\e64f"; }
+.icon-gedan:before { content: "\e61a"; }
+.icon-gengduo1:before { content: "\e635"; }
+.icon-huo:before { content: "\e60d"; }
+.icon-dingyueicon01:before { content: "\e600"; }
+/* 字体图标样式 */
+.icon-yinlee17d83{
+font-size:0.5rem;
+color:red;
+}
+
+.icon-weibo,
+.icon-weixin,
+.icon-qq{
+    font-size:0.25rem;
+}
+.icon-weibo{
+    color:#D70000;font-size:0.3rem;
+}
+.icon-weixin{
+    color:#1FCA64;
+}
+.icon-qq{
+    color:#4FC5F7;
+}
+
+.icon-yutoubaoicon,
+.icon-tuijian,
+.icon-canggezongbang{
+    color:red;
+    font-size:0.16rem;
+}
+.icon-mianxingtubiao1yinlediantai,.icon-ttpodicon,.icon-bofang,.icon-diantai,.icon-dingyueicon01{
+    color:#F4B1AD;
+}
+.icon-gengduo{
+color:#E86B70;
+font-size: 0.22rem;
+}
+.icon-sousuo,.icon-aixinxindiantu{
+    color:#fff;
+}
+.icon-gengduo1{
+  font-size:0.18rem;
+  color:red;
+}
+.icon-huo{
+color:red;
+}
+.icon-gedan{
+  color:red;
+  position:absolute;
+  right:3%;
+  top:50%;
+  transform:translateY(-50%);
+  -webkit- transform:translateY(-50%);
+}
+
+/* layout插件插件样式 */
+#layout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#layout * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.layout-body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.layout-alert {
+  display: inline-block;
+  padding: 0.2rem 0.17rem;
+  background: #fff;
+  width: 1.92rem;
+  min-height: 1.12rem;
+  position: relative;
+  margin-top: 40%;
+}
+
+.layout-msg {
+  text-align: center;
+}
+
+.layout-msg p {
+  font-size: 0.12rem;
+  padding-top: 0.12rem;
+}
+
+.layout-btn {
+  width: 100%;
+  margin-top: 0.08rem;
+}
+
+.layout-btn:before, .layout-btn:after {
+  content: "";
+  display: table;
+}
+
+.layout-btn:after {
+  clear: both;
+}
+
+.layout-btn {
+  *zoom: 1;
+  /* IE6-7 触发 hasLayout */
+}
+
+.layout-btn button {
+  outline: 0;
+  border: 0 none;
+  width: 0.6rem;
+  height: 0.3rem;
+  color: #fff;
+  font-size: 0.12rem;
+  background: #2B90D9;
+  float: left;
+}
+
+.layout-btn button:active {
+  background: #30A9FF;
+}
+
+.layout-btn button:first-child {
+  float: left;
+}
+
+.layout-btn button:last-child {
+  float: right;
+}
+
+.layout-icon {
+  display: inline-block;
+  width: 0.33rem;
+  height: 0.33rem;
+  border-radius: 50%;
+  background: #F7931E;
+  text-align: center;
+  line-height: 0.33rem;
+}
+
+.layout-icon .icon-exclamation {
+  color: #fff;
+  font-size: 0.33rem;
+}
+
+
+ html {
+        /*  font-size: 62.5%; 为了更好的计算，兼容更多不同分辨率的屏幕，使用js计算根节点字体大小*/
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        /* 禁止出现滚动条影响美观 */
+        -webkit-transform: translate3d(0, 0, 0);
+        /*  在部分android机型的微信环境中会出现事件无法触发、表单无法输入的情况，我们针对需要输入或者触发事件的元素设置样式：
+        -webkit-transform: translate3d(0,0,0) ，不过新版本的微信已经直接修复了该问题,仅仅为了兼容低版本微信。 */
+    }
+
+    body {
+        font-size: 0.14rem;
+        /* 14÷100=0.14*/
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        /* 禁止出现滚动条影响美观 */
+        position: absolute;
+        top: 0;
+        left: 0;
+        /* 解决微信下vue获取内容的bug */
+        font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+        /*使用无衬线字体*/
+        -webkit-text-size-adjust: 100%!important;
+        /*禁止IOS调整字体大小*/
+    }
+
+    html,
+    body {
+        -webkit-user-select: none;
+        /*禁止选中文本*/
+        user-select: none;
+    }
+    /* 去掉浏览器各种蛋疼的好丑的样式 */
+
+    a,
+    img {
+        -webkit-touch-callout: none;
+        /*禁止长按链接与图片弹出菜单*/
+        border: 0 none;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        vertical-align: top;
+        -ms-interpolation-mode: bicubic;
+    }
+
+    @media only screen and (min-width: 1024px) {
+        /* 表明是PC端就固定字体大小,默认16px ,浏览器默认大小就是16px*/
+        body {
+            font-size: 16px !important;
+            overflow: auto !important;
+        }
+    }
+
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+        -webkit-appearance: none;
+        /*去掉webkit默认的表单样式*/
+    }
+
+    a,
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        /*去掉a、input和button点击时的蓝色外边框和灰色半透明背景*/
+    }
+
+    input::-webkit-input-placeholder {
+        color: #ccc;
+        font-size:0.14rem;
+        /*修改webkit中input的planceholder样式*/
+        /*   placeholder的文字在ios下可以换行，android不行 */
+    }
+
+    input:focus::-webkit-input-placeholder {
+        color: green;
+        /*修改webkit中focus状态下input的planceholder样式*/
+    }
+
+    input::-webkit-input-speech-button {
+        display: none;
+        /*隐藏Android的语音输入按钮*/
+    }

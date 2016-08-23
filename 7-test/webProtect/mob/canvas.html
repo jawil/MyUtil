@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <style>
+    body {
+        background: black;
+    }
+
+    #canv {
+        background: white;
+    }
+
+    span {
+        color: white;
+    }
+    </style>
+</head>
+
+<body>
+    <canvas id="canv" width="400" height="400">
+        <span>您的浏览器不支持canvas</span>
+    </canvas>
+    <!--  (div.navwrap>ul.nav>li.item$$*4>a>img)^p
+
+   <div class="navwrap">
+       <ul class="nav">
+           <li class="item01"><a href=""><img src="" alt=""></a></li>
+           <li class="item02"><a href=""><img src="" alt=""></a></li>
+           <li class="item03"><a href=""><img src="" alt=""></a></li>
+           <li class="item04"><a href=""><img src="" alt=""></a></li>
+       </ul>
+   </div>
+   <p></p> -->
+    <script>
+    var oC = document.querySelector('#canv');
+    var oGc = oC.getContext('2d');
+
+    //绘制一个小方块
+    /*oGc.fillStyle='red';
+    oGc.strokeStyle='blue';
+    oGc.lineWidth=10;
+    oGc.lineJoin='bevel';
+    oGc.lineCap='round';
+    oGc.fillRect(50,50,100,100);
+    oGc.strokeRect(50.5,50.5,100,100);
+    */
+
+
+    //绘制一个三角形
+    /*    oGc.beginPath();
+        oGc.moveTo(100, 100);
+        oGc.lineTo(200, 200);
+        oGc.lineTo(300, 200);
+        oGc.closePath();
+        oGc.stroke();
+    */
+    //绘制一个实心三角形
+    /*  oGc.beginPath();
+
+      oGc.moveTo(100, 200);
+
+      oGc.lineTo(200, 300);
+
+      oGc.lineTo(300, 300);
+
+      oGc.closePath();
+
+      oGc.fill();*/
+
+    //清空画布
+    /*    oGc.beginPath();
+        oGc.rect(100, 100, 100, 100);
+        oGc.closePath();
+        oGc.fill();
+        oGc.clearRect(0, 0, oC.width, oC.height);*/
+
+
+    //save的用法,想当于函数的局部变量
+    /*    oGc.save();
+        oGc.fillStyle = 'red';
+        oGc.beginPath();
+        oGc.moveTo(100, 100);
+        oGc.lineTo(200, 200);
+        oGc.lineTo(300, 200);
+        oGc.closePath();
+        oGc.fill();
+        oGc.restore();
+        oGc.beginPath();
+        oGc.moveTo(100, 200);
+        oGc.lineTo(200, 300);
+        oGc.lineTo(300, 300);
+        oGc.closePath();
+        oGc.fill();*/
+
+
+
+    //绘制一条粗的直线
+    /* oGc.lineWidth=10;
+    oGc.lineCap='round';
+    oGc.moveTo(100,100);
+    oGc.lineTo(200,200);
+    oGc.stroke();
+*/
+
+
+    //鼠标开始绘制线条
+
+    /* oC.onmousedown = function(ev) {
+        var ev = ev || window.event;
+
+        oGc.moveTo(ev.clientX - oC.offsetLeft, ev.clientY - oC.offsetTop);
+
+        document.onmousemove = function(ev) {
+            var ev = ev || window.event;
+            oGc.lineTo(ev.clientX - oC.offsetLeft, ev.clientY - oC.offsetTop);
+            oGc.stroke();
+
+        };
+        document.onmouseup = function() {
+            document.onmousemove = null;
+            document.onmouseup = null;
+           // oGc.clearRect(0,0,oC.width,oC.height);
+        };
+    };
+*/
+
+    //让小方块不停的运动
+/*    var num = 0;
+    oGc.fillRect(0, 0, 100, 100);
+    var timer = setInterval(function() {
+        num++;
+        oGc.clearRect(0, 0, oC.width, oC.height);
+        oGc.fillRect(num, num, 100, 100);
+    }, 20);
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*开始做笔记:
+    边界绘制:
+    lineJoin:边界连接点样式
+    miter默认、round(圆角)、bevel(斜角)
+
+    lineCap:端点样式
+    butt(默认)、round(圆角)、square(高度多出宽度一半的值)
+
+    绘制路径:
+    beginPath:开始绘制路径
+    closePath:结束绘制路径
+    moveTo:移动到绘制的新目标点
+    lineTo:新的目标点
+
+
+    绘制路径_2
+    stroke:画线,默认黑色
+    fill:填充,默认黑色
+    rect:矩形区域
+    clearRect:删除一个画布的矩形区域
+    save:保存路径
+    restore:恢复路径*/
+    </script>
+</body>
+
+</html>

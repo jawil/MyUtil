@@ -1,0 +1,51 @@
+付呗：
+正式站：http://www.51fubei.com 首展科技 netfans321
+
+测试站: http://shouzhan1.51fubei.com biaoge sz88776191
+
+友店：
+正式站：http://life.51youdian.com shenghuo 88776191
+
+测试站：http://test1pos.saledian.com xianxia 666666
+
+生活圈
+http://youdian1.saledian.com/
+
+付呗：
+
+邵健负责更新，测试吴丽英，田甜。
+爱生活:
+
+刑永强负责更新。 测试吴丽英，田甜。
+生活圈:
+
+李明华负责更新。测试王青
+友店商户版微信公众帐号测试站：http://app-api-test.51youdian.com:8099/youdianWeixin/static/
+设计-蒋亚玲 10:28:10
+双击查看原图
+前端-陆利舟 10:28:15
+付呗：
+正式站：http://www.51fubei.com 首展科技 netfans321
+
+测试站: http://shouzhan1.51fubei.com biaoge sz88776191
+
+友店：
+正式站：http://life.51youdian.com shenghuo 88776191
+
+测试站：http://test1pos.saledian.com xianxia 666666
+
+生活圈
+http://youdian1.saledian.com/
+
+账号:admin 密码:88776191
+
+付呗：
+
+邵健负责更新，测试吴丽英，田甜。
+爱生活:
+
+邵建负责更新。 测试吴丽英，田甜。
+生活圈:
+
+李明华负责更新。测试王青
+友店商户版微信公众帐号测试站：http://app-api-test.51youdian.com:8099/youdianWeixin/static/

@@ -1,0 +1,356 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0;color:white;}
+em{font-style:normal;}
+#chatbox{width:225px;height:675px;border:1px solid red;border-radius:5px;background:#0B1A25;padding:5px;position:relative;margin:30px auto;}
+#chatbox>a{position:absolute;width:25px;height:25px;border:1px solid #1D4554;right:5px;top:5px;font:bold 25px/40px "宋体";text-align:center;border-radius:2px;
+box-shadow:0 0 0 5px #07131B;text-decoration:none;}
+#chatbox>a span{position:absolute;top:40px;left:20px;color:green;width:60px;height:30px;font:16px/30px "宋体";background:rgba(64,64,64,0.3);border-radius:5px;display:none;}
+#chatbox>a:hover{opacity:0.8;box-shadow:inset 0 0 20px 0 #224C5B;}
+#chatbox>a:hover span{display:block;}
+#chatbox p:nth-of-type(1){width:8px;height:8px;position:absolute;right:17px;top:39px;border-radius:50%;background:#00B958;box-shadow:0px 0px 20px 0 #008F64;cursor:pointer;}
+#chatbox p:nth-of-type(1) span{position:absolute;top:20px;left:5px;color:green;width:130px;height:30px;font:16px/30px "宋体";background:rgba(64,64,64,0.3);border-radius:5px;display:none;}
+#chatbox p:nth-of-type(1):hover span{display:block;}
+#chatbox #imgID{margin-bottom:5px;}
+#chatbox #imgID span{position:absolute;top:12px;left:60px;font-size:15px;}
+#chatbox #imgID input{position:absolute;width:130px;height:20px;top:32px;left:60px;font:10px/20px;color:#3C9F36;background:#0B1A25;border:none;}
+img{cursor:pointer}
+#search{background:url(101.png) no-repeat right #060F11;width:225px;height:25px;border:1px solid #14333F;outline:none;}
+#chatbox .listfriend{width:225px;height:25px;border:1px solid #14333F;margin-top:5px;font:14px/25px "宋体";background:#0F252B;color:#FFFFFF;cursor:pointer;position:relative;}
+#chatbox .listfriend img{position:absolute;right:10px;top:3px;}
+#chatbox .listfriend img:hover~span{display:block;z-index:1000;}
+#chatbox .listfriend span{position:absolute;top:40px;right:-60px;color:green;width:70px;height:30px;font:16px/30px "宋体";background:rgba(64,64,64,0.3);border-radius:5px;display:none;}
+.gamefriends{perspective:800px;width:225px;position:relative;}
+#wrap{transform-style:preserve-3d;width:100%;transition:1s;position:relative;}
+#wrap h2{cursor:pointer;width:225px;height:40px;font:18px/40px "宋体";text-align:center;color:#CCCCCC;background:#0E1E28;font-weight:bold;z-index:12;position:relative; transform: translateZ(1px);}
+#wrap h2 input{border-radius:50%;width:auto;font-size:12px;height:auto;position:absolute;left:5px;top:10px;text-decoration:none;color:white;background:#0D3033;width:15px;height:15px;outline:none;cursor:pointer;box-shadow:inset 0 0 20 0 green;border:none;font-weight:bold;}
+#wrap div{transform-style:preserve-3d;transform:rotateX(-120deg);width:100%;transform-origin:top;position:absolute;top:32px;left:0;backface-visibility:hidden;cursor:pointer;}
+#wrap span{height:30px;font:12px/30px "微软雅黑";text-indent:20px;display:block;background:#0E1E28;box-shadow:inset 0 0 0 20px rgba(0,0,0,1); transition:1s;color:#DC8E8E;z-index:1;color:#CCCCCC;}
+#wrap span:hover{background:#16323E;}
+
+#wrap>div{top:40px;}
+@keyframes open{
+	0%{
+		transform:rotateX(-120deg);
+	}
+	25%{
+		transform:rotateX(30deg);
+	}
+	50%{
+		transform:rotateX(-15deg);
+	}
+	75%{
+		transform:rotateX(8deg);
+	}
+	100%{
+		transform:rotateX(0deg);
+	}
+}
+@keyframes close{
+	0%{
+		transform:rotateX(0deg);
+	}
+	100%{
+		transform:rotateX(-120deg);
+	}
+}
+#wrap .show{animation:2s open;transform:rotateX(0deg);}
+#wrap .hide{animation:1s close;transform:rotateX(-120deg);}
+#wrap .show>span{box-shadow:inset 0 0 0 20px rgba(0,0,0,0);}
+</style>
+</head>
+
+<body>
+<div id="chatbox">
+<a href="javascript:;">-<span>最小化</span></a>
+<p id="circle"><span>点击改变你的状态</span></p>
+  <p id="imgID"><img src="100.png"/><span>微醺年华</span><input id="model" type="label" value="在线"></p>
+  <input id="search" type="text" value="筛选好友列表"/>
+  <p class='listfriend'>好友列表<img src="102.png"/><span>好友选项</span></p>
+  <!--<p class='myfriend'>我的好友</p>-->
+  <div class="gamefriends">
+
+  <div id="wrap">
+  
+    <h2> 我的好友 <input id="zhedie" type="button"   value="+"></h2>
+   
+    <div> <span >微醺年华</span>
+      <div> <span>石原里美</span>
+        <div> <span>佐佐木希</span>
+          <div> <span>桥本环奈</span>
+            <div> <span>新垣结衣</span>
+              <div> <span>未来穂香 </span>
+                <div> <span>酒井法子</span>
+                  <div> <span>山口百惠</span>
+                    <div> <span>仓木麻衣</span>
+                      <div> <span>宇多田光</span> 
+                       <div> <span>中岛美嘉</span> 
+                        <div> <span>长泽雅美</span>
+                         <div> <span>崛北真希</span> 
+                          <div> <span>田中千绘</span>
+                           <div> <span>工藤静香</span>
+                            <div> <span>青山黛玛</span> 
+                            </div>
+                             </div>
+                            
+                         </div>
+                         </div>
+                         </div>
+                       
+                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+</div>
+
+<script>
+var oMdel=document.getElementById('model');
+var flagmodel='';
+var bOff=true;
+var oCircle=document.getElementById('circle');
+var oSearch=document.getElementById('search');
+oSearch.onfocus=function(){
+	if(this.value=='筛选好友列表'){
+	this.value='';
+	}
+	else{
+	oSearch.select();
+	}
+	
+}
+oSearch.onblur=function(){
+	if(this.value==''){
+		this.value='筛选好友列表';
+	}
+}
+oMdel.onfocus=function(){
+	flagmodel=this.value;
+	this.style.cssText="background:white;border:none;color:black";
+	if(this.value=='在线'||this.value=='离线'){
+	this.value='';
+	}else{
+		oMdel.select();
+		}
+	}
+oMdel.onblur=function(){
+	this.style.cssText='';
+	if(this.value==''){
+	this.value='在线';
+	if(!bOff){
+		this.style.color='red';
+		this.value='离线';
+			}
+					  }
+					  else{
+						  if(!bOff){
+		this.style.color='red';
+	
+			}else{
+				this.style.cssText='';
+			}
+						  
+					  }
+	
+	
+						}
+oCircle.onclick=function(){
+	if(bOff){
+	this.style.cssText="background:red;border:1px solid white;box-shadow:0px 0px 20px 0 red;";
+	if(oMdel.value=='在线'){
+	oMdel.value='离线';
+	};
+	oMdel.style.color='red';
+	}else{
+		this.style.cssText='';
+		if(oMdel.value=='离线'){
+	oMdel.value='在线';
+		}
+	oMdel.style.color='#3C9F36';
+	}
+	bOff=!bOff;
+}
+
+/*var oH=document.getElementById('h');
+var oDiv=document.getElementById('wrap');
+var shake=oDiv.getElementsByTagName('div');
+var i=0;
+var timer=null;
+var timer2=null;
+var flag=0;
+oDiv.onmouseenter=function (){
+  clearInterval(timer);
+	i=0;
+	
+		timer=setInterval(function(){
+		shake[i].className="show";
+		i++;
+		if(i==shake.length){
+			clearInterval(timer);
+		}
+		
+		},200);
+		
+}
+oDiv.onmousemove=function(ev){
+	var ev=ev||window.event;
+	
+	var distance=ev.clientX-oLeft(oDiv);
+	if(2*distance<oDiv.offsetWidth){
+		oDiv.style.transform='rotateY(-20deg)';
+	}else{
+		oDiv.style.transform='rotateY(20deg)';
+	}
+	}
+oDiv.onmouseleave=function(){
+	i=shake.length-1;
+	clearInterval(timer);
+	timer=setInterval(function(){
+			shake[i].className="hide";
+			i--;
+			if(i<=2){
+				oDiv.style.transform='rotateY(0deg)';
+			}
+			if(i<0)
+			{
+				clearInterval(timer);
+			
+				
+			}	
+		},200);
+	}
+	
+	function oLeft(obj){
+		var left=0;
+		while(obj){
+		left+=obj.offsetLeft;
+		obj=obj.offsetParent;
+		}
+		return left;
+	}
+*/	
+var oBtn=document.getElementById('zhedie');
+var oWrap=document.getElementById("wrap");
+var aDiv=oWrap.getElementsByTagName("div");
+var iDelay=200;
+var oTimer=null;
+var i=0;
+var bOff2=true;
+oBtn.onclick=function()
+{
+	if(oTimer)
+	{
+		return;
+	}
+	if(bOff2)
+	{
+		i=0;
+		oTimer=setInterval(function(){
+			aDiv[i].className="show";
+			i++;
+			if(i==aDiv.length)
+			{
+				clearInterval(oTimer);
+				oTimer=null;
+				bOff2=false;
+			}	
+		},iDelay);
+		this.value="-";
+	}
+	else
+	{
+		i=aDiv.length-1;
+		this.value="+";
+		oTimer=setInterval(function(){
+			aDiv[i].className="hide";
+			i--;
+			if(i<0)
+			{
+				clearInterval(oTimer);
+				bOff2=true;
+				oTimer=null;
+				
+			}	
+		},iDelay);
+	}
+};
+var oshakeDiv=document.getElementById('wrap');
+var oSpanshake=oshakeDiv.getElementsByTagName('span');//中间右侧新闻栏目3D翻转
+	
+		
+		for(var i=0;i<oSpanshake.length;i++){
+			
+		oSpanshake[i].onmousemove=function(ev){
+	var ev=ev||window.event;
+	
+	var distance=ev.clientX-getLeft(this);
+	if(2*distance<this.offsetWidth){
+		this.style.transform='rotateY(-10deg)';
+	}else{
+		this.style.transform='rotateY(10deg)';
+	}
+	}
+	
+			oSpanshake[i].onmouseout=function(){
+			this.style.WebkitTransform="rotateY(0deg)";
+			this.style.MozTransform="rotateY(0deg)";
+			this.style.transform="rotateY(0deg)";
+			this.style.cssText='';
+			}
+			
+			
+			
+			oSpanshake[i].onmouseover=function(ev){
+			
+			this.style.color="#FEFF00";	
+			var iX=ev.clientX-getLeft(this);
+			this.style.transition="0.5s";
+			this.style.WebkitTransition="0.5s";
+			this.style.MozTransition="0.5s";
+			/*if(iX>this.offsetWidth/2)
+			{
+				this.style.WebkitTransform="rotateY(10deg)";
+				this.style.MozTransform="rotateY(10deg)";
+				this.style.transform="rotateY(10deg)";
+			}
+			else
+			{
+				this.style.WebkitTransform="rotateY(-10deg)";
+				this.style.MozTransform="rotateY(-10deg)";
+				this.style.transform="rotateY(-10deg)";
+			}*/
+			
+			
+			//alert(oDli.length);
+		}
+		}
+		
+		
+		
+		function getLeft(obj)
+	{
+		var iLeft=0;
+		while(obj)
+		{
+			iLeft+=obj.offsetLeft;
+			obj=obj.offsetParent;
+		}
+		return iLeft
+	}
+
+	
+</script>
+</body>
+</html>

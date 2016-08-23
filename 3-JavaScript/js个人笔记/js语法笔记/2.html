@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script language="javascript" type="text/javascript">
+var UntilEvent={
+    addEvent: function (opt,type,fn) {
+        if(opt.addEventListener){
+            opt.addEventListener(type,fn,false);
+
+        }
+        else if(opt.attachEvent){
+            opt.attachEvent('on'+type,fn);
+        }
+        else{
+            opt['on'+type]=fn;
+        }
+    }
+}
+UntilEvent.addEvent(document,'click',function(){
+    alert(1);
+});
+UntilEvent.addEvent(document,'click',function(){
+    alert(2);
+});
+</script>
+</body>
+</html>

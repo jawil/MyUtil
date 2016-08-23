@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <title>斗鱼云音乐</title>
+    <link rel="stylesheet" href="css/reset/cube.min.css">
+    <!-- 公共重置样式 -->
+    <link rel="stylesheet" href="css/bug/bug.css">
+    <script>
+    document.getElementsByTagName("html")[0].style.fontSize = window.innerWidth / 3.2 + "px";
+    (function(doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function() {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                docEl.style.fontSize = 100 * (clientWidth / 320) + 'px';
+            };
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+    </script>
+    <style>
+    html {
+        font-size: 31.25vw;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .juzhong {
+        display: -webkit-box;
+        display: box;
+        display: -webkit-flex;
+        display: flex;
+        /* flex左右居中 */
+        -webkit-justify-content: center;
+        justify-content: center;
+        /* 上下居中 */
+        -webkit-align-items: center;
+        align-items: center;
+        /* 竖着排列 */
+        flex-direction: column;
+        -webkit-flex-direction: column;
+        /* 所占比例 */
+        -webkit-flex: 1;
+        flex: 1;
+        /* 上下居中 */
+        -webkit-box-pack: center;
+        /* box左右居中 */
+        -webkit-box-align: center;
+        /* 竖着排列 */
+        -webkit-box-orient: vertical;
+        /* 所占比例 */
+        -webkit-box-flex: 1;
+    }
+#musicplayer{
+    background-image: -webkit-linear-gradient(top,#6A6853, #2C2610);
+    background-image: linear-gradient(top,#6A6853, #2C2610);
+    width:100%;
+    height: 100%;
+}
+    #musicplayer .head {
+        height: 0.5rem;
+        border: 1px solid red;
+        display: -webkit-box;
+        display: -moz-box;
+    }
+
+    #musicplayer .head div {
+        display: -webkit-box;
+        display: box;
+    }
+
+    #musicplayer .head .back-share {
+        -webkit-box-flex: 1;
+        -webkit-box-pack: center;
+        -webkit-box-align: center;
+    }
+
+    #musicplayer .head div:nth-of-type(2) {
+        -webkit-box-flex: 5;
+        -webkit-box-orient: vertical;
+    }
+
+    #musicplayer .head .song-title {
+        /*  border: 1px solid green; */
+    }
+
+    #musicplayer .head .song-title p {
+        width: 100%;
+        overflow: hidden;
+        font-size: 0.17rem;
+    }
+
+    #musicplayer .head .song-title span {
+        width: 200%;
+        display: inline-block;
+        -webkit-animation: 5s moving infinite linear;
+        animation: 5s moving infinite linear;
+        color:#fff;
+    }
+
+    #musicplayer .head .song-title span i {
+        display: inline-block;
+        width: 50%;
+    }
+
+    #musicplayer .head .singer {
+        color: #A6A795;
+        font-size: 0.12rem;
+    }
+
+    @-webkit-keyframes moving {
+        0% {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+        100% {
+            -webkit-transform: translate3d(-50%, 0, 0);
+            transform: translate3d(-50%, 0, 0);
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div id="musicplayer">
+        <header>
+            <div class="head">
+                <div class="back-share">返回</div>
+                <div>
+                    <div class="song-title">
+                        <p><span><i>那些花儿</i><i>那些花儿</i></span></p>
+                    </div>
+                    <div class="singer">朴树</div>
+                </div>
+                <div class="back-share">分享</div>
+            </div>
+        </header>
+    </div>
+</body>
+
+</html>

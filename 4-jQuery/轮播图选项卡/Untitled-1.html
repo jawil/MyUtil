@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script src="jquery-1.10.1.min.js"></script>
+<script>
+$(function(){
+	var carousel=function(){
+	var iDistance=$('#Main').find('li').eq(1).width();
+	var flag=0;
+	return function(){
+	$('#prev').click(function(){
+		flag--;
+		flag=flag<0?0:flag;
+		$('#Main').animate({left:-flag*iDistance},100);
+		$('#footer').find('li').attr('class','');
+		$('#footer').find('li').eq(flag).addClass('active');
+		});
+	$('#next').click(function(){
+		flag++;
+		flag=flag>=5?4:flag;
+		$('#Main').animate({left:-flag*iDistance},100);
+		$('#footer').find('li').attr('class','');
+		$('#footer').find('li').eq(flag).addClass('active');
+		});
+	$('#footer').find('li').mouseover(function(){
+		$('#footer').find('li').attr('class','');
+		$('#footer').find('li').eq($(this).index()).addClass('active');
+		flag=$(this).index();
+		$('#Main').animate({left:-flag*iDistance},100);
+		})
+	setInterval(function(){
+		flag++;
+		flag=flag>=5?0:flag;
+		$('#Main').animate({left:-flag*iDistance},100);
+		$('#footer').find('li').attr('class','');
+		$('#footer').find('li').eq(flag).addClass('active');
+		},3000);
+	}
+	}();
+	
+	carousel();
+	
+	
+	});
+																																																	
+</script>
+<style>
+*{padding:0;margin:0;}
+a{text-decoration:none;}
+li{list-style:none;}
+img{vertical-align:top;border:none;}
+input{outline:none;}
+em {font-style: normal;}
+body { font-family:"宋体"; }
+.clear:after{display:block;content:"";clear:both;}
+#wrap{position:relative;width:567px;height:247px;overflow:hidden;margin:100px auto;}
+#Main{width:2850px;position:absolute;top:0;left:0;}
+#Main li{list-style:none;width:567px;height:235px;float:left;}
+#wrap a{position:absolute;width:30px;height:30px;border:1px dotted #0ed1d9;color:#0ed1d9;font:20px/30px '宋体';text-align:center;font-weight:bold;border-radius:50%;}
+#wrap a:hover{opacity:0.7;filter:alpha(opacity=70);}
+#wrap a:nth-of-type(1){left:5px;top:calc(50% - 15px);}
+#wrap a:nth-of-type(2){right:5px;top:calc(50% - 15px);}
+#footer{width:120px;height:17px;position:absolute;right:10px;bottom:5px;text-align:center;}
+#footer li{width:15px;height:15px;background:white;float:left;border-radius:50%;margin-left:8px;cursor:pointer;}
+img{width:567px;height:247px;}
+#footer .active{background:blue;}
+</style>
+</head>
+
+<body>
+<div id="wrap">
+
+<ul id="Main" class="clear">
+<li><img src="17.png"/></li>
+<li><img src="18.png"/></li>
+<li><img src="19.png"/></li>
+<li><img src="20.png"/></li>
+<li><img src="21.png"/></li>
+</ul>
+<ul id="footer">
+<li class="active"></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+
+<a id="prev" href="javascript:;"><</a>
+<a id="next" href="javascript:;">></a>
+</div>
+</body>
+</html>

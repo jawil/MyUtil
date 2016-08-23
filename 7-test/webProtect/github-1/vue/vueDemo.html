@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta name="renderer" content="webkit">
+      <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/>
+      <meta charset="utf-8">
+      <title>
+        vue 学习 Demo(合并)
+      </title>
+      <link rel="stylesheet" type="text/css" href="../common.css" />
+      <style>
+        #demo li { cursor: pointer;color: #34495e;-ms-user-select: none;-moz-user-select: none;-webkit-user-select: none; }
+        li.done { color: #7f8c8d;text-decoration: line-through; }
+        .demo-panel { margin:10px 0; }
+        .directive-demo { margin:20px 0; }
+        .expand-transition { transition: all .3s ease; height: 30px; padding: 10px; background-color: #eee; overflow: hidden; }
+        .expand-enter, .expand-leave { height: 0; padding: 0 10px; opacity: 0; }
+        /*动画效果*/
+        .bounce-enter {
+          animation: bounce-in .5s;
+        }
+        .bounce-leave {
+          animation: bounce-out .5s;
+        }
+        @keyframes bounce-in {
+          0% {
+            transform: scale(0);
+          }
+          50% {
+            transform: scale(1.5);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+        @keyframes bounce-out {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.5);
+          }
+          100% {
+            transform: scale(0);
+          }
+        }
+      </style>
+    </head>
+    
+    <body>
+      <h3>VUE DEMO</h3>
+      <p>
+        本项目<a title="代码来源" target="_blank" href="http://cn.vuejs.org/guide/installation.html">代码来源</a>
+      </p>
+      <div class='btn-list'>
+        <button id="compute" data-id="compute-panel" class="radius-btn" v-on="click: show_panel_no = 1">计算属性</button>
+        <button id="directive" data-id="directive-panel" class="radius-btn" v-on="click: show_panel_no = 2">自定义指令</button>
+        <button id="filter" data-id="filter-panel" class="radius-btn" v-on="click: show_panel_no = 3">过滤器</button>
+        <button id="form" data-id="form-panel" class="radius-btn" v-on="click: show_panel_no = 4">表单</button>
+        <button id="on" data-id="on-panel" class="radius-btn" v-on="click: show_panel_no = 5">事件监听</button>
+        <button id="repeat" data-id="repeat-panel" class="radius-btn" v-on="click: show_panel_no = 6">列表渲染</button>
+        <button id="componnents" data-id="componnents-panel" class="radius-btn" v-on="click: show_panel_no = 7">组件系统</button>
+        <button id="transition" data-id="transition-panel" class="radius-btn" v-on="click: show_panel_no = 8">过渡效果</button>
+        <!-- <a href="#" target="_blank">创建大型应用（新页面）</a> -->
+      </div>
+
+      <!-- 例子显示面板列表 -->
+      <div id="demo">
+        <!-- 计算属性， 处理复杂表达式时使用，例如：金融Web端，年化收益率计算 -->
+        <div id="compute-panel" class="demo-panel" v-show="show_panel_no == 1">
+          <h3>{{fullName}}</h3>
+          <input type="text" v-model="fullName" />
+        </div>
+        
+        <!-- 自定义指令， 组件化开发神器 -->
+        <div id="directive-panel" class="demo-panel" v-show="show_panel_no == 2">
+          <button v-disable="disabled" v-on="click: myClick">
+            {{disabled ? 'Disabled' : 'Submit'}}
+          </button>
+          <!-- 绑定事件，点击时对disabled的值进行取反 -->
+          <button v-on="click: disabled = !disabled">toggle</button>
+          
+          <div id="demo" v-demo="LightSlateGray : msg" class="directive-demo"></div>
+          <input type="text" v-model="msg" /> 
+          <!-- 字面指令 -->
+          <p v-literal-dir="test_foo">字面指令： 留意浏览器控制台输出内容</p>
+
+          <p>双向指令： 指令函数能修改原绑定的值</p>
+
+        </div>
+        
+        <!-- 过滤面板 -->
+        <div id="filter-panel" class="demo-panel" v-show="show_panel_no == 3">
+          <p><strong>原字符串：</strong>{{test_str}}</p>
+          <p><strong>reverse过滤后：</strong><span v-text="test_str | reverse"></span></p>
+          <p><strong>uppercase过滤后（vue自带）：</strong><span v-text="test_str | uppercase"></span></p>
+          <p><strong>带参数的过滤器 wrap 'this' 213：</strong><span v-text="test_str | wrap 'this' 213"></span></p>
+          <br/>
+
+          <p><strong>组合过滤器(reverse 与 uppercase共同作用)：</strong><span v-text="test_str | reverse | uppercase"></span></p>
+          
+          <br/>
+          <br/>
+          <h4>双向过滤器， 惰性更新lazy！</h4>
+          <!-- 双向过滤示例  -->
+          <input type="text" v-model="test_str2 | currencyDisplay" lazy />
+          <div>{{test_str2}}</div>
+        </div>
+        
+        <!-- 表单demo 面板 -->
+        <div id="form-panel" class="demo-panel" v-show="show_panel_no == 4">
+          <form id="form-demo">
+            <!-- text -->
+            <p>
+              <input type="text" v-model="msg">
+              <!-- <input type="text" v-model="msg" number> -->
+              <!-- 惰性更新 -->
+              <!-- <input type="text" v-model="msg" lazy> -->
+              {{msg}}
+            </p>
+            <!-- checkbox -->
+            <p>
+              <input type="checkbox" v-model="checked">
+              {{checked ? "yes" : "no"}}
+            </p>
+            <!-- radio buttons -->
+            <p>
+              <input type="radio" name="picked" value="男" v-model="picked"><label>男</label>
+              <input type="radio" name="picked" value="女" v-model="picked"><label>女</label>
+              {{picked}}
+            </p>
+            <!-- select -->
+            <p>
+              <select v-model="selected">
+                <option>one</option>
+                <option>two</option>
+              </select>
+              {{selected}}
+            </p>
+            <p>
+              <select v-model="selected" options="myOptions"></select>
+              {{myOptions | json 2}}
+            </p>
+            <!-- multiple select -->
+            <p>
+              <select v-model="multiSelect" multiple>
+                <option>one</option>
+                <option>two</option>
+                <option>three</option>
+              </select>
+              {{multiSelect}}
+            </p>
+            <p><pre>data: {{$data | json 2}}</pre></p>
+          </form>
+        </div>
+        
+        <!-- 事件监听demo 面板 -->
+        <div id="on-panel" class="demo-panel" v-show="show_panel_no == 5">
+          <h2>{{test_num}}</h2>
+          <button v-on="click: onClick">click: onClick</button>
+
+          <h2>{{ test_num2 }}<h2>
+          <button v-on="click: test_num2++">click: test_num2++</button>
+
+          <p><strong>键盘处理监听：</strong></p>
+          <h2>{{ test_num3 }}<h2>
+          <input v-on="keyup: keyFun" v-model="test_on_str">
+        </div>
+        
+        <!-- 列表渲染demo　面板 -->
+        <div id="repeat-panel" class="demo-panel" v-show="show_panel_no == 6">
+          <h1>{{title | uppercase}}</h1>
+          <ul>
+            <li
+              v-repeat="todos"
+              v-on="click: done = !done"
+              class="{{done ? 'done' : ''}}">
+              {{content}}
+            </li>
+          </ul>
+        </div>
+
+        <!-- 组件系统 面板 -->
+        <div id="componnents-panel" class="demo-panel" v-show="show_panel_no == 7">
+          <my-component msg="wteam-xq is 213!"></my-component>
+          
+          <h3>动态传参 组件：</h3>
+          <div>
+            <input v-model="parentMsg">
+            <br>
+            <my-component msg="{{parentMsg}}"></my-component>
+          </div>
+          <h3>等待事件</h3>
+          <wait-component wait-for="data-loaded" syndata="{{parentMsg}}"></wait-component>
+        </div>
+
+        <!-- 过渡效果 -->
+        <div id="transition-panel" class="demo-panel" v-show="show_panel_no == 8">
+          <h1>过渡效果</h1>
+          <div v-if="show" v-transition="expand">hello</div>
+          <br/>
+          <button v-on="click: show = !show">toggle</button>
+
+          <h1>动画效果</h1>
+          <p><span v-show="show2" v-transition="bounce">Look at me!</span></p>
+          <br/>
+          <button v-on="click: show2 = !show2">toggle</button>
+        </div>
+
+      </div>
+
+      <script src="vue.js"></script>
+      <script src="../utils/base.js"></script>
+      <script type="text/javascript">
+        // 全局变量
+        var xq = {};
+
+        // 初始化 函数
+        init();
+
+        function init() {
+          var btn_list = document.getElementsByClassName('radius-btn'),
+              i , len, btn_item, vm, MyComponent;
+
+          // for (i = 0, len = btn_list.length; i < len; i++) {
+          //   btn_item = btn_list[i];
+          //   btn_item.onclick = btnEvent;
+          // }
+
+          // 默认显示计算属性demo
+          // showDemo('compute-panel');
+
+          // vue自定义函数只有3种：bind, update, unbind; 默认的回调函数为 update
+          Vue.directive('disable', function (value) {
+            this.el.disabled = !!value
+          });
+          Vue.directive('my-directive', {
+            bind: function () {
+              // 做绑定的准备工作
+              // 比如添加事件监听器，或是其他只需要执行一次的复杂操作
+            },
+            update: function (newValue, oldValue) {
+              // 根据获得的新值执行对应的更新
+              // 对于初始值也会被调用一次
+            },
+            unbind: function () {
+              // 做清理工作
+              // 比如移除在 bind() 中添加的事件监听器
+            }
+          })
+          Vue.directive('demo', {
+            bind: function () {
+              this.el.style.color = '#fff'
+              this.el.style.backgroundColor = this.arg
+            },
+            update: function (value) {
+              this.el.innerHTML =
+                'name - '       + this.name + '<br>' +
+                'raw - '        + this.raw + '<br>' +
+                'expression - ' + this.expression + '<br>' +
+                'argument - '   + this.arg + '<br>' +
+                'value - '      + value
+            }
+          });
+          // 字面指令
+          Vue.directive('literal-dir', {
+            isLiteral: true,
+            bind: function () {
+              console.log(this.expression) // 'foo'
+            }
+          });
+
+          // 过滤器得写在 new 之前
+          Vue.filter('reverse', function (value) {
+            return value.split('').reverse().join('')
+          });
+          Vue.filter('wrap', function (value, begin, end) {
+            return begin + ' ' + value + ' ' + end
+          });
+
+          // 扩展 Vue 得到一个可复用的构造函数, new 构造函数前使用
+          MyComponent = '<p><strong>a simple Test!</strong><span>A custom component!</span></p><p>so easy!{{msg}}</p>';
+
+          // 把构造函数注册到 my-component 这个 id
+          Vue.component('my-component',  {
+            // 声明props 传递的数据
+            props: ['msg'],
+            template: MyComponent
+          });
+          // 组件开发之继承父级作用域
+          inheritParent();
+          // 组件等待事件
+          Vue.component('wait-component', {
+            props: ['syndata'],
+            compiled: function () {
+              var self = this;
+              setTimeout(function() {
+                // 相当于异步请求...
+                self.syndata = '异步请求完成！'
+                  self.$emit('data-loaded')
+              }, 1000);
+            },
+            template: '<h4>新的值将会是：{{syndata}}</h4>'
+          });
+
+          Vue.transition('expand', {
+            beforeEnter: function (el) {
+              el.textContent = 'beforeEnter'
+            },
+            enter: function (el) {
+              el.textContent = 'enter'
+            },
+            afterEnter: function (el) {
+              el.textContent = 'afterEnter'
+            },
+            enterCancelled: function (el) {
+              // handle cancellation
+            },
+
+            beforeLeave: function (el) {
+              el.textContent = 'beforeLeave'
+            },
+            leave: function (el) {
+              el.textContent = 'leave'
+            },
+            afterLeave: function (el) {
+              el.textContent = 'afterLeave'
+            },
+            leaveCancelled: function (el) {
+              // handle cancellation
+            }
+          });
+
+          vm = new Vue({
+            el: 'body',
+            data: {
+              // 显示面板名
+              show_panel_no: 1,
+              // 计算属性
+              firstName: 'Foo',
+              lastName: 'Bar',
+              // 自定义指令变量
+              disabled: false,
+              // 过滤器变量
+              test_str: 'wteam-xq',
+              test_str2: 12.56,
+              // 表单变量
+              msg      : 'hi!',
+              checked  : true,
+              picked   : 'one',
+              selected : 'two',
+              myOptions : [
+                { text: 'A', value: 'one' },
+                { text: 'B', value: 'two' }
+              ],
+              multiSelect: ['one', 'three'],
+              // 事件监听变量
+              test_on_str: '',
+              test_num: 3,
+              test_num2: 4,
+              test_num3: 0,
+              // 列表渲染变量
+              title: 'todos',
+              todos: [
+                {
+                  done: true,
+                  content: 'Learn JavaScript'
+                },
+                {
+                  done: false,
+                  content: 'Learn Vue.js'
+                }
+              ],
+              // 组件系统
+              parentMsg: '只是一小测试',
+              syn_data: 'xxx',
+              // 过渡效果
+              show: true,
+              show2: true
+            },
+            computed: {
+              fullName: {
+                // getter
+                get: function () {
+                  return this.firstName + ' ' + this.lastName
+                },
+                // setter
+                set: function (newValue) {
+                  var names = newValue.split(' ')
+                  this.firstName = names[0]
+                  this.lastName = names[names.length - 1]
+                }
+              }
+            },
+            methods: {
+              // 自定义指令方法
+              myClick: function(e){
+                alert('单击事件');
+              },
+              // 监听方法
+              onClick: function(e){
+                // e是原生的DOM事件对象
+                // this 指向该ViewModel实例
+                this.test_num++
+              },
+              keyFun: function(){
+                this.test_num3 = this.test_on_str.length;
+              }
+            },
+            filters:{
+              'currencyDisplay': {
+                // model -> view
+                // formats the value when updating the input element.
+                read: function(val) {
+                  return '$'+val.toFixed(2)
+                },
+                // view -> model
+                // formats the value when updating the data.
+                write: function(val, oldVal) {
+                  var number = +val.replace(/[^\d.]/g, '')
+                  return isNaN(number) ? 0 : number
+                }
+              } 
+            }
+          });
+          // 方便调试
+          xq.vm = vm;
+        }
+        //继承父级作用域
+        function inheritParent() {
+          var parent = new Vue({
+            data: {
+              a: 1
+            }
+          });
+          // $addChild() 是一个实例方法，
+          // 它允许你用代码创建子实例。
+          var child = parent.$addChild({
+            inherit: true,
+            data: {
+              b: 2
+            }
+          });
+          console.log(child.a) // -> 1
+          console.log(child.b) // -> 2
+          parent.a = 3
+          console.log(child.a) // -> 3
+        }
+
+        // 按钮点击事件
+        function btnEvent(e) {
+          var target_id = this.getAttribute('data-id');
+          showDemo(target_id);
+        }
+
+        // 显示计算属性demo
+        function showDemo(panel_id) {
+          var demo_panel = null;
+          demo_panel = document.getElementById(panel_id);
+          if (demo_panel) {
+            hideAllDemo('demo-panel');
+            demo_panel.style.display = 'block';
+          }
+        }
+
+        // 隐藏所有demo panel
+        function hideAllDemo(class_name) {
+          var demo_panel = document.getElementsByClassName(class_name),
+              i, len, paenl_item;
+          for (i = 0, len = demo_panel.length; i < len; i++) {
+            paenl_item = demo_panel[i];
+            paenl_item.style.display = 'none';
+          }
+        }
+
+      </script>
+
+    </body>
+</html>

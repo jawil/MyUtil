@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+#div1{width:100px;height:100px;background:red;position:absolute;left:100px;top:100px;}
+</style>
+</head>
+
+<body>
+<div id="div1">
+
+</div>
+<script language="javascript">
+	/*var oDiv=document.getElementById('div1');
+	var  disX=0;
+	var disY=0;
+	var leftMax=0;
+	var topMax=0;
+	oDiv.onmousedown=function (ev){
+		
+		var ev=ev||window.event;
+		disX=ev.clientX-this.offsetLeft;
+		disY=ev.clientY-this.offsetTop;
+		leftMax=document.documentElement.clientWidth-oDiv.offsetWidth;
+		topMax=document.documentElement.clientHeight-oDiv.offsetHeight;
+		
+			document.onmousemove=function (ev){
+			var ev=ev||window.event;
+			var L=ev.clientX-disX;
+			var T=ev.clientY-disY;
+			
+			if(L<0)
+			L=0;
+			else if(L>leftMax)
+			L=leftMax;
+			if(T<0)
+			T=0;
+			else if(T>topMax)
+			T=topMax;
+			
+			
+			oDiv.style.left=L+'px';
+			oDiv.style.top=T+'px';	
+		}
+		
+		document.onmouseup=function (){
+			document.onmousemove=document.onmouseup=null;
+		}
+		
+	}*/
+	
+//先变形
+
+	/*var oDiv=null;
+	var  disX=0;
+	var disY=0;
+	var leftMax=0;
+	var topMax=0;	
+	
+	window.onload=function (){
+		
+		oDiv=document.getElementById('div1');
+		init();
+		
+	}
+	
+	function init(){
+		
+		oDiv.onmousedown=fnDown;
+	}
+	
+	function fnDown(ev){
+		
+		var ev=ev||window.event;
+		disX=ev.clientX-this.offsetLeft;
+		disY=ev.clientY-this.offsetTop;
+		leftMax=document.documentElement.clientWidth-oDiv.offsetWidth;
+		topMax=document.documentElement.clientHeight-oDiv.offsetHeight;
+		document.onmousemove = fnMove;
+	    document.onmouseup = fnUp;
+	
+	return false;
+		
+	}
+	
+	
+	function fnMove(ev){
+		
+		var ev=ev||window.event;
+			var L=ev.clientX-disX;
+			var T=ev.clientY-disY;
+			
+			if(L<0)
+			L=0;
+			else if(L>leftMax)
+			L=leftMax;
+			if(T<0)
+			T=0;
+			else if(T>topMax)
+			T=topMax;
+			
+			
+			oDiv.style.left=L+'px';
+			oDiv.style.top=T+'px';
+		
+		
+	}
+	
+	function fnUp(){
+	document.onmousemove = null;
+	document.onmouseup = null;
+}*/
+
+//面向对象
+
+window.onload=function(){
+	var dl=new Drag();
+	dl.init();
+	
+}
+
+function Drag(){
+	
+	this.oDiv=document.getElementById('div1');
+	this.disX=0;
+	this.disY=0;
+	this.leftMax=0;
+	this.topMax=0;
+	
+}
+
+Drag.prototype.init=function(){
+	var This=this;
+	this.oDiv.onmousedown=function(ev){
+		
+		var ev=ev||event;
+		This.fnDown(ev);
+		return false;
+	}
+	
+	
+}
+	
+Drag.prototype.fnDown=function(ev){
+		var This=this;
+		this.disX=ev.clientX-this.oDiv.offsetLeft;
+		this.disY=ev.clientY-this.oDiv.offsetTop;
+		this.leftMax=document.documentElement.clientWidth-this.oDiv.offsetWidth;
+		this.topMax=document.documentElement.clientHeight-this.oDiv.offsetHeight;
+		
+		document.onmousemove=function(ev){
+			var ev=ev||event;
+			This.fnMove(ev);
+		}
+		document.onmouseup=this.fnUp;
+	}
+	
+Drag.prototype.fnMove=function (ev){
+	
+	        var L=ev.clientX-this.disX;
+			var T=ev.clientY-this.disY;
+			
+			if(L<0)
+			L=0;
+			else if(L>this.leftMax)
+			L=this.leftMax;
+			if(T<0)
+			T=0;
+			else if(T>this.topMax)
+			T=this.topMax;
+			
+			
+			this.oDiv.style.left=L+'px';
+			this.oDiv.style.top=T+'px';
+	
+	
+	
+}
+
+Drag.prototype.fnUp = function(){
+	document.onmousemove = null;
+	document.onmouseup = null;
+}
+</script>
+</body>
+</html>

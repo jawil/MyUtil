@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta name="renderer" content="webkit">
+      <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/>
+      <meta charset="utf-8">
+      <title>
+        测试工具类页面
+      </title>
+      <link rel="icon" href="favicon.ico" type="image/x-icon" />
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+      <style>
+        .dragg_div{ width:200px; height:200px; background-color:#222; }
+      </style>
+    </head>
+    
+    <body>
+      <h3>测试工具类页面</h3>
+      <!-- 本部分代码来自： webStorage.html -->
+      <p>
+        1.localStorage 不清除缓存一直存在；
+        <input type="button" value="点击存入缓存" id="lSetBtn"/>
+        <input type="button" value="点击删除缓存" id="lRemoveBtn" />
+        <input type="button" value="点击查看缓存" id="lShowBtn" />
+      </p>
+      <p>
+        <span id="lBtnTips"></span>
+      </p>
+      <br/>
+      <div class="dragg_div" id="dragg_div"></div>
+      <!--[if lt IE 8]>
+        <script type="text/javascript" src="lib/json2.js"></script>
+      <![endif]-->
+      <script type="text/javascript" src="utils/base.js"></script>
+      <script type="text/javascript" src="lib/jquery-1.10.2.min.js"></script>
+      <script type="text/javascript" src="utils/client.js"></script>
+      <script type="text/javascript" src="utils/draggable.js"></script>
+      <script type="text/javascript" src="utils/localStorageUtil.js"></script>
+      <script>
+        var TestUtils = {
+          init: function(){
+            var This = this;
+            // this.insertScript();
+            // initlocalStorageDemo();
+            // 测试移动库
+            new Draggable({"wrapper": $("#dragg_div")});
+          },
+          insertScript: function(){
+            var COOKIE_URL = 'utils/cookieUtil.js';
+            // 动态插入 cookie库脚本，并存储cookie
+            insertScript(COOKIE_URL, function(js){
+              CookieUtil.set('utilsTestCookie', 'xq, xq, sb');
+            });
+          }
+        }; 
+        TestUtils.init();
+        function initlocalStorageDemo(){
+          var localStorage, lSetBtn, lRemoveBtn, lShowBtn, lBtnTips;
+
+          lSetBtn = document.getElementById('lSetBtn');
+          lRemoveBtn = document.getElementById('lRemoveBtn');
+          lShowBtn = document.getElementById('lShowBtn');
+          lBtnTips = document.getElementById('lBtnTips');
+
+          localStorage = window.localStorage;
+          lSetBtn.onclick = localSetItem;
+          lRemoveBtn.onclick = localRemoveItem;
+          lShowBtn.onclick = showLocalStorage;
+          
+          // 插入缓存
+          function localSetItem(event){
+            if (window.localStorage) {
+              localStorage.setItem('utilsTest', 'localStorageUtil');
+              lBtnTips.innerHTML = '保存成功！';
+            }else {
+              lBtnTips.innerHTML = '保存失败！';
+            }
+          }
+          // 显示storage, 转成字符串显示，JSON对象赋值之，ie8（不包括IE8）以下浏览器需引入json3
+          function showLocalStorage(){
+            if (window.localStorage) {
+              // IE7 IE6 特殊处理
+              if (client.browser.ie && parseInt(client.browser.ver,10) == 6 ) {
+                lBtnTips.innerHTML = 'utilsTest: ' + localStorage.getItem("utilsTest");
+              } else {
+                lBtnTips.innerHTML = 'localStorage: utilsTest:' + JSON.stringify(localStorage);
+              }
+            } else {
+              lBtnTips.innerHTML = '浏览器不支持localStorage';
+            }
+          }
+          // 清除缓存
+          function localRemoveItem(event){
+            if (window.localStorage) {
+              localStorage.removeItem('utilsTest');
+              lBtnTips.innerHTML = '删除成功！';
+            }else {
+              lBtnTips.innerHTML = '删除失败！';
+            }
+          }
+        }
+      </script>
+    </body>
+</html>

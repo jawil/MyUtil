@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8">
+        <title>
+            原生js实现拖放
+        </title>
+        <!-- <link type="text/css" rel="stylesheet" href="xxx.css"> -->
+        <style type="text/css">
+            .draggable{ position: absolute; background:red; width: 200px; height: 200px; }
+            .status{ margin-top: 200px; }
+        </style>
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    </head>
+    
+    <body>
+        <h3>原生js实现拖放, 实现原理: 点击某个对象，并按住鼠标按钮不放，将鼠标移动到另一区域，然后释放鼠标将对象“放”在这里</h3>
+        <!-- 红色小方块 -->
+        <div class="draggable" id="dragDom"></div>
+        
+        <!-- 拖动提示内容 -->
+        <div id="status" class="status"></div>
+
+        <script type="text/javascript" src="utils/base.js"></script>
+        <script>
+          // 原生js实现拖放
+          var DragDrop = function(dragId){
+            var dragdrop = new EventTarget(),
+                dragging = null,
+                diffX = 0,
+                diffY = 0;
+            // 获得待移动的dom节点
+            var DragDom = document.getElementById(dragId);
+            if (DragDom == null){
+                return null;
+            }
+
+            function handleEvent(event){
+                // 获取事件和对象
+                event = EventUtil.getEvent(event);
+                var target = EventUtil.getTarget(event);
+                // 确定事件类型
+                switch(event.type){
+                    case "mousedown":
+                        if (target.id === dragId){
+                            dragging = target;
+                            diffX = event.clientX - target.offsetLeft;
+                            diffY = event.clientY - target.offsetTop;
+                            dragdrop.fire({type:"dragstart", target:dragging, x: event.clientX, y: event.clientY});
+                        }
+                        break;
+                    case "mousemove":
+                        if (dragging !== null){
+                            // 指定位置
+                            dragging.style.left = (event.clientX - diffX) + "px";
+                            dragging.style.top = (event.clientY - diffY) + "px";
+                            // 触发自定义事件
+                            dragdrop.fire({type:"drag", target:dragging, x: event.clientX, y: event.clientY});
+                        }
+                        break;
+                    case "mouseup":
+                        if (dragging !== null){
+                            dragdrop.fire({type:"dragend", target: dragging, x: event.clientX, y: event.clientY});
+                            dragging = null;
+                        }
+                        break;
+                }
+            };
+            // 公共接口
+            dragdrop.enable = function(){
+                EventUtil.addHandler(DragDom, "mousedown", handleEvent);
+                EventUtil.addHandler(DragDom, "mousemove", handleEvent);
+                EventUtil.addHandler(DragDom, "mouseup", handleEvent);
+            };
+            dragdrop.disable = function(){
+                EventUtil.removeHandler(DragDom, "mousedown", handleEvent);
+                EventUtil.removeHandler(DragDom, "mousemove", handleEvent);
+                EventUtil.removeHandler(DragDom, "mouseup", handleEvent);
+            };
+
+            return dragdrop;
+          };
+
+          // 使用拖动类
+          function useDrag(dragId, dragTipId){
+            // 使用拖动类
+            var dragdrop_instance = DragDrop(dragId);
+            if (dragdrop_instance){
+
+                dragdrop_instance.enable();
+                dragdrop_instance.addHandler("dragstart", function(event){
+                    var status = document.getElementById(dragTipId);
+                    status.innerHTML = event.target.id + " start drag";
+                });
+                dragdrop_instance.addHandler("drag", function(event){
+                    var status = document.getElementById(dragTipId);
+                    status.innerHTML += "<br/>" + event.target.id + " Dragging" + " to(" + event.x + "," + event.y + ")";
+                });
+                dragdrop_instance.addHandler("dragend", function(event){
+                    var status = document.getElementById(dragTipId);
+                    status.innerHTML += "<br/>" + event.target.id + " end drag" + " at (" + event.x + "," + event.y + ")";
+                });
+            }
+          }
+          // 赋予拖动事件 参数1：移动Dom id 参数2：拖动提示内容
+          useDrag("dragDom", "status");
+        </script>
+    </body>
+</html>

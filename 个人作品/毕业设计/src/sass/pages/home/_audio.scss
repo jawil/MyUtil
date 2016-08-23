@@ -1,0 +1,58 @@
+    @charset "utf-8";
+    @import 'helpers/mixins/_flex.scss';
+    #musicplayer {
+        background-image: -webkit-linear-gradient(top, #6A6853, #2C2610);
+        background-image: linear-gradient(top, #6A6853, #2C2610);
+        width: 100%;
+        height: 100%;
+        .head {
+            height: 0.5rem;
+            @include border;
+            @include box;
+            div {
+                display: -webkit-box;
+            }
+            .back-share {
+                @include box(1);
+                @include box(center);
+            }
+            div:nth-of-type(2) {
+                @include box(5);
+                @include box($bool: true);
+            }
+            .song-title {
+               @include  border;
+            }
+            .song-title p {
+                width: 100%;
+                overflow: hidden;
+                font-size: 0.17rem;
+            }
+            .song-title span {
+                width: 200%;
+                display: inline-block;
+                -webkit-animation: 5s moving infinite linear;
+                animation: 5s moving infinite linear;
+                color: #fff;
+            }
+            .song-title span i {
+                display: inline-block;
+                width: 50%;
+            }
+            .singer {
+                color: #A6A795;
+                font-size: 0.12rem;
+            }
+        }
+
+       @-webkit-keyframes moving {
+            0% {
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                -webkit-transform: translate3d(-50%, 0, 0);
+                transform: translate3d(-50%, 0, 0);
+            }
+        }
+    }

@@ -1,0 +1,183 @@
+@charset "utf-8";
+//弹性flex布局
+@mixin flex($position:default, $bool:false) {
+    @if type-of($position)==string {
+        //如果是字符串，则进行flex布局
+        display: box;
+        display: -webkit-box;
+        display: flex;
+        display: -webkit-flex;
+        @if($bool) {
+            //竖着排列，默认是横向排列
+            flex-direction: column;
+            -webkit-flex-direction: column;
+            -webkit-box-orient: vertical;
+        }
+        @if $position==lr {
+            //左右居中
+            -webkit-box-align: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+        }
+        @else if $position==tb {
+            //上下居中
+            -webkit-box-pack: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+        @else if $position==center {
+            //左右上下居中
+            -webkit-box-pack: center;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+        }
+    }
+    @else if type-of($position)==number {
+        //如果是数字，则设置flex
+        -webkit-box-flex: $position;
+        flex: $position;
+        -webkit-flex: $position;
+    }
+    @debug type-of($position);
+}
+
+//弹性box布局
+@mixin box($position:default, $bool:false) {
+    @if type-of($position)==string {
+        //如果是字符串，则进行flex布局
+        display: -webkit-box;
+        @if($bool) {
+            //竖着排列，默认是横向排列
+            -webkit-box-orient: vertical;
+        }
+        @if $position==lr {
+            //左右居中
+            -webkit-box-align: center;
+        }
+        @else if $position==tb {
+            //上下居中
+            -webkit-box-pack: center;
+        }
+        @else if $position==center {
+            //左右上下居中
+            -webkit-box-pack: center;
+            -webkit-box-align: center;
+        }
+    }
+    @else if type-of($position)==number {
+        //如果是数字，则设置flex
+        -webkit-box-flex: $position;
+    }
+}
+
+//链接的混入
+@mixin links ($link, $visited, $hover, $active) {
+    & {
+        color: $link;
+        &:visited {
+            color: $visited;
+        }
+        &:hover {
+            color: $hover;
+        }
+        &:active, &:focus {
+            color: $active;
+        }
+    }
+}
+
+
+
+//显示省略号
+@mixin nowrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+//清除浮动
+@mixin clearfix {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+    & {
+        *zoom: 1;
+        /* IE6-7 触发 hasLayout */
+    }
+}
+
+//绝对居中
+@mixin center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+//随机边框颜色进行调试
+@mixin border($border-width:1) {
+    $color: green blue purple red orange #81BC03 #D35D26 #0B8383 #AE9E69 #E09A91;
+    $len: length($color);
+    $random: floor(random()*$len)+1;
+    $border-color: nth($color, $random);
+    $border-width: $border-width+px;
+    border: $border-width solid $border-color;
+}
+
+//移动端高清、多屏适配方案
+@mixin px2rem($name, $px) {
+    #{$name}: $px / 75 * 1rem;
+}
+
+//移动端适配字体，字体最好不要用rem
+@mixin px2px($name, $px) {
+    #{$name}: round($px / 2) * 1px;
+    [data-dpr="2"] & {
+        #{$name}: $px * 1px;
+    }
+    // for mx3
+    [data-dpr="2.5"] & {
+        #{$name}: round($px * 2.5 / 2) * 1px;
+    }
+    // for 小米note
+    [data-dpr="2.75"] & {
+        #{$name}: round($px * 2.75 / 2) * 1px;
+    }
+    [data-dpr="3"] & {
+        #{$name}: round($px / 2 * 3) * 1px
+    }
+    // for 三星note4
+    [data-dpr="4"] & {
+        #{$name}: $px * 2px;
+    }
+}
+
+//渐变函数的书写
+$pop-stripe-colors:red orange yellow green indigo blue purple black;
+@function stripes($position, $colors) {
+    $colors: if(type-of($colors)!='list', compact($colors), $colors);
+    $gradient: compact();
+    $len: length($colors);
+    $width: percentage(1/$len);
+    @for $i from 1 through $len {
+        $current-color: nth($colors, $i);
+        $temp: $current-color ($width*($i - 1)), $current-color ($width*$i);
+        $gradient: join($gradient, $temp, comma);
+    }
+    @return linear-gradient($position, $gradient);
+}
+
+@mixin background-image($default:'') {
+    $default: stripes(left, $pop-stripe-colors);
+    background-image:#{$default};
+    background-image:-webkit-#{$default};
+}

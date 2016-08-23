@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script src="jquery-1.10.1.min.js"></script>
+<script>
+$(function(){
+var arrColor=['red','yellow','green','blue','orange'];
+var viewH=$(window).height();
+var viewW=$(window).width();
+var index=0;
+$('div').each(function(index, element) {
+    $(element).css('background',arrColor[index]).css({'width':viewW,'height':viewH});
+});
+
+$('li').on('click',function(){
+	$(this).attr('class','active').siblings().attr('class','');
+	//$(document).scrollTop($(this).index()*viewH);
+	$('html,body').animate({scrollTop:$(this).index()*viewH},1000);
+	
+});
+$(window).on('scroll',function(){
+	index=Math.floor((viewH/2+$(document).scrollTop())/viewH);
+	$('li').eq(index).attr('class','active').siblings().attr('class','');
+	$('ul').css('top',(viewH-$('ul').height())/2+$(document).scrollTop());
+	
+	});
+$(window).on('resize',function(){
+	 viewH=$(window).height();
+     viewW=$(window).width();
+	 $('div').each(function(index, element) {
+    $(element).css('background',arrColor[index]).css({'width':viewW,'height':viewH});
+});
+	$('ul').css('top',(viewH-$('ul').height())/2+$(document).scrollTop());
+	}
+);
+$('ul').css('top',(viewH-$('ul').height())/2+$(document).scrollTop());
+});
+</script>
+
+<style>
+*{ margin:0; padding:0;}
+li{ list-style:none;}
+ul{ position:absolute;top:0;right:0;margin-top:-30px;}
+ul li{ width:20px; height:20px; background:white; border-radius:50%; margin:5px; cursor:pointer;background:white;}
+ul li.active{ background:gray;}
+</style>
+</head>
+
+<body>
+<div>111111111</div>
+<div>222222222</div>
+<div>333333333</div>
+<div>444444444</div>
+<div>555555555</div>
+<ul>
+<li class="active"></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+</body>
+</html>

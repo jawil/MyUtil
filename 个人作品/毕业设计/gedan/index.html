@@ -1,0 +1,1587 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no">
+<title>斗鱼云音乐</title>
+<link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
+<script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js">//使用cdn下载速度飞速,贵族服务,本地js文件租不起</script>
+
+<script src="js/ripple-min.js"></script>
+<style>
+/*样式重置*/
+html, body, div, span,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+img, ins, kbd, q, s, samp,
+small, strike, strong,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+  font-family:Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+}
+body {
+  line-height: 1;
+  font-size:15px;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+a{text-decoration:none;}
+img{vertical-align:top;border:none;}
+/*清除浮动，兼容IE6，淘宝就是这个清除浮动*/
+.clear{
+	zoom:1;
+	}
+.clear:after{display:block;content:"";clear:both;}
+
+html{ width:100%; height:100%; overflow:hidden;}
+body{ width:100%; height:100%; font: 14px/1.5 Tahoma,Arial,Roboto,"Droid Sans","Helvetica Neue","Droid Sans Fallback","Heiti SC",sans-self;}
+#main{width:100%;height:100%;position:relative;overflow:hidden;margin:0 auto;}
+#musicList{ width:100%; height:100%; background:url(img/bg.jpg) no-repeat; background-size:cover;}
+#ripple{width:100%;height:100%;}
+#musicList .list_title{ width:100%; height:40px; background:url(img/logo_0.jpg) no-repeat rgba(243,149,13,0.3); font-size:20px; line-height:40px; text-align:center; color:white; position:absolute; top:0;}
+#musicList .list_title #titleLogo{transform-style:preserve-3d;perspective:800px;transition:0.5s;-webkit-transform-style:-webkit-preserve-3d;-webkit-perspective:800px;-webkit-transition:0.5s;}
+#musicList .list_title #titleLogo:hover{transform:rotateY(60deg);-webkit-transform:rotateY(60deg);}
+#musicList .list_tip{ width:16px; height:16px; background:url(img/tip.png) no-repeat; background-size:cover; position:absolute; right:15px; top:12px;}
+#musicList .list_content{ width:100%; position:absolute; top:40px; bottom:9%; overflow:hidden;}
+#musicList .list_content ul{ width:100%; position:absolute; top:0; left:0; transform:translate3d(0,0,0);overflow:hidden;}
+#musicList .list_content ul li{ width:100%; height:55px; background:rgba(26,26,26,0.6); border-bottom:1px #999999 solid; box-sizing:border-box;position:relative;}
+#musicList .list_content ul li .voiceImg{width:18px;height:18px;position:absolute;left:0;top:23px;display:none;}
+/*鱼儿运动*/
+#musicList .list_content ul li  #fishMove{width:60px;height:60px;position:absolute;left:100px;top:7px;animation:30s linear infinite logoImgMove,1s linear infinite logoImgMoveTop;
+-webkit-animation:30s linear infinite logoImgMove,1s linear infinite logoImgMoveTop;display:none;-moz-animation:30s linear infinite logoImgMove,1s linear infinite logoImgMoveTop;display:none;}
+
+#musicList .list_content ul li:hover{opacity:0.5;}
+#musicList .list_content ul li .active{ border-left:5px #29abe2 solid;}
+
+/*自定义滚动条*/
+#mCSB_container{position:absolute;top:0;right:0;}
+#mCSB_scrollTools{width:10px;background-color:#294345;; height:300px;; border:1px solid green;border-radius:0;position:relative;}
+#mCSB_scrollTools #mCSB_buttonUp{width:8px;height:8px;display:block;border:1px solid blue;background:#1F138E;text-align:center;position:absolute;top:0;left:0;}
+#mCSB_scrollTools #mCSB_buttonUp div{width:0;height:0;border-bottom:3px solid white;border-right:3px solid transparent;border-left:3px solid transparent;margin-left:1px;margin-top:3px;}
+
+#mCSB_scrollTools #mCSB_buttonDown{width:8px;height:8x;display:block;border:1px solid blue;background:#1F138E;text-align:center;position:absolute;bottom:0;left:0;}
+#mCSB_scrollTools #mCSB_buttonDown div{width:0;height:0;border-top:3px solid white;border-right:3px solid transparent;border-left:3px solid transparent;margin-left:1px;margin-top:3px;}
+#mCSB_dragger{ background-color:#97C821; height:50px; width:8px; outline-offset:-2px;  outline:2px solid #4D86A1;  border-radius:4px;  border: 1px dotted #495363;position:absolute;left:0;top:10px;;}
+
+
+
+/*底部功能模块，歌手，播放模式*/
+#musicList .list_audio{ width:100%; height:9%; background:rgba(0,0,0,0.5); position:absolute; bottom:0;}
+#musicList .list_audio .list_audioText{ width:18.6%;height:100%;position:absolute;left:12%;}
+#musicList .list_audio h3{width:100%;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;cursor:pointer;color:#16D437}
+#musicList .list_audio p{width:100%;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;cursor:pointer;color:#13A4D0}
+#musicList .list_audio p:hover{color:white;}
+#spreadDiv{position:absolute;left:38%;top:50%;margin-top:-10px;}
+#musicList #imgSpread{cursor:pointer;width:20px;height:20px;border:1px solid gray;transition:.5s;}
+#spreadDiv span{position:absolute;left:-100%;top:-100%;color:#FF358D;border:1px solid gray;white-space:nowrap;display:none;}
+#musicList #imgSpread:hover{opacity:0.8;filter:alpha(opacity=80);transform:rotate(180deg); -webkit-transform:rotate(180deg); -moz-transform:rotate(180deg);}
+#musicList #imgSpread:hover~span{display:block;}
+#musicList .list_audioImg{ width:45px;height:45px; border-radius:50%; position:absolute;top:50%;margin-top:-23px;left:3%;cursor:pointer;}
+#musicList .list_audioImg.move{ animation:4s linear audioImgMove; -webkit-animation:4s linear infinite audioImgMove;-moz-animation:4s linear infinite audioImgMove;}
+
+
+
+#musicList .list_audioBtn{ position:absolute; width:25px;height:25px; background-size:cover;display:none;right:9%;top:50%;margin-top:-13px;cursor:pointer;}
+/*音乐播放声音控制*/
+#voiceTurn{width:31%;height:100%;position:absolute;right:20%;top:0;}/*音乐播放声音控制*/
+#noVoice{width:20px;height:17px;cursor:pointer;position:absolute;top:50%;margin-top:-9px;}
+#noVoice #voiceImg{width:20px;height:17px;}
+#noVoice span{position:absolute;border-radius:10px;left:-60%;bottom:-130%;border:1px solid gray;color:white;white-space:nowrap;display:none;box-shadow:0px 0px 5px red ;display:none;}
+/*#noVoice #voiceImg:hover~span{display:block;}*/
+#styleModel{color:red;width:30px;height:18px;float:right;margin-top:21px;cursor:pointer;margin-left:5px;}
+#styleMessage{position:absolute;right:-13px;bottom:0;background:#FFFFFF;color:#575757;border:1px solid #767676;display:none;}
+#palyImg{width:25px;height:18px;position:absolute;right:0;top:50%;margin-top:-10px;}
+#voiceWrap{width:45%;height:12px;position:absolute; top:50%;margin-top:-6px;left:19%;}
+#voicePro{width:100%; height:100%; background:#161515;border-radius:6px;position:absolute;left:0;top:0;}
+#voiceProUp{width:100%; height:12px; background:#B8110D; position:absolute; left:0; top:0;cursor:pointer;border-radius:6px;}
+#voiceProBar{width:12px; height:12px; background:#ECECEF; border-radius:50%; margin-left:-6px;position:absolute; left:100%;; top:0; cursor:pointer; display:none;}
+#circle{width:4px;height:4px;background:#B8110D;border-radius:50%;position:absolute;left:4px;top:4px;}
+
+
+/*翻转3D文字图片效果*/
+#musicDetails{ width:100%; height:100%; background:url(img/detailsBg.jpg) no-repeat; background-size:cover; position:absolute; top:0; left:0; z-index:10; background-position:bottom;}
+#musicDetails .nav{margin:0;padding:0;position:absolute;left:10px;top:50%;margin-top:-10px;}
+#musicDetails  .nav li{float:left; list-style:none;-webkit-perspective:100px;}
+#musicDetails  .nav a{float:left; position:relative; text-decoration:none; -webkit-transform-style:preserve-3d; -webkit-transition:.5s; -webkit-transform-origin:center center -10px;}
+#musicDetails  .nav img{float:left;width:50px; text-align:center; -webkit-backface-visibility:hidden;}
+#musicDetails   .nav img:nth-of-type(2){ position:absolute;left:0; top:-20px;-webkit-transform-origin:bottom; -webkit-transform:rotateX(90deg);}
+#musicDetails   .nav a:hover{ -webkit-transform:rotateX(-90deg);}
+
+/* 歌曲详细信息和歌词模块*/
+#musicDetails .details_title{font-family:Constantia, "Lucida Bright", "DejaVu Serif", Georgia, serif; width:100%; height:7%; background:rgba(41,171,226,0.5); line-height:40px; text-align:center; color:white; position:absolute; top:0;}
+#musicDetails .details_name{ font-size:130%;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;cursor:pointer;color:#eeeded;index:100;width:50%;position:absolute;left:25%;}
+#musicDetails .details_name span{ font-size:56%;color:#1FDCD9;}
+#musicDetails #shrinkWrap{ position:absolute; right:15px; top:15px;}
+#musicDetails #shrinkWrap p{position:absolute;left:-400%;top:100%;color:#7DFEDD;white-space:nowrap;font-size:10px;border:1px solid gray;padding:0;display:none;}
+#musicDetails .details_tip{width:19px; height:10px; background:url(img/details_arrow.png) no-repeat; background-size:cover;cursor:pointer;display:block;}
+#musicDetails .details_tip:hover{opacity:0.5;filter:alpha(opacity=50);}
+#musicDetails #shrinkWrap:hover p{display:block;}
+/*歌词图标*/
+#fengmianDetails #geci{position:absolute;right:15px;bottom:10px;}
+#fengmianDetails #geciImg{width:30px;height:30px;cursor:pointer;}
+/*分享功能,youtube,Facebook,Google+,Twitter*/
+#sharMusic {
+    background:rgba(0,0,0,0) none repeat scroll 0 0 padding-box;
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-radius: 37px;
+    height: 62px;
+    position: absolute;
+    right:5px;
+    top: 10px;
+    width: 62px;
+
+	z-index:100;
+}
+#sharMusic h2 {
+    color: #f06b86;
+    font: 13px/18px "微软雅黑";
+    height: 36px;
+    padding: 5px;
+    position: absolute;
+    right:7px;
+    text-align: center;
+    top: 8px;
+    transition: all 0.2s ease 0s;
+    width: 36px;
+    z-index: 2;
+
+	color: rgb(240, 107, 134);
+	background:rgba(0,0,0,0);
+	border-radius:50%;
+}
+#ContactMeMore {
+    background: #f16682 none repeat scroll 0 0;
+    border-radius: 23px;
+    height: 46px;
+    left: 8px;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 23px;
+    position: absolute;
+    top: 8px;
+    width: 0;
+    z-index: 1;
+
+}
+#ContactMeMore .content {
+    left: 23px;
+    opacity: 0;
+    position: absolute;
+    top: 1px;
+    width:160px;
+}
+#ContactMeMore .content img{width:30px;height:20px;}
+/*#ContactMeMore .content span{
+    color: #fff;
+    font: 12px/22px Arial;
+    padding-left: 5-px;
+    white-space: nowrap;
+}*/
+
+
+/*封面图片旋转模块*/
+#musicDetails .fengmian{width:100%; position:absolute; top:7%; bottom:21%;transition:.5s; -webkit-transition:.5s;}
+#fengmianWrap{position:absolute;left:15%;border-radius:50%;box-shadow:0 0 0 15px #576262 ;}
+#fengmianInner{width:80%;height:80%;position:absolute;left:10%;top:10%;border-radius:50%;}
+#fengmianImg{width:100%;height:100%;border-radius:50%;}
+#fengmianImg.move{animation:16s linear audioImgMove; -webkit-animation:16s linear infinite audioImgMove;-moz-animation:16s linear infinite audioImgMove;}
+#playLogo{transform-origin:top left;transition:1s;z-index:10;-webkit-transform-origin:top left;-webkit-transition:1s;
+width:116px;height:59px;position:absolute;left:50%;}
+#playLogo.play{transform:rotate(45deg);-webkit-transform:rotate(45deg); -moz-transform:rotate(45deg);}
+
+
+
+
+/*喜欢下载评论更多分享按钮*/
+#detailsFooter{width:100%;height:10%;position:absolute;bottom:0;}
+#detailsFooter img{width:20px;height:20px;position:absolute;bottom:0;cursor:pointer;}
+#detailsFooter img:nth-of-type(1){left:17.5%;}
+#detailsFooter img:nth-of-type(2){left:35%;margin-left:20px;}
+#detailsFooter img:nth-of-type(3){right:35%;margin-left:-20px;}
+#detailsFooter img:nth-of-type(4){right:17.5%;}
+
+
+
+/*歌词模块*/
+#musicDetails .details_lyric{ width:100%; position:absolute; top:7%; bottom:21%; overflow:hidden; transition:.5s; -webkit-transition:.5s;opacity:0;}
+#musicDetails .details_lyric ul{ width:100%; text-align:center;color:#8de8e1; font-size:14px; position:absolute; top:0; left:0; transition:.5s; -webkit-transition:.5s;}
+#musicDetails .details_lyric li{ margin-top:10px;}
+#musicDetails .details_lyric li.actively{ color:#ece831;}
+#musicDetails .details_lyric #back{position:absolute;top:15%;right:5%;cursor:pointer;}
+#musicDetails .details_lyric #back img{width:30px;height:30px;}
+
+
+
+
+
+#musicDetails .details_audio{ width:100%; height:21%; position:absolute; bottom:0;}
+#musicDetails .details_audioAll{ width:200px; position:absolute;top:20%;left:50%;margin-left:-100px;}
+#musicDetails .details_audioPro{ width:100%; height:2px; background:white;}
+#musicDetails .details_audioProUp{ width:0; height:2px; background:#29abe2; position:absolute; left:0; top:0;cursor:pointer;}
+#musicDetails .details_audioProBar{ width:15px; height:15px; background:#29abe2; border-radius:50%; position:absolute; left:0; top:0; margin:-7px;cursor:pointer;}
+#musicDetails .details_nowTime{ font-size:12px; color:#b3b3b3; position:absolute; top:-8px; left:-40px;}
+#musicDetails .details_allTime{ font-size:12px; color:#b3b3b3; position:absolute; top:-8px; right:-40px;}
+#musicDetails .details_play{cursor:pointer; width:50px; height:50px; background:url(img/details_play.png) no-repeat; background-size:cover; position:absolute; left:50%; margin-left:-27px; top:30px;}
+#musicDetails .details_prev{ cursor:pointer;width:37px; height:37px; background:url(img/details_prev.png) no-repeat; background-size:cover; position:absolute; left:10px; top:37px;}
+#musicDetails .details_next{ cursor:pointer;width:37px; height:37px; background:url(img/details_next.png) no-repeat; background-size:cover; position:absolute; right:10px; top:37px;}
+
+#musicDetails .details_btn{ width:100%; position:absolute; bottom:0px; text-align:center;}
+#musicDetails .details_btn li{ width:7px; height:7px; background:#29abe2; border-radius:5px; display:inline-block; margin:3px;}
+#musicDetails .details_btn li.active{ width:21px;}
+.title{ color:white; font-size:100%;; padding:10px 0 0 20px;}
+.name{ color:#b3b3b3; font-size:86%; padding:2px 0 0 20px;}
+.active{ border-left:5px #29abe2 solid;}
+.active1{ color:green;}
+.active2{ color:#AD1D84;}
+
+
+
+/*css3动画模块,鱼儿,封面运动关键帧*/
+@keyframes audioImgMove{
+	0%{ transform:rotate(0deg);}
+	100%{ transform:rotate(360deg);}
+}
+@-webkit-keyframes audioImgMove{
+	0%{ -webkit-transform:rotate(0deg);}
+	100%{ -webkit-transform:rotate(360deg);}
+}
+
+@keyframes logoImgMove{
+	0%{ left:100px;}
+	100%{ left:100%;
+	}
+}
+@-webkit-keyframes logoImgMove{
+	0%{ left:100px;}
+
+	100%{left:100%;}
+}
+@keyframes logoImgMoveTop{
+	0%{
+		top:7px;
+	}
+	50%{
+		top:15px;
+	}
+	100%{
+		top:7px;
+	}
+}
+@-webkit-keyframes logoImgMoveTop{
+	0%{
+		top:7px;
+	}
+	50%{
+		top:15px;
+	}
+	100%{
+		top:7px;
+	}
+}
+/*#moveImg{animation:20s linear infinite logoImgMove;}*/
+
+</style>
+
+</head>
+
+<body>
+<div id="main"><!--1-->
+
+<div id="musicList"  ><!--2-->
+<img id="ripple" src="img/bg1_0.jpg">
+<img id="moveImg" src="img/you.gif" style="height:40px;width:20%;position:absolute;left:50% ;margin:0 0 0 -63px;;top:0;width:125px;">
+<div id="listTitle" class="list_title"><p id="titleLogo">斗鱼云音乐</p><span class="list_tip"></span></div>
+
+
+
+<div id="listContent" class="list_content"><!--3-->
+<ul id="listContentUl">
+<!--<li>
+<h3>逆战</h3>
+<p>张杰</p>
+</li>-->
+</ul>
+<!--加入自定义滚动条-->
+<div id="mCSB_container">
+  <div id="mCSB_scrollTools">
+  <a id="mCSB_buttonUp" href="javascript:;" ><div></div></a>
+
+    <div id="mCSB_dragger"></div>
+
+    <a id="mCSB_buttonDown" href="javascript:;" ><div></div></a>
+    </div>
+</div>
+
+
+
+
+</div><!--3-->
+
+
+<!--音乐歌曲名称和歌手图片控制-->-
+<div class="list_audio" id="listAudio"><!--4-->
+<img class="list_audioImg" id="listAudioImg" src="img/fengmian.jpg">
+<div id="spreadDiv">
+<img id="imgSpread" src="img/zhankai.png"/>
+<span>展开音乐详情页</span>
+</div>
+
+
+<div class="list_audioText" id="listAudioText">
+<h3 class="title">斗鱼好音乐</h3>
+<p class="name">乐音致远</p>
+
+</div>
+<div id="listAudioBtn" class="list_audioBtn"></div>
+
+<!--音乐声音大小控制模块-->
+<div id="voiceTurn" >
+
+<div id="noVoice">
+<img  id="voiceImg" src="img/voiceturn.png"/><!--//静音控制-->
+<span>设置静音</span>
+</div>
+
+<div id="styleModel" ><!--//播放模式控制-->
+<span id="styleMessage">列表循环</span>
+<img id="palyImg"  src="img/list.png"</div><!--//播放模式控制-->
+<!--音乐声音大小进度条模拟模块-->
+<div id="voiceWrap" >
+<div id="voicePro" ></div>
+<div id="voiceProUp" ></div>
+
+<div id="voiceProBar" >
+<div id="circle"></div>
+</div>
+
+</div>
+
+
+
+</div>
+
+
+</div><!--4-->
+
+</div><!--2-->
+
+
+ <div id="musicDetails" >
+
+    	<div id="detailsTitle" class="details_title">
+
+        <ul class="nav" style="float:left;">
+    <li>
+        <a href="javascript:;">
+            <img class="img3D" src="img/douyulogo.gif">
+            <img class="img3D" src="img/douyulogo.gif">
+        </a>
+    </li>
+
+</ul>
+
+        	<div id="detailsName" class="details_name"></div>
+            <div id="shrinkWrap">
+            <span class="details_tip"></span>
+            <p>收起音乐详情页</p>
+            </div>
+
+
+        </div>
+
+
+
+
+ 	<div id="detailsLyric" class="details_lyric"><!--/*默认隐藏,当点击歌词时候隐藏方面显示歌词*/-->
+
+            <div id="back" >
+            <a href="javascript:;"><img src="img/fanhui.png" ></a>
+            </div>
+
+            <ul id="detailsLyricUl">
+            	<!--<li>歌词测试文字</li>
+                <li class="active">歌词测试文字</li>
+                <li>歌词测试文字</li>
+                <li>歌词测试文字</li>-->
+         	</ul>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div id="fengmianDetails" class="fengmian"><!--//封面转动模块-->
+        <img style="float:left;width:80px;height:60px;" src="img/music.gif">
+       <div id="geci">
+       <img id="geciImg" src="img/geci1.png">
+       </div>
+
+      <div id="sharMusic" ><!--/*//分享音乐*/-->
+      <h2 style="">我要分享</h2>
+      <div id="ContactMeMore" >
+      <div class="content" >
+      <a target="_blank" href="http://www.renren.com/"><img src="img/tw.png"></a>
+      <a target="_blank" href="http://www.renren.com/"><img src="img/vk.png"></a>
+      <a target="_blank" href="http://weibo.com/"><img src="img/fb.png"><br></a>
+       <a target="_blank" href="http://www.youku.com/"><img src="img/tb.png"YouTube</a>
+       <a target="_blank" href="https://www.baidu.com/"><img src="img/gg.png"></a>
+        <a target="_blank" href="https://www.baidu.com/"><img src="img/yb.png"></a>
+      </div>
+      </div>
+      </div>
+
+
+
+        <div id="detailsFooter" ><!--下载喜欢评论按钮-->
+        <img src="img/nofeel.png">
+        <img src="img/download.png">
+        <img src="img/talk.png">
+        <img src="img/more.png">
+        </div>
+
+        <img id="playLogo" style="" src="img/fengmianmove_03.gif">
+        <div id="fengmianWrap" >
+        <div id="fengmianInner" >
+        <img id="fengmianImg" src="music/1.jpg"/>
+        </div>
+        </div>
+
+        </div>
+
+        <div class="details_audio">
+        	<div class="details_audioAll">
+            	<div class="details_audioPro">
+                	<div id="detailsAudioProUp" class="details_audioProUp"></div>
+                    <div id="detailsAudioProBar" class="details_audioProBar"></div>
+                </div>
+                <div id="detailsNowTime" class="details_nowTime">00:00</div>
+                <div id="detailsAllTime" class="details_allTime">00:00</div>
+                <div id="detailsPlay" class="details_play"></div>
+                <div id="detailsPrev" class="details_prev"></div>
+                <div id="detailsNext" class="details_next"></div>
+            </div>
+        </div>
+        <ul class="details_btn">
+        	<li class="active"></li>
+            <li></li>
+        </ul>
+    </div>
+</div><!--1-->
+<audio id="audio1"></audio>
+ <script>
+ $(function(){
+    $("#ripple").waterripple({ arbitrary: 500 });
+	var viewWidth=$(window).width();
+	var  viewHeiht=$(window).height();
+	var desWidth=640;
+	var desHeight=730;
+	var touchstart='touchstart';
+	var touchmove='touchmove';
+	var touchend='touchend';
+
+
+	var $main = $('#main');
+	var $listContent = $('#listContent');
+	var $listContentUl = $('#listContentUl');
+	var $listTitle = $('#listTitle');
+	var $listAudio = $('#listAudio');
+	var $listAudioImg = $('#listAudioImg');
+	var $listAudioText = $('#listAudioText');
+	var $listAudioBtn = $('#listAudioBtn');
+
+
+	var index = 0;
+
+	var oAudio = $('#audio1').get(0);//audio最好在原生情况下使用
+
+	var $musicDetails = $('#musicDetails');
+	var $detailsTitle = $('#detailsTitle');
+	var $detailsName = $('#detailsName');
+	var $detailsAudioProUp = $('#detailsAudioProUp');
+	var $detailsAudioProBar = $('#detailsAudioProBar');
+	var $detailsNowTime = $('#detailsNowTime');
+	var $detailsAllTime = $('#detailsAllTime');
+	var $detailsPlay = $('#detailsPlay');
+	var $detailsPrev = $('#detailsPrev');
+	var $detailsNext = $('#detailsNext');
+	var id=0;
+
+	var  $voiceImg=$('#voiceImg');
+	var  $voiceProUp=$('#voiceProUp');
+	var  $voicePro=$('#voicePro');
+	var  $voiceProBar=$('#voiceProBar');
+	var  $voiceWrap=$('#voiceWrap');
+	var  $currentVoice=0;
+	var  $palyImg=$('#palyImg');
+	var  $styleMessage=$('#styleMessage');
+	var  $fishMove=$('#fishMove');
+	var  $imgSpread=$('#imgSpread');
+
+
+	var mouseWheel=true;//如果是PC端则触发鼠标滚轮事件
+
+	var $fengmianImg=$('#fengmianImg');
+	var $playLogo=$('#playLogo');
+	var $detailsFooter=$('#detailsFooter');
+	var $detailsLyric = $('#detailsLyric');
+	var $detailsLyricUl = $('#detailsLyricUl');
+
+
+	var scrolloff=true;//控制歌词滚动
+	var $geciImg=$('#geciImg');
+	device();
+	//init();
+	function init(){//整个项目的大初始化
+	musicList.init();
+	musicDetails.init();
+	musicAudio.init();
+	srcollMove.init();
+
+	}
+	function device(){//兼容移动端和PC端
+	if(viewWidth>desWidth){//表明是PC端
+	$main.css({width:640,height:730});
+	//$listContent.css('overflow','auto');
+	mouseWheel=true;
+	}else{
+		$('body').css('font-size','12px');
+		mouseWheel=false;
+	}
+
+	var isMobile = /Mobile/i.test(navigator.userAgent);
+
+		if(!isMobile){
+			touchstart = 'mousedown';
+			touchmove = 'mousemove';
+			touchend = 'mouseup';
+		}
+	}
+
+	    var musicList=(function(){//1//音乐列表的操作
+	    var bbsUrl ='http://www.douyumusic.com/LOL/';
+	    var downY = 0;
+		var prevY = 0;
+		var downT = 0;
+		var parentH = $listContent.height();
+		var childH = $listContentUl.height();
+		var onoff1 = true;
+		var onoff2 = true;
+		var onoff3=true;
+		var timer = null;
+		var speed = 0;
+		var $mCSB_dragger=$('#mCSB_dragger');
+		var $mCSB_buttonUp=$('#mCSB_buttonUp');
+		var minH=$mCSB_buttonUp.outerHeight();
+		var topest=$listContent.height()- $mCSB_dragger.outerHeight()-minH;
+		var timeout=null;
+
+		function init(){//初始化音乐列表
+		data();
+		firstSongPlay();
+		bind();
+		moveScroll();
+
+		}
+		function data(){  //数据
+			$.ajax({
+				url :'musicList.php',
+				type : 'GET',
+				dataType : 'json',
+				success : function(data){
+
+					$.each(data,function(i,obj){
+
+						var $li = '<li musicId="'+(obj.id)+'"><img class="voiceImg" src="img/voice.png"/><h3 class="title">'+(obj.musicName)+'</h3><p class="name"><img style="width:15px;height:15px;margin-top:4px;" src="img/singer.png"/>'+(obj.name)+'</p><img id="fishMove" src="img/fish.png"></li>';
+						$listContentUl.append($li);
+					});
+					childH = $listContentUl.height();
+
+				$listContentUl.find('li').eq(0).find('h3').addClass('active1');//初始化第一首歌样式
+				$listContentUl.find('li').first().find('p').addClass('active2');
+				$listContentUl.find('li').first().attr('class','active');
+				$listContentUl.find('li').first().find('.voiceImg').show();
+				$listContentUl.find('li').first().find('#fishMove').show();
+
+				}
+
+			});
+		}
+		function firstSongPlay(){//自动播放第一歌曲
+				id=1;
+				musicAudio.loadMusic(id);
+
+
+		}
+		function bind(){   //事件
+			$listTitle.on(touchstart,function(){
+				window.location = bbsUrl;
+			});
+			//如果是滑屏就不走这里，如果是单纯的单击就走这里
+			$listContentUl.delegate('li',touchend,function(){//事件委托
+				//alert(onoff3);
+			if(onoff3){
+				//alert(111);
+				$(this).find('h3').addClass('active1').end().siblings().find('h3').removeClass('active1');
+				$(this).find('p').addClass('active2').end().siblings().find('p').removeClass('active2');
+				$(this).attr('class','active').siblings().attr('class','');
+				$(this).find('.voiceImg').show().end().siblings().find('.voiceImg').hide();
+				$(this).find('#fishMove').show().end().siblings().find('#fishMove').hide();
+				//$listAudioBtn.css('display','block');
+				//$listAudioBtn.css('backgroundImage','url(img/list_audioPause.png)');
+				//alert(222);
+				//$listAudioBtn=$('#listAudioBtn');
+				id = $(this).attr('musicId');
+				index=$(this).index();
+				musicAudio.loadMusic(id);
+					//alert(3333);
+
+			}
+				});
+				$imgSpread.on(touchstart,function(){
+				if(id){
+					musicDetails.sildeUp();
+				}
+
+			});
+
+		}
+
+		function moveScroll(){   //滑动列表和移动列表位置///111
+			$(document).on(touchmove,function(ev){
+				ev.preventDefault();
+			});
+			var iTop=0;
+			$listContentUl.on(touchstart,function(ev){///222
+				//ev.pageX
+				//touch.pageX
+				//ev.originalEvent -> JQ的event转成JS的event
+				//timeout=setTimeout(slidingScreen,2000);
+				//function slidingScreen(){//333滑屏
+				if(parentH > childH){return false;}
+				var touch = ev.originalEvent.changedTouches ? ev.originalEvent.changedTouches[0] : ev;
+				var This = this;
+				downY = touch.pageY;
+				prevY = touch.pageY;
+				downT = $(this).position().top;
+				onoff1 = true;
+				onoff2 = true;
+				onoff3 = true;//控制是播放还是滑屏
+				onoff4=true;//如果是滑屏就有一个缓冲速度,ended事件要处理,如果是移动列表则不需要处理;
+				clearInterval(timer);
+				$(document).on(touchmove+'.move',function(ev){
+					var touch = ev.originalEvent.changedTouches ? ev.originalEvent.changedTouches[0] : ev;
+					iTop = $(This).position().top;
+					speed = touch.pageY - prevY;
+					prevY = touch.pageY;
+					if(touch.pageY - downY!=0){
+						onoff3=false;
+					}
+					if(iTop >= 0){   //头
+						if(onoff1){
+							onoff1 = false;
+							downY = touch.pageY;
+						}
+						$(This).css('transform','translate3d(0,'+(touch.pageY - downY)/3+'px,0)');
+					}
+					else if(iTop <= parentH - childH){  //尾
+						if(onoff2){
+							onoff2 = false;
+							downY = touch.pageY;
+						}
+						$(This).css('transform','translate3d(0,'+((touch.pageY - downY)/3 + (parentH - childH))+'px,0)');
+					}
+					else{
+						$(This).css('transform','translate3d(0,'+(touch.pageY - downY + downT)+'px,0)');
+					}
+					//实现滚动条与translate3d同步
+					var mouseupScale=(touch.pageY-prevY-iTop)/ (childH-parentH);
+
+					var mouseupTop=mouseupScale*(topest);
+					$mCSB_dragger.css('top',mouseupTop);
+					if($mCSB_dragger.position().top<minH){
+						$mCSB_dragger.css('top',minH);
+						}
+						else if($mCSB_dragger.position().top>topest){
+							$mCSB_dragger.css('top',topest);
+						}
+
+
+				});
+				$(document).on(touchend+'.move',function(){
+					//alert(iTop);
+					//var touch = ev.originalEvent.changedTouches ? ev.originalEvent.changedTouches[0] : ev;
+
+					$(this).off('.move');
+
+					//console.log(speed);
+					if(!onoff3){
+					clearInterval(timer);
+					timer = setInterval(function(){
+						var iTop = $(This).position().top;
+						if(Math.abs(speed) <= 1 || iTop > 50 || iTop < parentH - childH - 50){
+							clearInterval(timer);
+							if(iTop >= 0){
+								$(This).css('transition','.2s');
+								$(This).css('transform','translate3d(0,0,0)');
+								//$('#mCSB_dragger').css('top',$('#mCSB_buttonUp'));
+								$mCSB_dragger.css('top',minH);
+							}
+							else if(iTop <= parentH - childH){
+								$(This).css('transition','.2s');
+								$(This).css('transform','translate3d(0,'+(parentH - childH)+'px,0)');
+								$mCSB_dragger.css('top',topest);
+								//$('#mCSB_dragger').css('top',$listContent.height()-$('#mCSB_dragger').outerHeight()-$('#mCSB_buttonUp').outerHeight());
+							}
+							//等到滑动彻底停了再来设置top值
+/*							var lastTop=(iTop/(parentH - childH))*topest;
+							//$mCSB_dragger.css('top',lastTop);
+					        $mCSB_dragger.animate({top:lastTop},500,function(){
+								if($mCSB_dragger.position().top<minH){
+							$mCSB_dragger.css('top',minH);
+						}
+							else if($mCSB_dragger.position().top>topest){
+							$mCSB_dragger.css('top',topest);
+						}
+
+								});
+							*/
+						}
+						else{
+							speed *= 0.9;
+							$(This).css('transform','translate3d(0,'+(iTop + speed)+'px,0)');
+							var lastTop=((iTop + speed)/(parentH - childH))*topest;
+							$mCSB_dragger.css('top',lastTop);
+						}
+
+					},13);
+
+
+					}
+
+
+
+				});
+				return false;
+
+
+	//			};///33333
+
+
+			});///222
+
+			$listContentUl.on('transitonend webkitTransitionEnd',function(){
+				$(this).css('transition','');
+			});
+
+
+
+
+
+
+		}///1
+
+
+			function show(sName,sMusicName,sImg){//每一首歌曲获取到这首首歌的信息
+			$listAudioImg.attr('src',sImg);
+			$fengmianImg.attr('src',sImg);
+			$listAudioText.find('h3').html(sMusicName);
+			$listAudioText.find('p').html(sName);
+			$listAudioBtn.show();
+			}
+
+
+		return {
+			init : init,
+			show:show
+		};
+
+	})();//1
+
+
+
+
+
+	var musicDetails = (function(){    //音乐详情页操作
+	var re = /\[[^[]+/g;
+		var arr = [];
+		var $li = null;
+		var iLiH = 0;
+		function init(){    //初始
+		//alert(1);
+			$musicDetails.css('transform','translate3d(0,'+(viewHeiht)+'px,0)');
+			//bind();
+			$detailsTitle.on(touchstart,function(){
+				$musicDetails.css('transform','translate3d(0,'+(viewHeiht)+'px,0)');
+			});
+		}
+		function sildeUp(){
+  			$musicDetails.css('transition','.5s');
+			$musicDetails.css('transform','translate3d(0,0,0)');
+		}
+		/*function sildeUp(){    //向上展开
+			$musicDetails.css('transition','.5s');
+			$musicDetails.css('transform','translate3d(0,0,0)');
+		}
+		function sildeDown(){   //向下收缩
+			$musicDetails.css('transform','translate3d(0,'+(viewHeight)+'px,0)');
+		}
+		function bind(){    //事件
+			$detailsTitle.on(touchstart,function(){
+				sildeDown();
+			});
+		}*/
+		function show(sName,sMusicName,sLyric){//歌词操作
+			$detailsName.html(sMusicName + ' <span>'+ sName +'</span>');
+						$detailsLyricUl.empty().css('transform','translate3d(0,0,0)');
+			//console.log(sLyric);
+			arr = sLyric.match(re);
+			//console.log(arr);
+			for(var i=0;i<arr.length;i++){
+				arr[i] = [formatTime(arr[i].substring(0,10)) , arr[i].substring(10).trim()];
+			}
+			//console.log(arr);
+			for(var i=0;i<arr.length;i++){
+				$detailsLyricUl.append('<li>'+arr[i][1]+'</li>');
+			}
+			$li = $detailsLyricUl.find('li');
+			$li.first().attr('class','actively');
+			iLiH = $li.first().outerHeight(true);
+		}
+		function formatTime(num){   //格式日期
+			num = num.substring(1,num.length-1);
+			var arr = num.split(':');
+			return (parseFloat(arr[0]*60) + parseFloat(arr[1])).toFixed(2);
+		}
+		function scrollLyric(ct){    //滚动歌词
+			//console.log(ct);
+			var iMax=Math.abs($detailsLyric.outerHeight()-$detailsLyricUl.outerHeight());
+			for(var i=0;i<arr.length;i++){
+				//alert($detailsLyric.outerHeight()-$detailsLyricUl.outerHeight());
+				if( i != arr.length - 1 && ct > arr[i][0] && ct < arr[i+1][0] ){
+					$li.eq(i).attr('class','actively').siblings().attr('class','');
+					if(i>3){
+						if(scrolloff){
+							$detailsLyricUl.css('transform','translate3d(0,'+(-iLiH*(i-3))+'px,0)');//如果向后拖拉就不行
+
+							}
+						if(Math.abs($detailsLyricUl.position().top)>=Math.abs($detailsLyric.outerHeight()-$detailsLyricUl.outerHeight())){
+						scrolloff=false;
+						$detailsLyricUl.css('transform','translate3d(0,'+(-iLiH*(i-3))+'px,0)');
+						//$detailsLyricUl.css('transform','translate3d(0,0,0)');
+
+						}
+
+
+					}
+					else{
+						$detailsLyricUl.css('transform','translate3d(0,0,0)');
+					}
+				}
+				else if(i == arr.length-1 && ct > arr[i][0]){
+					$li.eq(i).attr('class','actively').siblings().attr('class','');
+					//$detailsLyricUl.css('transform','translate3d(0,'+(-iLiH*(i-3))+'px,0)');
+				}
+			}
+		}
+		return {
+			init : init,
+			sildeUp : sildeUp,
+			show:show,
+			scrollLyric : scrollLyric
+
+		};
+	})();
+
+
+
+		var musicAudio=(function(){//音乐播放器操作
+			var onoff=true;
+			var timer=null;
+			var scale=0;
+			var disX=0;
+			var disW=0;
+			var voiceoff=true;
+			var voiceProBarL=$voicePro.width();
+			//alert(voiceProBarL);
+			var switchIndex=0;
+			var musicOff=true;
+
+			var parentW = $detailsAudioProBar.parent().width();
+
+			function init(){
+				bind();
+			}
+			function loadMusic(id){
+				$.ajax({
+				url : 'musicAudio.php',
+				type : 'GET',
+
+				dataType : 'json',
+				async : false,
+				data : { id : id },
+				success : function(data){
+					show(data);
+				},
+				error:function(){
+					alert(已是列表播放最后一首);
+				}
+			});
+			}
+
+			function show(obj){
+				var sName=obj.name;
+				var sMusicName=obj.musicName;
+				var sLyric=obj.lyric;
+				var sImg=obj.img;
+				var sAudio=obj.audio;
+				var sFengmian=obj.fengmian;
+
+				musicList.show(sName,sMusicName,sImg);
+				musicDetails.show(sName,sMusicName,sLyric);
+				oAudio.src=sAudio;
+				play();
+				$(oAudio).one('canplaythrough',function(){
+				$detailsAllTime.html(formatTime(oAudio.duration));
+					});
+				$(oAudio).one('ended',function(){//终于搞好了,尼玛.弄好了一下午,每次点击ul多次会多次触发音乐ended事件
+				if(musicOff){
+
+				if(oAudio.currentTime==oAudio.duration){
+				next(switchIndex);
+				}
+				}else{
+				$listAudioImg.removeClass('move');
+				$listAudioBtn.css('backgroundImage','url(img/list_audioPlay.png)');
+				$detailsPlay.css('backgroundImage','url(img/details_play.png)');
+				}
+
+			});
+			}
+
+			function play(){//音乐播放
+			onoff=false;
+			//var RX=$fengmianImg.css('transform');
+
+			//$fengmianImg.css('transform',RX);
+			$listAudioImg.addClass('move');
+			$fengmianImg.addClass('move');
+			$playLogo.addClass('play');
+			$listAudioBtn.css('backgroundImage','url(img/list_audioPause.png)');
+			$detailsPlay.css('backgroundImage','url(img/details_pause.png)');
+			oAudio.play();
+			playing();
+			clearInterval(timer);
+			timer=setInterval(playing,1000);
+
+			}
+			function pause(){//音乐暂停
+			onoff=true;
+			var RX=$fengmianImg.css('transform');
+
+			$fengmianImg.css('transform',RX);
+			//alert(RX);
+			$listAudioImg.removeClass('move');
+			$fengmianImg.removeClass('move');
+			$playLogo.removeClass('play');
+			$listAudioBtn.css('backgroundImage','url(img/list_audioPlay.png)');
+			$detailsPlay.css('backgroundImage','url(img/details_play.png)');
+			oAudio.pause();
+			clearInterval(timer);
+			}
+
+			function bind(){//事件绑定
+
+			$('.img3D').on(touchstart,function(){
+				return false;
+			});
+			 $voiceImg.hover(function(){
+				  $voiceImg.css('opacity',0.5);
+
+				  setTimeout(function(){ $('#voiceImg+span').show();},500);
+
+				 },function(){
+					  $voiceImg.css('opacity',1);
+					  setTimeout(function(){ $('#voiceImg+span').hide();},500);
+					 });
+			$palyImg.hover(function(){//播放模式的文字提示
+				setTimeout(function(){$styleMessage.show();},500);
+
+				},function(){
+					setTimeout(function(){$styleMessage.hide();},500);
+					});
+			$palyImg.on(touchstart,function(){//循环播放，单曲循坏，列表循坏，随机播放，默认列表循坏
+					switchIndex++;
+					//alert(switchIndex);
+					switchIndex=switchIndex>=4?0:switchIndex;
+					switch(switchIndex){
+						case 0:
+						$palyImg.attr('src','img/list.png');
+						$styleMessage.toggle();
+						$styleMessage.html('列表循环');
+						setTimeout(function(){$styleMessage.toggle();},500);
+						break;
+						case 1:
+						//alert(1);
+						$palyImg.attr('src','img/shunxu.png');
+						$styleMessage.toggle();
+						$styleMessage.html('顺序播放');
+						setTimeout(function(){$styleMessage.toggle();},500);
+						break;
+						case 2:
+						$palyImg.attr('src','img/danqu.png');
+						$styleMessage.toggle();
+						$styleMessage.html('单曲循环');
+						setTimeout(function(){$styleMessage.toggle();},500);
+						break;
+						case 3:
+						$palyImg.attr('src','img/suiji.png');
+						$styleMessage.toggle();
+						$styleMessage.html('随机播放');
+						setTimeout(function(){$styleMessage.toggle();},500);
+						break;
+					}
+
+				});
+
+			 $voiceImg.on(touchstart,function(){//音乐声音大小控制事件
+			 if(voiceoff){//关闭声音
+
+			 //alert(1);
+				 voiceoff=false;
+				 $currentVoice=oAudio.volume;
+				 $voiceProUp.css('width',0);
+				 $voiceProBar.css('left',0);
+				 oAudio.volume=0;
+				 $voiceImg.attr('src','img/novoice.png');
+				 $('#voiceImg+span').hide();
+				setTimeout(function(){ $('#voiceImg+span').html('恢复音量').show();},700);
+
+			 }else{
+				 voiceoff=true;
+				 $voiceProUp.css('width',voiceProBarL);
+				 $voiceProBar.css('left',voiceProBarL);
+				 oAudio.volume=$currentVoice;
+				 $voiceImg.attr('src','img/voiceturn.png');
+				 $('#voiceImg+span').hide();
+				 setTimeout(function(){ $('#voiceImg+span').html('设置静音').show();},700);
+				 }
+
+			 });
+
+				$listAudioBtn.add($detailsPlay).on(touchstart,function(){//播放暂停事件
+					if(onoff){
+						play();
+					}
+					else{
+					pause();
+					}
+					return false;
+				});
+
+				$voiceWrap.hover(function(){//声音进度条的出现与隐藏
+					$voiceProBar.show();
+					},function(){
+					$voiceProBar.hide();
+						});
+
+
+				 $voiceWrap.on(touchstart,function(ev){//声音大小的调整功能
+					//alert(1);
+					 var touch = ev.originalEvent.changedTouches?ev.originalEvent.changedTouches[0]:ev;
+					 voiceProBarL=ev.pageX-$voicePro.offset().left;
+					 $voiceProUp.css('width',voiceProBarL);
+					 $voiceProBar.css('left',voiceProBarL);
+					 var scale=voiceProBarL/($voiceWrap.width());
+					 oAudio.volume=scale;
+
+				 });
+
+				$voiceProBar.on(touchstart,function(ev){//拖拽声音进度条
+				var touch=ev.originalEvent.changedTouches?ev.originalEvent.changedTouches[0]:ev;
+				var This=this;
+				disW=touch.pageX-$(this).position().left;
+				$(document).on(touchmove+'.move',function(ev){
+				var touch=ev.originalEvent.changedTouches?ev.originalEvent.changedTouches[0]:ev;
+				var L=touch.pageX-disW;
+				if(L<=0){
+					L=0;
+					}
+				else if(L>$voiceWrap.width()){
+					L=$voiceWrap.width();
+				}
+				voiceProBarL=L;
+
+				$(This).css('left', L );
+				$voiceProUp.css('width',L);
+				var scale=$voiceProUp.width()/$voiceWrap.width();
+				oAudio.volume=scale;
+					});
+
+				$(document).on(touchend+'.move',function(){
+					$(this).off('.move');
+					//alert(1);
+					});
+
+					return false;
+				});
+
+
+  				$detailsAudioProBar.on(touchstart,function(ev){//拖拽播放进度条
+				//alert(1);
+				var touch = ev.originalEvent.changedTouches ? ev.originalEvent.changedTouches[0] : ev;
+				var This = this;
+				disX = touch.pageX - $(this).position().left;
+				clearInterval(timer);
+				$(document).on(touchmove+'.move',function(ev){
+					//alert(2);
+					var touch = ev.originalEvent.changedTouches ? ev.originalEvent.changedTouches[0] : ev;
+					var L = touch.pageX - disX;
+					if(L<=0){
+						L = 0;
+					}
+					else if(L >= parentW){
+						L = parentW;
+					}
+					$(This).css('left', L );
+					scale = L/parentW;
+				});
+				$(document).on(touchend+'.move',function(){
+					$(this).off('.move');
+					oAudio.currentTime = scale * oAudio.duration;
+					playing();
+					scrolloff=true;
+					clearInterval(timer);
+					timer = setInterval(playing,1000);
+
+				});
+				return false;
+			});
+			$detailsPrev.on(touchstart,function(){
+				prev();
+			});
+			$detailsNext.on(touchstart,function(){
+				//musicOff=true;
+
+				next(switchIndex);
+			});
+
+
+			}
+			function formatTime(num){//格式日期
+				num=parseInt(num);
+				var iM=Math.floor(num%3600/60);
+				var iS=Math.floor(num%60);
+				return iM+':'+addZero(iS);
+
+
+			}
+			function addZero(num){//补零操作
+			return num=num<10?('0'+num):(''+num);
+
+			}
+			function playing(){//正在播放中
+				$detailsNowTime.html(formatTime(oAudio.currentTime));
+				scale=oAudio.currentTime/oAudio.duration;
+				$detailsAudioProUp.css('width',scale*100+'%');
+				$detailsAudioProBar.css('left',scale*100+'%');
+
+					musicDetails.scrollLyric(oAudio.currentTime);
+			}
+		function next(playstyle){    //下一首歌
+			var $li = $listContentUl.find('li');
+			var play_style=playstyle||0;
+			//alert(index===$listContentUl.find('li.active').index())
+
+			switch(switchIndex){//播放模式
+				case 0://0表示列表循环
+			index = index == $li.length - 1 ? 0 : index + 1;
+			id = $li.eq(index).attr('musicId');
+			musicOff=true;
+				break;
+				case 1://1表示顺序播放，到最后一首停止播放
+				if(index==$li.length - 1){
+					musicOff=false;}
+				index = index == $li.length - 1 ? 0 : index + 1;
+				id = $li.eq(index).attr('musicId');
+
+				break;
+				case 2://2表示单曲循环
+				id = $li.eq(index).attr('musicId');
+				musicOff=true;
+				break;
+				case 3://3表示随机播放
+				index=Math.floor(Math.random()*($li.length));
+				id = $li.eq(index).attr('musicId');
+				musicOff=true;
+				break;
+			}
+
+
+			    $li.eq(index).find('h3').addClass('active1').end().end().eq(index).siblings().find('h3').removeClass('active1');//最喜欢jQuery的链式操作啦
+				$li.eq(index).find('p').addClass('active2').end().end().eq(index).siblings().find('p').removeClass('active2');
+				$li.eq(index).attr('class','active').siblings().attr('class','');
+				$li.eq(index).find('.voiceImg').show().end().end().eq(index).siblings().find('.voiceImg').hide();
+				$li.eq(index).find('#fishMove').show().end().end().eq(index).siblings().find('#fishMove').hide();
+			loadMusic(id);
+
+		}
+		function prev(){    //上一首歌
+			var $li = $listContentUl.find('li');
+			index = index == 0 ? $li.length - 1 : index - 1;
+			id = $li.eq(index).attr('musicId');
+			    $li.eq(index).find('h3').addClass('active1').end().end().eq(index).siblings().find('h3').removeClass('active1');//最喜欢jQuery的链式操作,很高大上有木有
+				$li.eq(index).find('p').addClass('active2').end().end().eq(index).siblings().find('p').removeClass('active2');
+				$li.eq(index).attr('class','active').siblings().attr('class','');
+				$li.eq(index).find('.voiceImg').show().end().end().eq(index).siblings().find('.voiceImg').hide();
+				$li.eq(index).find('#fishMove').show().end().end().eq(index).siblings().find('#fishMove').hide();
+			loadMusic(id);
+		}
+			return{
+				init:init,
+				loadMusic:loadMusic
+			}
+
+			})();
+
+
+
+	var musicFengmian = (function(){ //音乐详情页操作
+	var $fengmianDetails=$('#fengmianDetails');
+	var $fengmianWrap=$('#fengmianWrap');
+	var H=$fengmianDetails.height();
+	var W=$fengmianDetails.width();
+	var $fengmianInner=$('#fengmianInner');
+	var scale=W/H;
+	var scaleH=60*scale;
+	var shadowOut=H/13;
+	//$musicDetails.css('transform','translate3d(0,'+(viewHeight)+'px,0)');
+	$fengmianWrap.css({width:'60%',height:(scaleH+"%"),left:'20%',top:(50-scaleH/2)+'%'});
+	$fengmianInner.css('box-shadow','0 '+0+' 0 '+shadowOut+'px'+' #252525');
+	$detailsFooter.find('img').on(touchstart,function(){return false;});
+	$detailsFooter.find('img').first().on(touchstart,function(){
+		$(this).attr('src')=='img/nofeel.png'?$(this).attr('src','img/love.png'):$(this).attr('src','img/nofeel.png');//其实不用每次都设置开关控制,增加变量,多利用自身的属性
+
+	});
+
+	$detailsFooter.find('img').eq(1).on(touchstart,function(){
+		$(this).attr('src')=='img/download.png'?$(this).attr('src','img/complete.png'):$(this).attr('src','img/complete.png');//其实不用每次都设置开关控制,增加变量,多利用自身的属性
+
+	});
+
+
+	var oSharMusic=$('#sharMusic');
+	var oMore=$('#ContactMeMore');
+	var oContent=$('.content');
+	var oH2=oSharMusic.find('h2').eq(0);
+	var oTimer=null;
+	var onff=true;
+
+	$fengmianDetails.on(touchstart,function(){
+		$fengmianDetails.css('opacity',0);
+		$detailsLyric.css('opacity',1);
+		$fengmianDetails.css('z-index',2);
+		$detailsLyric.css('z-index',3);
+		return false;
+		});
+
+		$detailsLyric.on(touchstart,function(){
+		$fengmianDetails.css('opacity',1);
+		$detailsLyric.css('opacity',0);
+		$fengmianDetails.css('z-index',3);
+		$detailsLyric.css('z-index',2);
+		return false;
+		});
+
+/*oH2.one(touchstart,function(){
+	if(onoff){onff=!onff;
+	//clearTimeout(oTimer);
+		oMore.animate({opacity:1},200,function(){
+		oSharMusic.animate({width:205},400);
+		oMore.animate({width:100},200);
+		oContent.animate({opacity:1},400);
+		oH2.css('color','#FF00FF');}
+	);
+	}else{onff=!onff;
+
+				oH2.css('color','#FF00FF');
+				oContent.animate({opacity:0},200);
+				oSharMusic.animate({width:62},200);
+				oMore.animate({opacity:0,width:0},200);
+
+
+	}
+	$(this).on(touchend,function(){
+		$(this).off();
+	});
+
+
+
+	});*/
+	oSharMusic.on(touchstart,function(){
+			return false;
+
+		});
+
+
+
+
+	oSharMusic.hover(function(){
+		clearTimeout(oTimer);
+		oMore.animate({opacity:1},200,function(){
+		oSharMusic.animate({width:205},400);
+		oMore.animate({width:100},200);
+		oContent.animate({opacity:1},400);
+		oH2.css('color','#FF00FF');
+			});
+		},function(){
+			oTimer=setTimeout(function(){
+				oH2.css('color','#FF00FF');
+				oContent.animate({opacity:0},200);
+				oSharMusic.animate({width:62},200);
+				oMore.animate({opacity:0,width:0},200);
+				},100);
+			}
+
+			);
+
+
+
+	 })();
+
+
+
+	/*var $mCSB_scrollTools=$('#mCSB_scrollTools');以前写的原生JS模拟滚动条，重新用Jquery写一遍就是方便有木有
+	var $mCSB=viewHeiht-$listTitle.height()-$listAudio.height();
+	var $listContentH=$listContent.height();
+	$mCSB_scrollTools.css('height', $listContentH);
+
+		var scrollDiv = document.getElementById('listContent');//整个div的高度
+        var scrollUl = document.getElementById('listContentUl');//Ul的高度
+
+        var scrollScro = document.getElementById('mCSB_scrollTools');//滚动条的高度
+        var scrollSpan = document.getElementById('mCSB_dragger');//滚轮标志的高度
+
+        var iMaxTop = scrollScro.offsetHeight - scrollSpan.offsetHeight-10;
+        //alert(srollSpan.offsetTop);
+
+        var imin = scrollSpan.offsetTop;
+$1('mCSB_dragger').onmousedown=function(ev){
+	var ev=ev||window.event;
+	var disY = ev.clientY - this.offsetTop;
+	document.onmousemove=function(ev){
+		var ev=ev||window.event;
+		var H=ev.clientY-disY;
+		if(H>iMaxTop){
+		H=iMaxTop;
+		}else if(H<imin){
+			H=imin;
+		}
+		 scrollSpan.style.top = H + 'px';
+
+		   var iScale =( H-10)/ (iMaxTop-10);
+
+                scrollUl.style.top = (scrollDiv.offsetHeight - scrollUl.offsetHeight) * iScale + 'px';
+				var T=Math.abs(parseInt(scrollUl.style.top));
+				//scrollUl.offsetHeight+=200;
+				//scrollSpan.style.top=(T/scrollDiv.offsetHeight)*(iMaxTop-17)+17+'px';
+
+
+
+	}
+	   document.onmouseup = function () {
+
+                document.onmousemove = document.onmouseup = null;
+
+            }
+
+            return false;
+
+
+}*/
+
+    var srcollMove=(function (parent,child){//模拟滚动条事件，自带的太丑了//1
+	var $mCSB_scrollTools=$('#mCSB_scrollTools');
+	var	scrollDiv=parent;//整个div的高度
+	var scrollUl=child;//Ul的高度
+    var scrollDivH=scrollDiv.height();
+	var scrollScro = $('#mCSB_scrollTools');//滚动条的高度
+    var scrollSpan =$('#mCSB_dragger');//滚轮标志的高度
+	var srollBtn=$('#mCSB_dragger');//滚动条按钮
+	var uoBtnH=$('#mCSB_buttonUp').outerHeight();
+
+	$mCSB_scrollTools.css('height',scrollDivH);
+	var iMaxTop = scrollDivH - scrollSpan.outerHeight()-uoBtnH;
+	var imin = scrollSpan.position().top;
+	var ScoL=0;
+	//alert(iMaxTop);
+
+	function init(){
+		bind();
+		}
+	function bind(){
+		scrollScro.on(touchstart,function(ev){
+		var touch = ev.originalEvent.changedTouches ? ev.originalEvent.changedTouches[0] : ev;
+		disT=touch.pageY-$(this).offset().top-(scrollSpan.outerHeight()/2);
+		if(disT>iMaxTop){
+		disT=iMaxTop;
+		}else if(disT<imin){
+			disT=imin;
+		}
+		srollBtn.animate({top:disT},500);
+		scrollUl.css('transition','.5s');
+		scrollUl.css('transform','translate3d(0,'+(-disT)+'px,0)');
+		});
+
+
+		srollBtn.on(touchstart,function(ev){
+		var touch = ev.originalEvent.changedTouches ? ev.originalEvent.changedTouches[0] : ev;
+		var disY=touch.pageY-$(this).position().top;
+		$(document).on(touchmove+'.move',function(ev){
+			var touch = ev.originalEvent.changedTouches ? ev.originalEvent.changedTouches[0] : ev;
+			var H=touch.pageY-disY;
+		if(H>iMaxTop){
+		H=iMaxTop;
+		}else if(H<imin){
+			H=imin;
+		}
+		scrollSpan.css('top',H);
+		   var iScale =( H-uoBtnH)/ (iMaxTop-uoBtnH);
+
+				ScoL=(scrollDiv.outerHeight() - scrollUl.outerHeight()) * iScale;
+				//scrollUl.css('top',ScoL);
+				scrollUl.css('transform','translate3d(0,'+(ScoL)+'px,0)');
+                //scrollUl.style.top = (scrollDiv.outerHeight() - scrollUl.outerHeight()) * iScale + 'px';
+				//var T=Math.abs(parseInt(scrollUl.style.top));
+
+			});
+
+		$(document).on(touchend+'.move',function(){
+			//scrollUl.css('transform','translate3d(0,'+(ScoL)+'px,0)');
+					$(this).off('.move');
+		});
+
+		return false;
+
+
+
+
+		});
+
+			if(mouseWheel){//表明是PC端//这里用原生JS编写，jQuery好像没有滚轮事件/2
+			scrollScro.get(0).onmousewheel = scrollSpan.get(0).onmousewheel = scrollDiv.get(0).onmousewheel = fn;//滚轮的效果.兼容火狐,IE,Chrome
+
+        if (scrollDiv.get(0).addEventListener) {
+            scrollDiv.get(0).addEventListener('DOMMouseScroll', fn, false);
+        }
+        else if (scrollScro.get(0).addEventListener) {
+            scrollScro.get(0).addEventListener('DOMMouseScroll', fn, false);
+        }
+        else if (scrollSpan.get(0).addEventListener) {
+            scrollSpan.get(0).addEventListener('DOMMouseScroll', fn, false);
+        }
+
+        function fn(ev) {
+
+            var ev = ev || event;
+
+            var b = true;
+
+            if (ev.wheelDelta) {
+                b = ev.wheelDelta > 0 ? true : false;
+            } else {
+                b = ev.detail < 0 ? true : false;
+            }
+
+
+            if (b) {
+                var speed = scrollSpan.get(0).offsetTop - 10;
+
+                if (speed < 10) {
+
+                    speed = 10;
+
+                }
+                scrollSpan.get(0).style.top = speed + 'px';
+
+                var iScale = speed / iMaxTop;
+                //alert(iScale);
+                //scrollUl.get(0).style.top = (scrollDiv.get(0).offsetHeight - scrollUl.get(0).offsetHeight) * iScale + 'px';
+				var transL=(scrollDiv.get(0).offsetHeight - scrollUl.get(0).offsetHeight) * iScale ;
+				scrollUl.css('transform','translate3d(0,'+(transL)+'px,0)');//transform的只其实影响了ul的top值,所以不需要再去设置他的top值
+            } else {
+                var speed = scrollSpan.get(0).offsetTop + 10;
+
+                if (speed > iMaxTop) {
+
+                    speed = iMaxTop;
+
+                }
+                scrollSpan.get(0).style.top = speed + 'px';
+
+
+                var iScale = (speed-10) / (iMaxTop-10);
+                //alert(iScale);
+                //scrollUl.get(0).style.top = (scrollDiv.get(0).offsetHeight - scrollUl.get(0).offsetHeight) * iScale + 'px';
+				var transL=(scrollDiv.get(0).offsetHeight - scrollUl.get(0).offsetHeight) * iScale ;
+				scrollUl.css('transform','translate3d(0,'+(transL)+'px,0)');
+
+            }
+
+
+
+            return false;
+
+
+        }
+
+			}//2
+
+
+		}
+
+
+	return{
+		init:init
+	}
+
+
+})($listContent,$listContentUl);//1
+init();
+
+
+
+
+
+
+
+
+
+	 });
+ </script>
+</body>
+</html>

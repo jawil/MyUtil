@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+#div1{width:100px;height:100px;background:red;position:absolute;left:100px;top:100px;}
+</style>
+</head>
+
+<body>
+<div id="div1">
+</div>
+
+<script language="javascript">
+var oDiv=document.getElementById('div1');
+oDiv.onclick = function() {
+		
+		doMove(oDiv, {
+			width : 200,
+			height: 300
+		}, 10);
+	}
+function doMove(obj,json,iSpeed){
+	clearInterval(obj.timer);
+	var iCur=0;
+	obj.timer=setInterval(function (){
+		
+		var flag=true;
+		
+		for(var attr in json){
+			var iTarget=json[attr];
+			if(attr=='opacity'){
+				iCur=Math.round(getStyle(obj,'opacity')*100);
+				}
+			else{
+				iCur=parseInt(getStyle(obj,attr));
+			
+				}
+				
+				if(iCur!=iTarget){
+					flag=false;
+					if(attr=='opacity'){
+						obj.style.opacity=(iCur+iSpeed)/100;
+						obj.style.filter='alpha(opacity='+(iCur+iSpeed)+')'
+						}
+				    else{
+						obj.style[attr]=iCur+iSpeed+'px';
+						}		
+					}	
+			}
+		if (flag) {
+				clearInterval(obj.timer);
+			}
+		
+		},30);
+	
+	
+}
+
+function getStyle(obj,attr){
+	
+	return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+	
+}
+
+</script>
+</body>
+</html>

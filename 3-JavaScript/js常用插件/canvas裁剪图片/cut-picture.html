@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>利用canvas裁剪图片</title>
+    <link rel="stylesheet" href="">
+    <style>
+    #upload-wrap {
+        width: 600px;
+        height: 400px;
+        border: 1px solid red;
+        background: #2D2F33;
+        border: 1px solid #3B3A3D;
+    }
+
+    #upload-wrap .title {
+        height: 50px;
+        border-bottom: 1px solid #3B3A3D;
+        box-sizing: border-box;
+        padding: 15px 20px;
+    }
+
+    #upload-wrap .title span:first-child {
+        color: #ADAFB2;
+    }
+
+    #upload-wrap .title span:last-child {
+        color: #ADAFB2;
+        float: right;
+        cursor: pointer;
+        transition:0.3s;
+
+    }
+    #upload-wrap .title span:last-child:hover{
+        transform:rotate(360deg);
+
+    }
+
+    #upload-wrap .contanier {
+        height: 290px;
+        width: 600px;
+        border-bottom: 1px solid #3B3A3D;
+    }
+
+    #upload-wrap .cut-picture {
+        width: 250px;
+        height: 250px;
+        border: 1px solid #3B3A3D;
+        display: inline-block;
+        margin-left: 60px;
+        margin-top: 19px;
+        vertical-align: middle;
+        overflow: hidden;
+        position: relative;
+    }
+
+    #upload-wrap .cut-picture #cut-move {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        cursor: move;
+    }
+
+    #upload-wrap .cut-picture img {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    #upload-wrap .pre-wrapper {
+        width: 250px;
+        height: 250px;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        color: #5F5F63;
+    }
+
+    #upload-wrap .pre-picture {
+        border: 1px solid #3B3A3D;
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+        margin-top: 50px;
+        margin-bottom: 20px;
+    }
+
+    #upload-wrap .pre-picture img {
+        border: 0;
+    }
+
+    #upload-wrap .save-picture {
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+    }
+
+    #upload-wrap .save-picture input {
+        width: 80px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        color: gray;
+        font-size: 14px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        background-image: linear-gradient(#5187c4, #1c2f45);
+        background-image: -webkit-linear-gradient(#5187c4, #1c2f45);
+        background-size: auto 200%;
+        background-position: 0 100%;
+        transition: background-position 0.5s;
+    }
+
+    #upload-wrap .save-picture input:hover {
+        background-position: 0 0;
+        color: white;
+    }
+
+    #myCanvas {
+        display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <input id="logo" type="file" accept="image/*" capture="camera" />
+    <canvas id="myCanvas"></canvas>
+    <div id="upload-wrap">
+
+            <div class="title">
+                <span>上传头像</span><span>×</span>
+            </div>
+
+
+            <div class="contanier">
+                <div class="cut-picture">
+                    <img src="" alt="" id="cut-image">
+                    <div id="cut-move"></div>
+                </div>
+                <div class="pre-wrapper">
+                    <div class="pre-picture">
+                        <img src="" alt="" id="pre-image">
+                    </div>
+                    <span>预览图片</span>
+                </div>
+            </div>
+
+                <div class="save-picture">
+                    <input type="button" value="重新选择">
+                    <input type="button" value="保存并关闭">
+                </div>
+
+
+    </div>
+    <script>
+    var oInput = document.querySelector('#logo');
+    var oWrap = document.querySelector('upload-wrap');
+    var oImg = document.querySelector('#cut-image');
+    var opreImg = document.querySelector('#pre-image');
+    var oDiv = document.querySelector('#cut-move');
+    var num = parseInt(css(document.querySelector('.cut-picture'), 'width'));
+    var preWidth = parseInt(css(document.querySelector('.pre-picture'), 'width'));
+    console.log(num);
+    oInput.onchange = function(e) {
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                var image = new Image();
+                image.src = event.target.result;
+                image.onload = function() {
+
+                    oImg.src = image.src;
+                    var rate = image.width / image.height;
+                    if (rate > 1) {
+                        oImg.width = num;
+                        oImg.height = num / rate;
+                    } else if (rate < 1) {
+
+                        oImg.width = num * rate;
+                        oImg.height = num;
+
+                    } else {
+
+                    }
+                    var canvas = document.getElementById("myCanvas");
+                    var flagWidth = 0;
+                    var ctx = canvas.getContext("2d");
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    if (rate < 1) {
+                        oDiv.style.width = oImg.width + 'px';
+                        oDiv.style.height = oImg.width + 'px';
+                        oDiv.style.left = (oImg.height - oImg.width) / 2 + 'px';
+                        canvas.width = image.width;
+                        canvas.height = image.width;
+                        flagWidth = image.width;
+                    } else {
+                        oDiv.style.width = oImg.height + 'px';
+                        oDiv.style.height = oImg.height + 'px';
+                        oDiv.style.top = (oImg.width - oImg.height) / 2 + 'px';
+                        canvas.width = image.height;
+                        canvas.height = image.height;
+                        flagWidth = image.height;
+                    }
+                    oDiv.style.border = "1px dotted #00FF00";
+                    ctx.drawImage(image, 0, 0, flagWidth, flagWidth, 0, 0, flagWidth, flagWidth);
+                    var data = canvas.toDataURL();
+                    opreImg.src = data;
+                    opreImg.width = preWidth;
+                    opreImg.height = preWidth;
+                    oDiv.onmousedown = function(ev) {
+                            var ev = ev || event;
+                            var disX = ev.clientX - this.offsetLeft;
+                            var disY = ev.clientY - this.offsetTop;
+                            var L = 0;
+                            var T = 0;
+                            if (oDiv.setCapture) {
+                                oDiv.setCapture();
+                            }
+
+                            document.onmousemove = function(ev) {
+                                var ev = ev || event;
+                                L = ev.clientX - disX;
+                                T = ev.clientY - disY;
+                                if (L < 0) {
+                                    L = 0;
+                                } else if (L > num - oDiv.offsetWidth) {
+                                    L = num - oDiv.offsetWidth;
+                                }
+                                if (T < 0) {
+                                    T = 0;
+                                } else if (T > num - oDiv.offsetHeight) {
+                                    T = num - oDiv.offsetHeight;
+                                }
+                                if (rate < 1) {
+                                    oDiv.style.top = T + 'px';
+
+                                } else {
+                                    oDiv.style.left = L + 'px';
+                                }
+                            }
+
+                            document.onmouseup = function() {
+                                document.onmousemove = document.onmouseup = null;
+                                if (oDiv.releaseCapture) {
+                                    oDiv.releaseCapture();
+                                }
+                                if (rate < 1) {
+                                    T = (image.height - image.width) / (oImg.height - oImg.width) * T;
+                                    ctx.drawImage(image, 0, T, flagWidth, flagWidth, 0, 0, flagWidth, flagWidth);
+                                    var data = canvas.toDataURL();
+                                    opreImg.src = data;
+
+                                } else {
+                                    L = (image.width - image.height) / (oImg.width - oImg.height) * L;
+                                    ctx.drawImage(image, L, 0, flagWidth, flagWidth, 0, 0, flagWidth, flagWidth);
+                                    var data = canvas.toDataURL();
+                                    opreImg.src = data;
+                                }
+                            }
+                            return false;
+                        }
+                        // 将图像绘制到canvas上
+                        //ctx.drawImage(image,    0, 0,     322, 322,    0,0,    322,322);
+                        // !!! 注意，image 没有加入到 dom之中
+                        //第一组数字是x和y轴偏移的(相对于图片)
+                        //第二组数字是啥?
+                        //第三组数字是x和y轴偏移的(相对于canvas)
+                        //第四组数字是在canvas展示的大小
+                }
+            }
+            reader.readAsDataURL(file);
+        }
+        /*  兼容各个浏览器获取样式数值*/
+    function css(obj, attr) {
+        if (obj.currentStyle) {
+            return obj.currentStyle[attr];
+        } else {
+            return getComputedStyle(obj, false)[attr];
+        }
+    }
+    </script>
+</body>
+
+</html>

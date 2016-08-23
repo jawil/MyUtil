@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            各种CSS
+        </title>
+        <style>
+          /*css3 动画demo*/
+          .testframes{ width:100px; height:100px; background:red;position:relative; animation:mymove 2s infinite; -moz-animation:mymove 2s infinite; /* Firefox */ -webkit-animation:mymove 2s infinite; /* Safari and Chrome */ -o-animation:mymove 2s infinite; /* Opera */ }
+          @keyframes mymove{ 
+            0% {left:0px;} 
+            100% {left:100px;} 
+          }
+          @-moz-keyframes mymove /* Firefox */ { 
+            0% {left:0px;} 
+            100% {left:100px;} 
+          }
+          @-webkit-keyframes mymove /* Safari 和 Chrome */ {
+            0% {left:0px;} 
+            100% {left:100px;} 
+          }
+          @-o-keyframes mymove /* Opera */ {
+            0% {left:0px;} 
+            100% {left:100px;} 
+          }
+          
+          /*清除浮动 常用样式*/
+          .clearfix{ zoom: 1; }
+          .clearfix:before,.clearfix:after{ content:'';display: table; }
+          .clearfix:after{ clear:both;visibility: hidden; }
+
+          /*垂直、水平居中*/
+          .c-wrap{ border:1px solid #ccc;width: 300px;height: 300px;position: relative;margin: 0 auto; }
+          /*transform IE9+兼容 ，另如果将top、left、right、top都设置成0然后margin设置成auto则能兼容IE8+*/
+          .c-cont{ position: absolute; margin:-50px 0 0 -50px; /*父元素 宽度的一半 高度的一半*/top:50%;left:50%;width:100px;  height:100px;background-color:green; }
+          #main { float: left; width: 100%; }
+          #mainContainer { margin: 0 200px; height: 200px; background: green; }
+          #left { float: left; margin-left: -100%; width: 200px }
+          #right { float: left; margin-left: -200px; width: 200px; }
+          #left .inner,
+          #right .inner { background: orange; margin: 0 10px; height: 200px; }
+
+          .radius-btn{ border-radius: 5px;cursor:pointer;padding:5px;margin: 5px;background-color: #eee; }
+          .radius-btn:hover{ background-color:#ddd; }
+
+          /*文字垂直居中对齐，table-cell IE8以下不兼容； http://www.hacke2.cn/div-center/*/
+          .vertical-wrap{ display:table-cell; width:550px; height:100px; padding:0 15px; border:4px solid #beceeb; color:#069; font-size:14px; vertical-align:middle; }
+          .ver-txt{ display:inline-block;  font-size:14px; }
+          .demo { display: none; }
+          /*多栏高度相等(等高实现)*/
+          .d-col-cont{ overflow:hidden; }
+          .d-col-l{ width:200px; margin-bottom:-3000px; padding-bottom:3000px; background:#cad5eb;  float:left; }
+          .d-col-r{ width:400px; margin-bottom:-3000px; padding-bottom:3000px;  background:#f0f3f9;  float:right; }
+          .d-col-c{ margin:0 410px 0 210px;  background:#ffe6b8; height:400px; }
+          /*媒体查询样式*/
+          #test5 h1 { margin: 0; padding: 0; }
+          .header { background-color: red; height: 50px; }
+          .sidebar { background-color: green; height: 50px; }
+          .content { background-color: blue;  height: 50px; }
+
+          @media screen and (min-width: 600px) {
+            .sidebar { width: 200px; float: left; }
+            .content { margin-left: 200px; }
+          }
+
+          /*css三角形, css三角形产生器：http://apps.eky.hk/css-triangle-generator/zh-hant*/
+          .css-triangle { width: 0; height: 0; border-style: solid dashed dashed dashed;*border-style:dashed; border-width: 200px 105px 0 105px; border-color: #007bff transparent transparent transparent; }
+          
+          .u_face{ position:relative; padding-top: 30px; width: 60px; margin: 0 auto; cursor:pointer; }
+          .u_face img{ width: 60px; height: 60px; display: block; border-radius: 50%;}
+          .u-face-pop { zoom:1; display:none; margin-top: -235px; margin-left:-70px; width:180px; height:130px; background: #ccc; border:2px solid #007bff; position:relative; padding:10px; }
+          .u-face-pop p{ color:#fff; }
+          .u-face-pop .triangle-ico { position:absolute; bottom:-16px; left:88px; width: 0; height: 0; border-style: solid dashed dashed dashed; border-width: 15px 10px 0 10px; border-color: #007bff transparent transparent transparent; }
+        
+          /*文字双击选中默认事件去除*/
+          /*IE6-9还没发现相关的CSS属性
+            需要在html标签添加事件
+            document.body.onselectstart = document.body.ondrag = function(){
+            return false;
+            }
+          */
+          .cant-selected{ -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; -ms-user-select:none; }
+          /*文字两端对齐 解决实际开发中文字没左右端两端没对齐bug*/
+          .box-wrap{width:50%; padding:20px; margin:20px auto; background-color:#f0f3f9; text-align:justify;}
+          .list{width:250px; height:120px; display:inline-block; margin-bottom:20px; text-align:center; vertical-align:top; background-color: #000; }
+          .justify-fix{display:inline-block; width:100%; height:0; overflow:hidden;}
+
+          /* padding border margin与 宽度关系探讨 */
+          .t-padding-wrap{ height:100px; width:200px; background-color:#ccc; padding:20px; }
+          .t-border-wrap{ height:100px; width:200px; background-color:#ccc; border:5px solid #555; }
+          .t-margin-wrap{ height:100px; width:200px; background-color:#ccc; margin:20px; }
+          .t-w-parent{ height:100px; width:200px; }
+          .t-padding-wrap2{ background-color:#ccc; padding:20px; height:100%; }
+          .t-border-wrap2{ background-color:#ccc; border:5px solid #555; height:100%; }
+          .t-margin-wrap2{ background-color:#ccc; margin:20px; height:100%; }
+
+          /*给div添加border 不占用宽度，例如原来是50%， 不想因为添加了brder导致div宽度大于50%; box-sizing IE8才开始支持（ie8 得加-ms前缀） */
+        
+          /*...样式实现，兼容IE6+，火狐下显示有点小问题*/
+          .text_overflow{width:27em; white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; overflow:hidden;}
+          
+          /*CSS 图片灰阶处理*/
+          /*http://www.zhangxinxu.com/wordpress/2012/08/css-svg-filter-image-grayscale/ 
+            实际应用中如果要兼容所有浏览器（包括但不限于ie6~ie11），样式无法办到，只能使用一个新的黑色透明节点盖上面迂回实现；
+          */
+          .gray { -webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-ms-filter: grayscale(100%);-o-filter: grayscale(100%);filter: grayscale(100%);filter: gray; }
+          /*http://www.cnblogs.com/qiyebao/p/4028129.html*/
+        </style>
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    </head>
+    
+    <body>
+
+      <div class='btn-cont'>
+        <button id="tBtn1" data-id="test1" class="radius-btn">css3动画</button>
+        <button id="tBtn2" data-id="test2" class="radius-btn">css水平垂直居中</button>
+        <button id="tBtn3" data-id="test3" class="radius-btn">css三栏布局</button>
+        <button id="tBtn4" data-id="test4" class="radius-btn">多栏布局</button>
+        <button id="tBtn5" data-id="test5" class="radius-btn">媒体查询</button>
+        <button id="tBtn6" data-id="test6" class="radius-btn">css三角形</button>
+        <button id="tBtn7" data-id="test7" class="radius-btn">两端对齐</button>
+        <button id="tBtn8" data-id="test8" class="radius-btn">盒子宽度实验</button>
+        <button id="tBtn9" data-id="test9" class="radius-btn">...样式实现</button>
+      </div>
+
+      <div id='test1' class="demo demo2">
+        <h3>CSS3动画</h3>
+        <div id="moveElement" class='testframes'>每秒移动50px，左移100px</div>
+      </div>
+
+      <!-- 垂直居中相关教程：http://www.zhangxinxu.com/wordpress/2013/11/margin-auto-absolute-%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D-%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD/ -->
+      <div id="test2" class="demo">
+        <h3>css实现水平垂直居中(容器高度固定)</h3>
+        <div class='c-wrap'>
+          <div class='c-cont'>
+            水平居中的元素
+          </div>
+        </div>
+        <h3> 高度固定，多行文字垂直居中</h3>
+        <div class="vertical-wrap">
+          <span class="ver-txt">
+            这里的文字用来做多行垂直居中对齐</br>
+            这是第二行，本行是用图像的display属性：inline-block
+          </span>
+        </div>
+      </div>
+      
+      <div id='test3' class="demo">
+        <h3>用DIV+CSS实现三栏布局（左右固定200px，中间自适应）</h3>
+        <div id="main">
+          <div id="mainContainer">main content</div>
+        </div>
+        <div id="left">
+          <div id="leftContainer" class="inner">left content</div>
+        </div>
+        <div id="right">
+           <div id="rightContainer" class="inner">right</div>
+        </div>
+      </div>
+
+      <div id='test4' class="demo">
+        <h2>多栏高度自动相等</h2>
+        <div id="DoubleCol" class="d-col-cont">
+          <div class="d-col-l">左边，无高度属性，自适应于最高一栏的高度</div>
+          <div class="d-col-r">右边，无高度属性，自适应于最高一栏的高度</div>
+          <div class="d-col-c">中间，高度600像素，左右两栏的高度与之自适应</div>
+        </div>
+      </div>
+
+      <div id='test5' class="demo">
+        <h2>媒体查询</h2>
+        <h4>屏幕宽度小于600px时样式改变</h4>
+        <div>
+          <div class='header'>
+            <h1>header</h1>
+          </div>
+          <div class="sidebar">
+            <h1>sidebar</h1>
+          </div>
+          <div class="content">
+            <h1>content</h1>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 源自知乎：http://www.zhihu.com/question/35180018/answer/61554144 -->
+      <div id="test6" class="demo">
+        <p>
+          <h2>来源：</h2>
+          <a href="http://apps.eky.hk/css-triangle-generator/zh-hant" >三角形产生器链接:</a>
+        </p>
+        <div class="css-triangle"></div>
+
+        <h2 class="cant-selected" onselectstart="return false;">运用场景：(点击弹出层)</h2>
+
+        <div class="u_face">
+            <img id="uFace" src="images/dlam.jpg">
+            <div class="u-face-pop" id="uFacePop">
+              <p>妨碍我们学习的不是未知的，而是已知的，尤其是那种略知一二的。 </p>
+              <div class="triangle-ico"></div>
+            </div>
+        </div>
+      </div>
+
+      <!-- 实现两端对齐, 2个一组对齐 -->
+      <div id="test7" class="demo box-wrap">
+        <span class="list"></span>
+        <span class="list"></span>
+        <span class="list"></span>
+        <span class="justify-fix"></span>
+      </div>
+
+      <div id="test8" class="demo">
+        <h1>padding margin border影响宽度对比</h1>
+        <div class="t-padding-wrap"></div>
+        <div class="t-border-wrap"></div>
+        <div class="t-margin-wrap"></div>
+        <h1>让padding border的盒子宽高相同</h1>
+        <div class="t-w-parent">
+          <div class="t-padding-wrap2">adsf</div>
+        </div>
+        <div class="t-w-parent">
+          <div class="t-border-wrap2">adf</div>
+        </div>
+        <div class="t-w-parent">
+          <div class="t-margin-wrap2">adf</div>
+        </div>
+      </div>
+
+      <div id="test9" class="demo">
+        <h3>..样式实现，兼容IE6+，火狐下显示有点小问题</h3>
+        <h4>原文：</h4>
+        <div>...样式实现原理，1.固定长度(width)；2.强制文字在一行显示(white-space)；3.超出部分截取(overflow)；4.文字超出部分添加...;(text-overflow)</div>
+        <h4>调用样式后文本：</h4>
+        <div class="text_overflow" title="...样式实现原理，1.固定长度(width)；2.强制文字在一行显示(white-space)；3.超出部分截取(overflow)；4.文字超出部分添加...;(text-overflow)">...样式实现原理，1.固定长度(width)；2.强制文字在一行显示(white-space)；3.超出部分截取(overflow)；4.文字超出部分添加...;(text-overflow)</div>
+      </div>
+      
+      <script src="utils/base.js" type="text/javascript"></script>
+      <script>
+        // CSS没有发布的概念，俗称是标准规范，实际上只是个建议，并不是强制执行的，W3C也只不过是个民间组织。
+        // 至于CSS3何时确定的，反正CSS2.1是今年6月7日最终定稿的。
+        // CSS3不是解决CSS2的问题，而是新的标准特性，不是补丁。
+        // 而且刚才说了，只是建议，浏览器厂商没有义务遵守，就算遵守的了，也需要更新版本逐步完善，就算完善了，也得用户升级才行。
+        // 而且这是个循序渐进的过程，不是说新的出来旧的就不用了。
+
+        init();
+
+        // 启动函数
+        function init() {
+          var i, len, btn;
+          // 按钮列表 
+          var btn_list = document.getElementsByClassName('radius-btn');
+
+          for (i = 0, len = btn_list.length; i < len; i++) {
+            btn = btn_list[i];
+            btn.onclick = demoClickHandler;
+          }
+
+          // 头像点击事件
+          popUserInfo();
+        }
+        // 头像事件
+        function popUserInfo() {
+          var uFace = document.getElementById('uFace'),
+              uFacePop = document.getElementById('uFacePop'),
+              timeoutId = 0;
+
+          // addHandler()  utils.js工具类方法
+          EventUtil.addHandler(uFace, 'mouseenter', showUserInfo);
+          EventUtil.addHandler(uFace, 'mouseleave', hideUserInfo);
+          EventUtil.addHandler(uFacePop, 'mouseover', overUserPop);
+          EventUtil.addHandler(uFacePop, 'mouseout', outUserPop);
+
+          // 显示弹出框
+          function showUserInfo(e) {
+            if ( timeoutId != 0 ) {
+              clearTimeout(timeoutId);
+              timeoutId = 0;
+            }
+            if ( uFacePop.style.display == 'none' || uFacePop.style.display == '') {
+              uFacePop.style.display = 'block';
+            }
+            
+          }
+          // 隐藏弹出框
+          function hideUserInfo(e) {
+            timeoutId = setTimeout(function () {
+              uFacePop.style.display = 'none';
+            }, 1000);
+          }
+
+          // 进入弹出框区域
+          function overUserPop(e) {
+            if ( timeoutId != 0 ) {
+              clearTimeout(timeoutId);
+              timeoutId = 0;
+            }
+          }
+          // 退出弹出框区域
+          function outUserPop(e) {
+            timeoutId = setTimeout(function () {
+              uFacePop.style.display = 'none';
+            }, 1000);
+          }
+
+        }
+
+        // 根据点击对象 获得对应节点
+        function demoClickHandler(event){
+          var targetDemo = null, demo_id = '';
+          demo_id = this.getAttribute('data-id');
+          targetDemo = document.getElementById(demo_id);
+          hideAllDemo();
+          showDemo(targetDemo);
+        }
+
+
+        function showAllDemo(){
+          // 获得demo集合 getElementsByClassName utils.js已做兼容处理
+          var demo_list = document.getElementsByClassName('demo');
+          var i , len, n_item;
+          for (i = 0, len = demo_list.length; i < len; i++) {
+            n_item = demo_list[i];
+            n_item.style.display = 'block';
+          }
+        }
+
+        function hideAllDemo(){
+          // 获得demo集合 
+          var demo_list = document.getElementsByClassName('demo');
+          var i , len, n_item;
+          for (i = 0, len = demo_list.length; i < len; i++) {
+            n_item = demo_list[i];
+            n_item.style.display = 'none';
+          }
+        }
+
+        // 显示某一demo
+        function showDemo(demo){
+          if (demo && demo.style){
+            demo.style.display = 'block';
+          }
+        }
+
+        // 隐藏某一demo
+        function hideDemo(demo){
+          if (demo && demo.style){
+            demo.style.display = 'none';
+          }
+        }
+
+      </script>
+
+    </body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 div{ width:200px; height:200px; border:1px #000 solid; display:none;}
+.active{ background:red;}
+</style>
+<script>
+
+/*window.onload = function(){
+	var oParent = document.getElementById('div1');
+	var aInput = oParent.getElementsByTagName('input');
+	var aDiv = oParent.getElementsByTagName('div');
+	
+	for(var i=0;i<aInput.length;i++){
+		aInput[i].index = i;
+		aInput[i].onclick = function(){
+			for(var i=0;i<aInput.length;i++){
+				aInput[i].className = '';
+				aDiv[i].style.display = 'none';
+			}
+			this.className = 'active';
+			aDiv[this.index].style.display = 'block';
+		};
+	}
+	
+};*/
+
+//先变型:
+//尽量不要出现函数嵌套函数
+//可以有全局变量
+//把onload中不是赋值的语句放到单独函数中
+
+
+/*var oParent = null;
+var aInput = null;
+var aDiv = null;
+
+window.onload = function(){
+	
+	oParent = document.getElementById('div1');
+	aInput = oParent.getElementsByTagName('input');
+	aDiv = oParent.getElementsByTagName('div');
+
+	init();
+	
+};
+
+function init(){
+	for(var i=0;i<aInput.length;i++){
+		aInput[i].index = i;
+		aInput[i].onclick = change;
+	}
+}
+
+function change(){
+	for(var i=0;i<aInput.length;i++){
+		aInput[i].className = '';
+		aDiv[i].style.display = 'none';
+	}
+	this.className = 'active';
+	aDiv[this.index].style.display = 'block';
+}*/
+
+//改成面向对象:
+//全局变量就是属性
+//函数就是方法
+//Onload中创建对象
+
+//改this指向问题 : 事件或者是定时器,尽量让面向对象中的this指向对象
+
+window.onload = function(){
+	
+	var t1 = new Tab();
+	t1.init();
+	
+};
+
+function Tab(){
+	this.oParent = document.getElementById('div1');
+	this.aInput = this.oParent.getElementsByTagName('input');
+	this.aDiv = this.oParent.getElementsByTagName('div');
+}
+
+Tab.prototype.init = function(){
+	var This = this;
+	for(var i=0;i<this.aInput.length;i++){
+		this.aInput[i].index = i;
+		this.aInput[i].onclick = function(){
+			This.change(this);
+		};
+	}
+};
+
+Tab.prototype.change = function(obj){
+	for(var i=0;i<this.aInput.length;i++){
+		this.aInput[i].className = '';
+		this.aDiv[i].style.display = 'none';
+	}
+	obj.className = 'active';
+	this.aDiv[obj.index].style.display = 'block';
+};
+
+</script>
+</head>
+
+<body>
+<div id="div1">
+	<input class="active" type="button" value="1">
+    <input type="button" value="2">
+    <input type="button" value="3">
+    <div style="display:block">11111</div>
+    <div>22222</div>
+    <div>33333</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script src="jquery-1.10.1.min.js"></script>
+<script>
+$(function(){
+	$('#wrap').hover(function(){
+		$("#wrap .move,#wrap_mirror").show(); //小滑块和大图展示显示
+	},function(){
+		$("#wrap .move,#wrap_mirror").hide();//小滑块和大图展示隐藏
+	});
+	
+$('#wrap').mousemove(function(ev){
+			var T=ev.clientY-$('#wrap .move').width()/2-$(this).offset().top;
+		    var L=ev.clientX-$('#wrap .move').height()/2-$(this).offset().left;
+			document.title=ev.clientX;
+			L=L<0?0:L;
+			L=L>($('#wrap').width()-$('#wrap').find('span').width())?($('#wrap').width()-$('#wrap').find('span').width()):L;
+			T=T<0?0:T;
+			T=T>($('#wrap').height()-$('#wrap').find('span').height())?($('#wrap').height()-$('#wrap').find('span').height()):T;
+			$('#wrap .move').css({"left":L,"top":T});
+			var scaleX = L/($('#wrap').width()-$('#wrap').find('span').width());
+			var scaleY = T/($('#wrap').height()-$('#wrap').find('span').height());
+		    $('#imgmove').css({"left":-scaleX*($('#imgmove').width()-$('#wrap_mirror').width()),"top":-scaleY*($('#imgmove').height()-$('#wrap_mirror').height())});
+			});
+			})
+
+</script>
+<style>
+* {
+	padding: 0;
+	margin: 0;
+}
+img {
+	vertical-align: top;
+	border: none;
+}
+#wrap {
+	border: 1px solid blue;
+	width: 180px;
+	height: 180px;
+	position: relative;
+}
+#wrap span {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	background: yellow;
+	width: 100px;
+	height: 100px;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+}
+#wrap_mirror {
+	width: 500px;
+	height: 500px;
+	border: 1px solid red;
+	position: absolute;
+	left: 200px;
+	top: 100px;
+	overflow: hidden;
+	display: none;
+}
+#imgmove {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+</style>
+</head>
+
+<body>
+<div id="wrap"> <img src="b2.jpg"/> <span class="move"></span> </div>
+<div id="wrap_mirror"> <img id="imgmove" src="b1.jpg"/> </div>
+</body>
+</html>

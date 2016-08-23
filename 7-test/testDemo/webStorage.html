@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta name="renderer" content="webkit">
+      <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/>
+      <meta http-equiv="content-type" content="charset=utf-8">
+      <!-- meta 详细信息 http://www.wzsky.net/html/Website/htmlcss/116165.html -->
+      <!-- 设置所有缓存无效 -->
+      <meta http-equiv="Expires"   CONTENT="0">
+      <meta http-equiv="Cache-Control"   CONTENT="no-cache">
+      <meta http-equiv="Pragma"   CONTENT="no-cache">
+      <title>
+        浏览器缓存理解
+      </title>
+      <!--[if lt IE 8]>
+        <script type="text/javascript" src="lib/json2.js"></script>
+      <![endif]-->
+      <link rel="icon" href="favicon.ico" type="image/x-icon" />
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    </head>
+    
+    <body>
+      <h3>浏览器缓存理解</h3>
+      
+      <p>
+        1.localStorage 不清除缓存一直存在；
+        <input type="button" value="点击存入缓存" id="lSetBtn"/>
+        <input type="button" value="点击删除缓存" id="lRemoveBtn" />
+        <input type="button" value="点击查看缓存" id="lShowBtn" />
+      </p>
+      <p>
+        <span id="lBtnTips"></span>
+      </p>
+      <br/>
+
+      <p>
+        2.sessionStorage：重启浏览器后消失；
+        <input type="button" value="点击存入缓存" id="sSetBtn"/>
+        <input type="button" value="点击删除缓存" id="sRemoveBtn" />
+        <input type="button" value="点击查看缓存" id="sShowBtn" />
+      </p>
+      <p>
+        <span id="sBtnTips"></span>
+      </p>
+      <br/>
+
+      <p>
+        3.cookie：需在虚拟服务器运行，放在虚拟服务器（如：tomcat）根目录下（或配置虚拟服务器映射）；
+        <input type="button" value="点击存入缓存" id="cSetBtn"/>
+        <input type="button" value="点击删除缓存" id="cRemoveBtn" />
+        <input type="button" value="点击查看缓存" id="cShowBtn" />
+      </p>
+      <p>
+        <span id="cBtnTips"></span>
+      </p>
+      <br />
+
+      <p>
+        4.websql浏览器缓存：仅chrome safari opera浏览器支持；
+        <input type="button" value="点击存入缓存" id="wSetBtn"/>
+        <input type="button" value="点击删除缓存" id="wRemoveBtn" />
+        <input type="button" value="点击查看缓存" id="wShowBtn" />
+      </p>
+      <p>
+        <span id="wBtnTips"></span>
+      </p>
+      <br/>
+
+      <p>
+        5.indexDb浏览器缓存：chrome firefox opera浏览器支持、IE(EDGE)、safari部分支持；
+        <input type="button" value="点击存入缓存" id="iSetBtn"/>
+        <input type="button" value="点击删除缓存" id="iRemoveBtn" />
+        <input type="button" value="点击查看缓存" id="iShowBtn" />
+      </p>
+      <p>
+        <span id="iBtnTips"></span>
+      </p>
+
+      <!-- 引入公用自定义文件，其包含cookie封装对象 后续去除 -->
+      <script type="text/javascript" src="utils/cookieUtil.js"></script>
+      <script>
+        // 不是很准确的总结： 
+        // 1.localStorage、sessionStorage 是html5 规范，IE8就支持了，不同浏览器总大小不同，大概为5MB； 
+        // 2.cookie 比较老的缓存实现方式，不同浏览器支持的cookie 个数跟容量不同，容量大概4K;（http://www.cnblogs.com/henryhappier/archive/2011/03/03/1969564.html）
+        // 3.webSql HTML5新增缓存机制，IE所有版本（包括edge） firefox均不支持， PC端目前基本无法投入使用；http://dev.w3.org/html5/webdatabase/?cm_mc_uid=87151019066814486820761&cm_mc_sid_50200000=1448682076#introduction
+        // 4.IndexDb HTML5规范的另一缓存机制， 浏览器支持情况比websql好一些； IE10(edge14仍是部分支持)开始部分支持， firefox、chrome、Opera全支持、safari8开始部分支持；实际开发同上，暂时鸡肋；
+        //   http://rainsilence.iteye.com/blog/984569(更详细的资料) (db.setVersion方法已被弃用) http://www.tfan.org/no-setversion-now-onupgradeneeded/
+        // 全局变量，可以将需要暴露的方法放置其中
+        var xq = {};
+        init();
+        function init() {
+          initSessionDemo();
+          initlocalStorageDemo();
+          initCookieDemo();
+          initWebSqlDemo();
+          initIndexDbDemo();
+        }
+        // sessionStorage 模块
+        function initSessionDemo(){
+          var session_storage, s_set_btn, s_remove_btn, s_show_btn, s_btn_tips;
+          s_set_btn = document.getElementById('sSetBtn');
+          s_remove_btn = document.getElementById('sRemoveBtn');
+          s_show_btn = document.getElementById('sShowBtn');
+          s_btn_tips = document.getElementById('sBtnTips');
+          try {
+            session_storage = window.sessionStorage;
+            session_storage.getItem('xq');
+            s_set_btn.onclick = sessionSetItem;
+            s_show_btn.onclick = showSessionStorage;
+            s_remove_btn.onclick = sessionRemoveItem;
+          }catch(e) {
+            s_set_btn.style.display = 'none';
+            s_remove_btn.style.display = 'none';
+            s_show_btn.style.display = 'none';
+            s_btn_tips.innerHTML = '浏览器不支持sessionStorage';
+          }
+          
+          // 插入缓存
+          function sessionSetItem(event){
+            // console.log('event: ', event);
+            // console.log('this: ', this);
+            // 检测 sessionStorage 能否多窗口(或选项卡)共存
+            if (window.sessionStorage) {
+              session_storage.setItem('xq', 'sb');
+              s_btn_tips.innerHTML = '保存成功！';
+            }else {
+              s_btn_tips.innerHTML = '保存失败！';
+            }
+          }
+          // 显示storage, 转成字符串显示，JSON对象赋值之，ie8（不包括IE8）以下浏览器需引入json3
+          function showSessionStorage(){
+            if (window.sessionStorage) {
+              s_btn_tips.innerHTML = 'sessionStorage:' + JSON.stringify(session_storage);
+            } else {
+              s_btn_tips.innerHTML = '浏览器不支持sessionStorage';
+            }
+          }
+          // 清除缓存
+          function sessionRemoveItem(event){
+            // 检测 sessionStorage 能否多窗口(或选项卡)共存
+            if (window.sessionStorage) {
+              session_storage.removeItem('xq');
+              s_btn_tips.innerHTML = '删除成功！';
+            }else {
+              s_btn_tips.innerHTML = '删除失败！';
+            }
+          }
+        }
+        // localStorage 模块， 2015年11月24日 编码风格较之前有所改变
+        function initlocalStorageDemo(){
+          var localStorage, lSetBtn, lRemoveBtn, lShowBtn, lBtnTips;
+
+          lSetBtn = document.getElementById('lSetBtn');
+          lRemoveBtn = document.getElementById('lRemoveBtn');
+          lShowBtn = document.getElementById('lShowBtn');
+          lBtnTips = document.getElementById('lBtnTips');
+          try {
+            localStorage = window.localStorage;
+            localStorage.getItem('xq');
+            lSetBtn.onclick = localSetItem;
+            lRemoveBtn.onclick = localRemoveItem;
+            lShowBtn.onclick = showLocalStorage;
+          }catch(e) {
+            lSetBtn.style.display = 'none';
+            lRemoveBtn.style.display = 'none';
+            lShowBtn.style.display = 'none';
+            lBtnTips.innerHTML = '浏览器不支持localStorage！';
+          }
+          
+          // 插入缓存
+          function localSetItem(event){
+            if (window.localStorage) {
+              localStorage.setItem('xq', 'sb');
+              lBtnTips.innerHTML = '保存成功！';
+            }else {
+              lBtnTips.innerHTML = '保存失败！';
+            }
+          }
+          // 显示storage, 转成字符串显示，JSON对象赋值之，ie8（不包括IE8）以下浏览器需引入json3
+          function showLocalStorage(){
+            if (window.localStorage) {
+              lBtnTips.innerHTML = 'localStorage:' + JSON.stringify(localStorage);
+            } else {
+              lBtnTips.innerHTML = '浏览器不支持localStorage';
+            }
+          }
+          // 清除缓存
+          function localRemoveItem(event){
+            if (window.localStorage) {
+              localStorage.removeItem('xq');
+              lBtnTips.innerHTML = '删除成功！';
+            }else {
+              lBtnTips.innerHTML = '删除失败！';
+            }
+          }
+        }
+        // 启动cookie 事件
+        function initCookieDemo(){
+          var c_set_btn, c_remove_btn, c_show_btn, c_btn_tips;
+
+          c_set_btn = document.getElementById('cSetBtn');
+          c_remove_btn = document.getElementById('cRemoveBtn');
+          c_show_btn = document.getElementById('cShowBtn');
+          c_btn_tips = document.getElementById('cBtnTips');
+          c_set_btn.onclick = cookieSetItem;
+          c_remove_btn.onclick = cookieRemoveItem;
+          c_show_btn.onclick = showCookie;
+
+          function cookieSetItem(){
+            var name = 'xq',
+                value = 'sb',
+                hours = 24,
+                expires = new Date(),
+                _expires;
+
+            expires.setTime(expires.getTime() + hours * 3600000);
+            _expires = (typeof hours) == "string" ? "" : "; expires=" + expires.toUTCString();
+            document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + _expires;
+            if (document.cookie != '') {
+              c_btn_tips.innerHTML = '设置cookie成功！';
+            }else{
+              c_btn_tips.innerHTML = '设置cookie失败！';
+            }
+          }
+
+          function cookieRemoveItem(){
+            var _value = '',
+                name = 'xq',
+                expires = new Date(0);
+
+            document.cookie = name + "=" + ";expires=" + expires.toUTCString();
+            _value = getCookie("xq");
+            if (_value) {
+              c_btn_tips.innerHTML = '删除cookie失败！';
+            } else {
+              c_btn_tips.innerHTML = '删除cookie成功！';
+            }
+          }
+
+          function showCookie() {
+            var _value = '';
+            _value = getCookie('xq');
+            c_obj = {
+              name: "xq",
+              value: _value
+            };
+            c_btn_tips.innerHTML = JSON.stringify(c_obj);
+          }
+
+          function getCookie(name){
+            var allcookies = document.cookie,
+              name = 'xq=',
+              pos = allcookies.indexOf(name),
+              _value = '';
+
+            var start = 0,
+                end = 0;
+
+            if (pos != -1) {
+              start = pos + name.length;
+              end = allcookies.indexOf(";", start);
+              if ( end == -1) {
+                end = allcookies.length;
+              }
+              _value = allcookies.substring(start, end)
+            }
+            return _value;
+          }
+        }
+        // web sql 模块(w3c 已表示不再维护，indexDb代替之)
+        function initWebSqlDemo(){
+          var wSetBtn, wRemoveBtn, wShowBtn, wBtnTips;
+          var db;
+          wSetBtn = document.getElementById('wSetBtn');
+          wRemoveBtn = document.getElementById('wRemoveBtn');
+          wShowBtn = document.getElementById('wShowBtn');
+          wBtnTips = document.getElementById('wBtnTips');
+          try {
+            db = openDatabase('mydatabase', '2.0', 'my db', 2 * 1024);
+            wSetBtn.onclick = webSqlSetItem;
+            wShowBtn.onclick = showWebSql;
+            wRemoveBtn.onclick = webSqlRemoveItem;
+          }catch(e) {
+            wBtnTips.innerHTML = '浏览器不支持webSql';
+            wSetBtn.style.display = 'none';
+            wRemoveBtn.style.display = 'none';
+            wShowBtn.style.display = 'none';
+          }
+          // 插入缓存
+          function webSqlSetItem(){
+            db.transaction(function (tx) {    
+              tx.executeSql('CREATE TABLE IF NOT EXISTS t1 (id unique, log)'); 
+              tx.executeSql('INSERT INTO t1 (id, log) VALUES (1, "xq too sb")');
+              wBtnTips.innerHTML = 'webSql 插入成功！';
+            });
+          }
+          // 删除缓存
+          function webSqlRemoveItem(){
+            db.transaction(function (tx) {    
+              tx.executeSql('DELETE FROM t1 WHERE id = 1');
+              wBtnTips.innerHTML = 'webSql 删除成功！';
+            });
+          }
+          // 查询缓存(回调函数 方便扩展)
+          function showWebSql(searchCb) {
+            db.readTransaction(function (tx) {
+              tx.executeSql('SELECT * FROM t1', [], function (tx, results) {
+                var len = results.rows.length, i;  
+                if (searchCb && (typeof searchCb) == 'function') {
+                  searchCb(results);
+                } else {
+                  msg = "<p>Found rows: " + len + "</p>"; 
+                  for (i = 0; i < len; i++){ 
+                    msg += "<p><b>" + results.rows.item(i).log + "</b></p>";  
+                  }
+                  wBtnTips.innerHTML = msg;
+                }
+              }, null);  
+            });
+          }
+        }
+        // indexDb 模块
+        function initIndexDbDemo(){
+          var iSetBtn, iRemoveBtn, iShowBtn, iBtnTips;
+          iSetBtn = document.getElementById('iSetBtn');
+          iRemoveBtn = document.getElementById('iRemoveBtn');
+          iShowBtn = document.getElementById('iShowBtn');
+          iBtnTips = document.getElementById('iBtnTips');
+          //数据库名称
+          var dbName = "H5AppDB",
+              //数据库版本 
+              dbVersion = 3,
+              //表名 
+              tablename = "todo", 
+              //indexDb数据库对象
+              indexDbObj = {},
+              //实例化IndexDB数据上下文，根据浏览器类型来做选择
+              indexedDB = null;
+          try {
+            indexedDB = window.indexedDB || window.webkitIndexedDB ||window.mozIndexedDB;
+            if ('webkitIndexedDB' in window) {
+              window.IDBTransaction = window.IDBTransaction;
+              window.IDBKeyRange = window.IDBKeyRange;
+            }
+            // 打开indexDb数据库
+            var request = indexedDB.open(dbName, dbVersion);
+            request.onupgradeneeded = function() {
+              var store = event.currentTarget.result.createObjectStore(tablename, {keyPath: "indexId"});
+            }
+            request.onsuccess = function(e){
+              var _request;
+              indexDbObj = request.result;
+              // 初始化数据库成功！
+              iSetBtn.onclick = indexDbSetItem;
+              iShowBtn.onclick = showIndexDb;
+              iRemoveBtn.onclick = indexDbRemoveItem;
+            }
+            request.onfailure = indexError;
+          }catch(e) {
+            iBtnTips.innerHTML = '浏览器不支持indexDb';
+            iSetBtn.style.display = 'none';
+            iRemoveBtn.style.display = 'none';
+            iShowBtn.style.display = 'none';
+          }
+          // 错误处理
+          function indexError(){
+            iBtnTips.innerHTML = "indexDb数据库处理时出现异常！";
+          }
+          // 插入缓存
+          function indexDbSetItem(){
+            var trans = indexDbObj.transaction([tablename], "readwrite"),
+                store = trans.objectStore(tablename),
+                newArray = ["wteamxq","151201"];
+
+            //数据以对象形式保存，体现NoSQL类型数据库的灵活性
+            var data = {
+                "text": "xq sb",
+                "indexId": "1",
+                "obj":newArray                         
+            };
+            var request = store.put(data);//保存数据
+            request.onsuccess = function (e) {
+              iBtnTips.innerHTML = "indexDb 插入数据成功！";
+            };
+            request.onerror = indexError;
+          }
+
+          // 删除缓存
+          function indexDbRemoveItem(){
+            var trans = indexDbObj.transaction([tablename], "readwrite"),
+                store = trans.objectStore(tablename),
+                request = store.delete("1");//根据主键来删除
+            request.onsuccess = function(e) {
+              iBtnTips.innerHTML = "indexDb 删除数据成功！";
+            };
+            request.onerror = indexError;
+          }
+
+          // 查询缓存(回调函数 方便扩展)
+          function showIndexDb(searchCb) {
+            //通过事物开启对象
+            var trans = indexDbObj.transaction([tablename], "readwrite"),
+                //获取到对象的值
+                store = trans.objectStore(tablename),
+                // Get everything in the store;
+                keyRange = IDBKeyRange.lowerBound(0),
+                //开启索引为0的表
+                cursorRequest = null;
+
+            iBtnTips.innerHTML = 'indexDb 数据内容为空！';
+            //开启索引为0的表
+            cursorRequest = store.openCursor(keyRange);
+            cursorRequest.onsuccess = function (e) {
+              var result = e.target.result;
+              if (!!result == false) {
+                return false;
+              }
+              iBtnTips.innerHTML = JSON.stringify(result.value);
+              //轮询读取
+              // result.continue();
+            };
+            cursorRequest.onerror = indexError;
+          }// end of showIndexDb
+        }
+      </script>
+    </body>
+</html>

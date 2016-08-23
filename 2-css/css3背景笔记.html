@@ -1,0 +1,399 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+/*5使用选择器在页面中插入内容*/
+yle>
+        h2:before{
+            content: "Title";
+            color:#fff;
+            background: green;
+            padding: 1px 5px;
+            margin-right: 10px;
+
+        }
+        h2.nocontent:before{
+            content: none;
+        }
+		#div1{white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
+		#div2{word-break:break-all;}
+		#div3{word-wrap:break-word;}
+		
+		#div4{width:300px;height:150px;border:dashed 30px green;padding:30px;background:red;background-clip:content-box;}
+		#div5{
+            width: 600px;
+            height: 300px;
+            background-image: url("57.png");
+            background-repeat: no-repeat;
+            border: dashed 30px green;
+            padding: 30px;
+            background-origin: content-box;
+			background-size:100px 100px;
+            
+        }
+		#div6{
+            width: 300px;
+            height: 150px;
+            background-color: #000;
+            border: solid 30px green;
+			border-radius:150px/75px;
+            /*border-radius: 30px 90px;*/
+           /* border-top-left-radius: 60px;
+            border-bottom-right-radius: 60px;*/
+        }
+		
+		#div7{
+			 width: 300px;
+            height: 300px;
+            background-color:red;
+            -ms-transform:rotate(45deg); /* IE 9 */
+            -moz-transform:rotate(45deg); /* Firefox */
+            -webkit-transform:rotate(45deg); /* Safari 和 Chrome */
+            -o-transform:rotate(45deg); /* Opera */
+			}
+			#div8{
+            width: 300px;
+            height: 300px;
+            background-color: #000;
+        }
+        #div8:hover{
+            -ms-transform:scale(0.1,0.1); /* IE 9 */
+            -moz-transform:scale(0.1,0.1); /* Firefox */
+            -webkit-transform:scaley(0.5); /* Safari 和 Chrome */
+            -o-transform:scale(0.1,0.1); /* Opera */
+        }
+		
+		#div9{
+            width: 300px;
+            height: 300px;
+            background-color: #000;
+            transform-origin:bottom ;
+        }
+        #div9:hover{
+            -ms-transform:rotate(40deg);/* IE 9 */
+            -moz-transform:rotate(40deg); /* Firefox */
+            -webkit-transform:rotate(40deg); /* Safari 和 Chrome */
+            -o-transform:rotate(40deg); /* Opera */
+        }
+		#div0{
+            width: 200px;
+            height: 200px;
+            background-color: green;
+            transition:all 10s linear 2s;
+          
+        }
+        #div0:hover{
+            background-color:red;
+            width: 900px;
+            height: 400px;
+        }
+		  #divg{
+            width: 200px;
+            height: 200px;
+            background-color: #ff6600;
+        }
+        @-webkit-keyframes mycolor {
+            0%{
+                background-color: #ff6600;
+                -webkit-transform:rotate(0deg);
+                transform:translate(0px,0px);
+            }
+            10%{
+                background-color: green;
+                -webkit-transform:rotate(30deg);
+                transform:translate(100px,0px);
+            }
+            20%{
+                background-color: red;
+                -webkit-transform:rotate(0deg);
+            }
+            80%{
+                background-color: #000;
+                -webkit-transform:rotate(30deg);
+            }
+            100%{
+                background-color: #ff6600;
+                -webkit-transform:rotate(0deg);
+            }
+        }
+        #divg:hover{
+            -webkit-animation-name:mycolor;
+            -webkit-animation-duration:5s;
+            -webkit-animation-timing-function:linear;
+            -webkit-animation-iteration-count:2;
+        }
+</style>
+</head>
+
+<body>
+<!--5使用选择器在页面中插入内容
+①使用选择器插入内容
+在css2中,使用before选择器在元素前面插入内容,使用after在元素后面插入内容,在选择器content属性中定义
+要插入的内容.
+
+
+例如对H2使用before选择器在H2的前面插入文字"Title".
+
+
+<style type="text/css">
+h2:before{content:"Title";}
+</style>
+并且我们还可以给他定义样式,进行美化操作.
+
+比如我们给"Title"的文字设置为白色,加上绿色的背景,内边距上下1像素左右,当然还可以设置字体什么的-->
+<h1>使用选择器插入内容</h1>
+<h2>使用选择器插入内容</h2>
+<h2>使用选择器插入内容</h2>
+<h2>使用选择器插入内容</h2>
+<h2 class="nocontent">使用选择器插入内容</h2>
+<h2>使用选择器插入内容</h2>
+<h2>使用选择器插入内容</h2>
+<h2>使用选择器插入内容</h2>
+<!--②word-break和word-wrap-->
+
+<div id="div1" style="width:300px;height:300px;border:1px solid red;">
+Mintcode薄荷科技 由杭州曼拓科技有限公司（中国），杭州亿川科技有限公司（中国），Mintcode Pty Ltd(澳大利亚）和株式会社Mintcode（日本）组成。我们在中国杭州，澳大利亚悉尼和日本东京设有办公室。我们有扎实的技术基础，技术团队占全员7成。 
+
+</div>
+
+<div id="div2" style="width:300px;height:300px;border:1px solid blue;">
+Mintcode Mint technology by Hangzhou science and Technology Co Ltd (China Manchester extension), Hangzhou Yichuan Technology Co. Ltd. (China), Mintcode Pty Ltd (Australia) and Mintcode Corporation (Japan). We Chinese in Hangzhou, Australia, Sydney and Tokyo offices. We have a solid technical foundation and technical team for full 7.
+
+</div>
+
+
+<div id="div3" style="width:300px;height:300px;border:1px solid blue;">
+http://www.lagou.com/mycenter/delivery.html?tag
+</div>
+
+<!--6.css3中的各种盒模型-->
+<div style="width:100Px;height:100px;border-radius:50%;background:red;box-shadow: 0 0 0 10px green;border:5px solid yellow;"></div>
+
+
+<!--7.背景和边框的相关样式
+新增的背景属性:
+background-clip:指定背景的显示范围,IE8以上才支持
+background-origin:指定绘制背景图像的起点
+background-size:指定背景中图像的尺寸
+background-break:指定内联元素的背景图像进行平铺的循环方式
+
+①background-clip指定背景的显示范围
+css3中的background-clip属性,它主要是用来控制我们背景显示区域.
+首先呢,我们先来看一下它的用法吧:
+background-clip:border-box||padding-box||content-box
+
+1)、border-box:此值为默认值,背景从border区域向外裁剪,也就是超出的部分将被裁剪掉;
+2)、padding-box:背景从padding区域向外裁剪,超过padding区域的背景将会被裁剪掉;
+3)、content-box:背景从content区域向外裁剪,超过conten区域的背景将被
+裁掉;
+Firefox3.6
+-moz-background-clip:border||padding||content
+
+
+Webkit
+-webkit-background-clip:border-box||padding-box||content-box
+
+W3C标准IE9+andFirefox4.0+
+background-clip:border-box||padding-box||content-box
+-->
+<h1>CSS3中新增的background-clip属性</h1>
+<div id="div4">CSS新增的background-clip属性</div>
+
+
+<!--②background-origin:默认是从padding外边缘开始显示背景图片的;
+需要特别注意一下的是:在IE一下默认是从border开始显示背景图片的
+兼容性写法:
+background-origin:padding||border||content
+兼容老版本
+background-origin:padding-box||border-box||content-box
+标准写法-->
+<h1> background-origin</h1>
+<div id="div5"></div>
+
+<!--
+③background-size属性指定背景图像的尺寸
+在css3中,可以使用background-size属性来指定背景图片的尺寸.
+
+使用方法:
+
+background-size:auto||<length>||<percetage>||cover||contain;
+1)、auto为默认值,保持背景图片的原始高度和宽度;
+2)、length:设置背景图片的高度和宽度,第一值设置宽度,第二个值设置高度,如果只设置一个值,第二个值会默认为auto.
+3)、percentage:以父元素的百分比来设置背景图像的宽度和高度,第一个值设置宽度,第二个值设置高度,如果只设置一个值,第二个值会默认为auto.
+4)、cover:此值将图片放大,以适合铺满整个容器,这个主要运用在,当图片小于容器时,又无法使用background-repeat实现时,我们就可以
+采用cover;将背景图片放大到适合容器的大小,但这种方法会使用背景图片失真.
+5)、contain:与cover相反
+
+
+
+④background-break属性指定背景图像的尺寸
+css3里标签元素能被分在不同的区域(如:让内联元素span跨多行),background-break属性能够控制背景在不同的区域显示
+属性值:
+1)、backgr-break:containuous;
+此属性为默认值,忽视区域之间的间隙空隙(给它们应用图片就好像把它们看成一个区域一样)
+2)、background-break:bounding-box;
+重新考虑区域之间的间隔
+3)、backgr=break:each-box;
+对每一个独立的标签区域进行背景的重新划分
+-->
+
+
+
+<!--在一个元素中显示多个背景图像,border-radius属性,border-image属性-->
+
+<h1>border-radius属性</h1>
+<div id="div6"></div>
+ 
+ 
+ <h1>border-image属性</h1>
+<div id="div7"></div>
+
+<!--8CSS3中的各种变形功能
+这css3中，可以利用transform功能来实现文字或图像的旋转、缩放、倾斜、移动这四种类型的变形处理。
+课后目标：
+ 第一、掌握css3中transform功能的使用方法，能够使用transform功能来实现文字或图像的旋转、缩放、倾斜、移动的变形效果。
+ 第二、能够将旋转、缩放、倾斜和移动，这四种变形效果进行结合使用，并且知道如果使用的先后顺序不同，页面显示的结果会是怎样的一个区别。
+1、如何使用transform功能
+在css3中通过transform属性，来实现transform功能。
+transform:功能;
+-ms-transform:功能; /* IE 9 */
+-moz-transform:功能; /* Firefox */
+-webkit-transform:功能; /* Safari 和 Chrome */
+-o-transform:功能; /* Opera */ 
+2、rotate 旋转，在参数中规定角度
+使用方法：
+-ms-transform:rotate(角度); /* IE 9 */
+-moz-transform:rotate(角度); /* Firefox */
+-webkit-transform:rotate(角度); /* Safari 和 Chrome */
+-o-transform:rotate(角度); /* Opera */ 
+rotate表示的是顺时针旋转，deg是CSS3中的角度单位。
+3、scale缩放转换
+使用方法：
+transform:scale(值)，他的值是指定的缩放倍率，比如0.5就是缩放到50%，1就是100%，1.5就是放大点150%。
+可能的值：
+1）、scale(x,y)使元素X轴和Y轴同时缩放
+2）、scaleX(x)元素仅X轴缩放
+3）、scaleY(y)元素仅Y轴缩放
+4、倾斜skew
+使用方法：transform:skew(值)，他的值是角度。
+可能的值：
+1）、skew(x,y)使元素在水平和垂直方向同时扭曲（X轴和Y轴同时按一定的角度值进行扭曲变形）只有一个参数时，只在水平方向上倾斜。
+2）、skewX(x)仅使元素在水平方向扭曲变形（X轴扭曲变形）
+3）、skewY(y)仅使元素在垂直方向扭曲变形（Y轴扭曲变形）
+5、移动translate
+使用方法：transform:translate(值)，他的值是指定移动的距离。
+可能的值：
+1）、translate(x,y)水平方向和垂直方向同时移动（也就是X轴和Y轴同时移动）只有一个参数时，只在水平方向上移动；
+2）、translateX(x)仅水平方向移动（X轴移动）
+3）、translateY(Y)仅垂直方向移动（Y轴移动）
+
+6、对一个元素使用多种变形的方法：
+使用方法：transform:方法1 方法2 方法3 方法4；
+
+7、改变元素基点transform-origin
+可能的值top left top right topleft center right bottom leftbottom bottom right
+-->
+
+<h1>rotate旋转</h1>
+<div id="div7"></div>
+ 
+ 
+ <h1>scale</h1>
+<div id="div8"></div>
+
+
+<h1>移动translate</h1>
+<div id="div9"></div>
+
+
+<!--9css3中的动画效果
+css3中transition允许css的属性值在一定的时间区间内平滑地过渡。这种效果可以在鼠标单击、获得焦点、被点击或对元素任何改变中触发，并圆滑地以动画效果改变CSS的属性值。
+transition属性的使用方法：
+
+
+transition:语法;
+-moz-transition: 语法; /* Firefox 4 */
+-webkit-transition:语法; /* Safari 和 Chrome */
+-o-transition:语法; /* Opera */
+
+
+
+
+语法：
+transition: property duration timing-function delay;
+
+
+transition主要包含四个属性值：
+1）、执行变换的属性：transition-property，属性规定应用过渡效果的 CSS 属性的名称。（当指定的 CSS 属性改变时，过渡效果将开始）
+ 值有三个类型：
+ A、none 没有属性会获得过渡效果。
+ B、all 所有属性都将获得过渡效果。
+ C、property 定义应用过渡效果的 CSS 属性名称列表，列表以逗号分隔。
+
+
+2）、变换延续的时间：transition-duration；
+ 规定完成过渡效果需要花费的时间（以秒或毫秒计），默认值0没有效果
+
+
+3）、在延续时间段，变换的速率变化transition-timing-function；
+ 值：
+ A、ease：（逐渐变慢）默认值，ease函数等同于贝塞尔曲线(0.25, 0.1, 0.25, 1.0).
+ B、linear：（匀速），linear 函数等同于贝塞尔曲线(0.0, 0.0, 1.0, 1.0).
+ C、ease-in：(加速)，ease-in 函数等同于贝塞尔曲线(0.42, 0, 1.0, 1.0).
+ D、ease-out：（减速），ease-out 函数等同于贝塞尔曲线(0, 0, 0.58, 1.0).
+ E、ease-in-out：（加速然后减速），ease-in-out 函数等同于贝塞尔曲线(0.42, 0, 0.58, 1.0)
+ F、cubic-bezier(n,n,n,n) 在 cubic-bezier 函数中定义自己的值。可能的值是 0 至 1 之间的数值。
+
+
+4）、变换延迟时间transition-delay；
+transition-delay是用来指定一个动画开始执行的时间，也就是说当改变元素属性值后多长时间开始执行transition效果，其取值：<time>为数值，单位为s（秒）或者ms(毫秒)-->
+
+
+
+
+<h1>transition属性</h1>
+<div id="div0"></div>
+
+<!--在CSS3之中我们除了可以使用transition实现动画效果之外呢，我们还可以使用Animations来实现动画效果。
+
+
+1、使用transition和Animations的区别：
+ transition和Animations的区别在于，transition只能通过指定属性的开始值与结束值，然后通过两属性值之间进行平滑过渡的方式来实现动画效果，所以transition不能实现复杂的动画效果，而Animations功能是是通过关键帧以及每个关键帧中的属性值来实现更为复杂的动画效果。
+
+
+2、Animations的使用方法：
+@-webkit-keyframes 关键帧合集名称{创建关键帧的代码}
+0%~100%{
+ 本关键帧中的样式
+}
+
+
+关键帧创建好了之后，还要在元素的样式中使用该关键帧。
+方法如下：
+元素{
+ -webkit-animation-name:关键帧合集名称;
+ -webkit-animation-duration:5s;
+ -webkit-animation-timing-function:linear;
+ -webkit-animation-iteration-count:infinite;
+}
+-webkit-animation-name指定合集名称，-webkit-animation-duration整个动画执行完成所需的时间、需要的时间，-webkit-animation-timing-function实现动画的方法,-webkit-animation-iteration-count属性的属性值设定为某个整数值，那么这个动画播放的次数就等于这个整数值（infinite是无限循环播放）。
+
+
+
+
+3、实现动画的方法：
+ A、linear：从开始到结束都是以同样的速度进行.
+ B、ease-in：开始速度很慢，然后沿着曲线进行加快.
+ C、ease-out：开始速度很快，然后沿着曲线进行减速.
+ D、ease：开始时速度很快，然后沿着曲线进行减速，然后再沿着曲线加速.
+ E、ease-in-out：开始时速度很慢，然后沿着曲线进行加速，然后再沿着曲线减速.
+ -->
+<br>
+<h1>Animations属性</h1>
+<div id="divg"></div>
+
+ 
+</body>
+</html>

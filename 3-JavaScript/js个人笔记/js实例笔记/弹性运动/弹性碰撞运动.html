@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+#div1{width:100px;height:100px;background:red;position:absolute;left:100px;top:100px;}
+#div2{height:500px;border:1px solid red;position:absolute;left:800px;}
+</style>
+</head>
+
+<body>
+<div id="div1">
+</div>
+<div id="div2">
+</div>
+
+<script language="javascript">
+     var oDiv=document.getElementById('div1');
+	 	 oDiv.onclick=function(){
+		 startMove(this,'left',800);
+	 }
+	 
+	 function startMove(obj,attr,target){
+		 clearInterval(obj.timer);
+		 var speed=0;
+          obj.timer=setInterval(function (){
+			   speed+=(target-obj.offsetLeft)/6;
+		        speed=speed*0.75;
+				
+				if(Math.abs(target-obj.offsetLeft)<=1&&Math.abs(speed)<=1){
+					clearInterval(obj.timer);
+					speed=0;
+					oDiv.style.left = target+'px';
+				}
+				
+				else{
+					obj.style[attr]=obj.offsetLeft+speed+'px';
+				}
+			  
+			  },30);
+		
+		 
+	 }
+</script>
+</body>
+</html>

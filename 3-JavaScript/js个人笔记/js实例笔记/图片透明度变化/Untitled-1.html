@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+#img1{filter:alpha(opacity:30);opacity:0.3;}
+
+<!--第一种filter:alpha(opacity:30)是IE/FF  第二种opacity:0.3是为了兼容chrome"-->
+</style>
+</head>
+
+<body>
+<img id="img1" src="1.gif"/>
+</body>
+<script language="javascript">
+var timer=null;
+var oImg=document.getElementById('img1');
+var alpha=30;
+oImg.onmouseover=function(){
+	startMove(100);
+	}
+oImg.onmouseout=function(){
+	startMove(30);
+	}
+function startMove(target){
+	
+
+		clearInterval(timer);
+	
+	timer=setInterval(function (){
+		var speed=0;
+		if(alpha<target){
+			speed=1;
+			}
+		else{
+		speed=-1;	
+		}
+		
+		if(alpha==target){
+			clearInterval(timer);
+			}
+		else{
+			alpha+=speed;
+			oImg.style.filter='alpha(opacity:'+alpha+')';
+			oImg.style.opacity=alpha/100;
+		
+		}
+		
+		},30);
+	
+	}
+	
+</script>
+</html>

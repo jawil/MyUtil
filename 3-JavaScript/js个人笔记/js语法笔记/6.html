@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script language="javascript">
+    function extend(child,parent){
+        var F=function(){};
+        F.prototype=parent.prototype;
+        child.prototype=new F();
+        child.prototype.constructor=child;
+        child.uber=parent.prototype;
+    }
+    function extend1(child,parent) {
+        var p = parent.prototype;
+        var c = child.prototype;
+        for (var attr in p) {
+            c[attr] = p[attr];
+        }
+        c.uber = p;
+    }
+    var Shape=function B(){};
+
+    var TwoDShape=function A(){};
+    Shape.prototype.name='shape';
+    Shape.prototype.toString=function(){
+        return this.name;
+    };
+    extend(TwoDShape,Shape);
+    var td=new TwoDShape();
+/*    console.log(td.name);
+    console.log(td.constructor.prototype);
+    console.log(td.constructor);
+    console.log(TwoDShape.prototype.name);
+    console.log(td.hasOwnProperty('name'));
+    console.log(td.__proto__.hasOwnProperty('name'));
+    console.log(td.__proto__.constructor.hasOwnProperty(('name')));
+    console.log(td.__proto__);
+    console.log(td.__proto__.constructor);
+    console.log(td.__proto__.constructor.prototype==td.__proto__);
+    console.log(td.__proto__.name);*/
+    console.log(TwoDShape.prototype.name);
+    console.log(td.__proto__==TwoDShape.prototype);
+    console.log(TwoDShape.prototype.constructor);
+
+
+
+
+/*    extend1(TwoDShape,Shape);
+    var td=new TwoDShape();
+    console.log(td.__proto__.hasOwnProperty('name'));
+    console.log(td.__proto__.hasOwnProperty('toString'));
+    console.log(td.__proto__.toString===Shape.prototype.toString);*/
+
+    var A=function(){};
+    var B=function(){};
+    A.prototype.test=[1,2,3];
+    A.prototype.test1='this is a test';
+    extend1(B,A);
+    console.log(B.prototype.hasOwnProperty('test'));
+    console.log(B.prototype.hasOwnProperty('test1'));
+    console.log(B.prototype.test);
+    console.log(B.prototype.test===A.prototype.test);
+    B.prototype.test1='hello maiz';
+    console.log(A.prototype.test1);
+    B.prototype.test.push(4,5,6);
+    console.log(B.prototype.test);
+    console.log(A.prototype.test);
+
+
+
+    //重写test属性
+    B.prototype.test=['aa','bb','cc','dd'];
+    console.log(A.prototype.test);
+    console.log(B.prototype.test);
+
+</script>
+</body>
+</html>

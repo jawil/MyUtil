@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <style>
+    #div1 {
+        width: 200px;
+        height: 200px;
+        background-color: green;
+        margin: 100px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="div1">
+        將文件拖放到此区
+    </div>
+    <script>
+    var oDiv = document.getElementById('div1');
+    oDiv.ondragenter = function() {
+        this.innerHTML = '可以釋放啦';
+    }
+    oDiv.ondragover = function(ev) {
+        var ev = ev || window.event;
+        ev.preventDefault();
+    }
+    oDiv.ondrop = function(ev) {
+        var ev = ev || window.event;
+        ev.preventDefault(); //阻止浏览器默认打开图片的功能
+        this.style.backgroundColor = 'green';
+        var fs = ev.dataTransfer.files;
+        // alert(fs.length);//长度
+        //alert(fs[0].type);判断类型
+        var fd = new FileReader();
+        fd.readAsDataURL(fs[0]);
+        fd.onload = function() {
+            //alert(this.result);
+        }
+
+
+
+    }
+    </script>
+</body>
+
+</html>

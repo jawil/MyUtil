@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<table id="tab1" width="100%" border="1px">
+<thead>
+<tr>
+<th>编号</th>
+<th>姓名</th>
+<th>性别</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody
+</tbody>
+</table>
+
+<script language="javascript">
+
+var data=[{id:1,username:'jawil',sex:'男'},{id:2,username:'jolin',sex:'女'},{id:3,username:'jj',sex:'男'},{id:4,username:'jason',sex:'男'}];
+
+var oTab=document.getElementById('tab1');
+var oTbody=oTab.tBodies[0];
+for(var i=0;i<data.length;i++){
+	var oTr=document.createElement('tr');
+	
+	var oTd=document.createElement('td');
+	oTd.innerHTML=data[i].id;
+	oTr.appendChild(oTd);
+	
+	oTd=document.createElement('td');
+	oTd.innerHTML=data[i].username;
+	oTr.appendChild(oTd);
+	
+	oTd=document.createElement('td');
+	oTd.innerHTML=data[i].sex;
+	oTr.appendChild(oTd);
+	
+	
+	oTd=document.createElement('td');
+	oTr.appendChild(oTd);
+	var oA=document.createElement('a');
+	oA.innerHTML='删除';
+	oA.href='javascript:;';
+	oA.onclick=function (){
+		
+		oTbody.removeChild(this.parentNode.parentNode);
+		for(var i=0;i<oTbody.rows.length;i++){
+			if(i%2==0){oTbody.rows[i].style.background='white';}
+			else{oTbody.rows[i].style.background='gray';}
+		}
+	}
+	oTd.appendChild(oA);
+	
+	oTbody.appendChild(oTr);
+	
+	
+	
+	
+}
+</script>
+</body>
+</html>

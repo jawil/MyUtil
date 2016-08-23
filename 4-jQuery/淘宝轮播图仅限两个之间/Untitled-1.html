@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script src="jquery-1.10.1.min.js"></script>
+<script>
+$(function(){
+	var iWidth=$('ul li').width();
+	var flag=0;
+	var bBtn = true;
+	$('ul').find('li').slice(1).css('left',iWidth);
+	$('ol li').mouseover(function(){
+		if( bBtn){
+		bBtn=false;
+		$(this).attr('class','active').siblings().attr('class','');
+		if($(this).index()>flag){
+			$('ul').find('li').eq($(this).index()).css('left',iWidth);
+			$('ul li').eq(flag).animate({left:-iWidth},300);
+			}
+			if($(this).index()<flag){
+			$('ul').find('li').eq($(this).index()).css('left',-iWidth);
+			$('ul li').eq(flag).animate({left:iWidth},300);	
+			}
+			
+			
+			
+			$('ul li').eq($(this).index()).animate({left:0},300,function(){bBtn=true;});
+			flag=$(this).index();
+		}
+	});
+})
+
+</script>
+<style>
+*{pading:0;margin:0;}
+img{vertical-align:top;border:none;}
+li{list-style:none;}
+#wrap{position:relative;width:470px;height:150px;margin:0 auto;overflow:hidden;}
+#wrap ul {position:absolute;top:0;left:0;z-index:1;}
+#wrap ul li{width:470px;height:150px; position:absolute; top:0;left:0;}
+ol{z-index:2; width:120px; position:absolute;right:10px; bottom:10px;}
+ol li{ width:20px;height:20px; float:left;margin:0 2px; display:inline; background:#fff; color:#f60; line-height:20px; text-align:center;border-radius:50%;cursor:pointer;}
+ol .active{ background:#f60; color:#fff;}
+</style>
+</head>
+
+<body>
+<div id="wrap">
+<ul>
+<li><img src="img/1.jpg"/></li>
+<li><img src="img/2.jpg"/></li>
+<li><img src="img/3.jpg"/></li>
+<li><img src="img/4.jpg"/></li>
+<li><img src="img/5.jpg"/></li>
+</ul>
+
+<ol>
+<li class="active">1</li>
+<li>2</li>
+<li>3</li>
+<li>4</li>
+<li>5</li>
+</ol>
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+    @charset "utf-8";
+    @import 'helpers/mixins/_flex.scss';
+    .test {
+        @include px2rem(width, 375);
+        //width:3.75rem;
+        height: 1rem;
+        @include border;
+        @include px2rem(font-size, 32);
+        // @include background-image;
+    }
+
+    a {
+        @include links(orange, blue, yellow, teal);
+    }

@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+.div1{width:1300px;height:800px;border:1px solid red;margin:0 auto;}
+li{ list-style-type:none;width:300px;border:1px solid orange;text-align:center;float:left;margin-top:15px;color:#006699;font-size:20px;font-weight:bold;}
+img{width:280px;height:170px;border:3px solid green;}
+.faceul{margin-left:20px;margin-top:30px;}
+body{text-align:center;}
+p{margin-top:50px;border:1px solid blue;}
+input{background-color:#009999;color:white;width:120px;height:50px;}
+</style>
+</head>
+
+<body>
+<div class="div1">
+<p><input type="button" value="从大到小"/>&nbsp;<input type="button" value="打乱排序"/>&nbsp;<input type="button" value="从小到大"/></p>
+<ul class="faceul">
+<li><img src="1.png"/><span>1-温馨办公</span></li>
+<li><img src="2.png"/><span>2-温馨办公</span></li>
+<li><img src="3.png"/><span>3-温馨办公</span></li>
+<li><img src="4.png"/><span>4-温馨办公</span></li>
+<li><img src="5.png"/><span>5-温馨办公</span></li>
+<li><img src="6.png"/><span>6-温馨办公</span></li>
+<li><img src="7.png"/><span>7-温馨办公</span></li>
+<li><img src="8.png"/><span>8-温馨办公</span></li>
+</ul>
+</div>
+
+
+
+
+
+<script language="javascript">
+ var arrJson=[{id:1, name:'1-温馨办公',url:'1.png'},{id:2,name:'2-温馨办公',url:'2.png'},{id:3,name:'3-温馨办公',url:'3.png'},{id:4,name:'4-温馨办公',url:'4.png'},{id:5,name:'5-温馨办公',url:'5.png'}, {id:6,name:'6-温馨办公',url:'6.png'}, {id:7,name:'7-温馨办公',url:'7.png'}, {id:8,name:'8-温馨办公',url:'8.png'}];
+ 
+
+ 
+// alert(JSON.stringify(arrJson));
+ /*var array = [
+    {name: 'a', phone: 1, value: 'val_4'},
+    {name: 'b', phone: 5, value: 'val_3'},
+    {name: 'd', phone: 3, value: 'val_2'},
+    {name: 'c', phone: 4, value: 'val_1'}
+]*/
+/*array.sort(getSortFun('desc', 'name'));
+function getSortFun(order, sortBy) {
+    var ordAlpah = (order == 'asc') ? '<' : '>';
+    var sortFun = new Function('a', 'b', 'return a.' + sortBy + ordAlpah + 'b.' + sortBy + '?1:-1');
+    return sortFun;
+}
+*/
+/*arrJson.sort(function ( a, b ) {
+	return Math.random() - 0.5;
+});
+alert(JSON.stringify(arrJson));*/
+var oInput=document.getElementsByTagName('input');
+var oSpan=document.getElementsByTagName('span');
+var oImg=document.getElementsByTagName('img');
+ oInput[0].onclick=function (){
+	 for(var i=0;i<oInput.length;i++){
+		 oInput[i].style.cssText='';
+		 }
+	 this.style.backgroundColor='red';
+	 this.style.color='black';
+	 
+	 
+	 arrJson.sort(getSortFun('desc', 'id'));
+function getSortFun(order, sortBy) {
+    var ordAlpah = (order == 'asc') ? '>' : '<';
+    var sortFun = new Function('a', 'b', 'return a.' + sortBy + ordAlpah + 'b.' + sortBy + '?1:-1');
+    return sortFun;
+}
+for(var i=0;i<oImg.length;i++){
+	
+	oImg[i].src=arrJson[i].url;
+	oSpan[i].innerHTML=arrJson[i].name;
+	}
+	 
+	 }
+	 
+
+ oInput[1].onclick=function (){
+	 for(var i=0;i<oInput.length;i++){
+		 oInput[i].style.cssText='';
+		 }
+	 this.style.backgroundColor='red';
+	 this.style.color='black';
+	 arrJson.sort(function ( a, b ) {
+	return Math.random() - 0.5;
+});
+//alert(JSON.stringify(arrJson));
+
+   for(var i=0;i<oImg.length;i++){
+	
+	oImg[i].src=arrJson[i].url;
+	oSpan[i].innerHTML=arrJson[i].name;
+	}
+	 
+
+ }
+ 
+ 
+ 
+ 
+	 oInput[2].onclick=function (){
+		 for(var i=0;i<oInput.length;i++){
+		 oInput[i].style.cssText='';
+		 }
+	 this.style.backgroundColor='red';
+	 this.style.color='black';
+	 
+	 arrJson.sort(getSortFun('desc', 'id'));
+function getSortFun(order, sortBy) {
+    var ordAlpah = (order == 'asc') ? '<' : '>';
+    var sortFun = new Function('a', 'b', 'return a.' + sortBy + ordAlpah + 'b.' + sortBy + '?1:-1');
+    return sortFun;
+}
+for(var i=0;i<oImg.length;i++){
+	
+	oImg[i].src=arrJson[i].url;
+	oSpan[i].innerHTML=arrJson[i].name;
+	}
+	 
+	 }
+ </script>
+</body>
+</html>

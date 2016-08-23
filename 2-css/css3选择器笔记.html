@@ -1,0 +1,385 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+/*1.属性选择器*/
+/*:root{background:gray;}*/
+/*body{background:#7F1314;}*/
+a[href$=html]:after{content:"你好html";color:green;}
+a[href$=jpg]:after{content:"你好jpg";color:red;}
+
+/*2.伪类选择器以及伪元素*/
+p.left{text-align:left;color:red;}
+p.right{text-align:right;color:green;}
+        a:link{
+            color: #000;
+        }
+        a:visited{
+            color: fuchsia;
+        }
+        a:hover{
+            color :green;
+        }
+        a:active{
+            color: #ff6600;
+        }
+p:first-line{background:red;}
+p:first-letter{background:green;font-size:20px;}	
+li{
+            list-style: none;
+        }
+        li:before{
+            content:"...";
+            color: red;
+        }
+        li:after{
+            content: "__after追加";
+            color: #ff6600;
+        }	
+		 :empty{
+            background: #ff6600;
+        }
+		 :target{
+            background: #000;
+            color: #fff;
+        }
+		li:first-child{background:red;}
+		li:last-child{background:green;}
+		li:nth-child(3){background:yellow;}
+		li:nth-last-child(2){background:gray;}
+		li:only-child{
+            background: #ff1b00;
+        }
+		
+		        input[type="text"]:hover{
+            background: green;
+        }
+/*3UI状态伪类选择器*/
+        input[type="text"]:focus{
+            background: #ff6600;
+            color:red;
+        }
+
+        input[type="text"]:active{
+            background: blue;
+        }
+        input[type="password"]:hover{
+            background: red;
+
+        }
+		
+		   input[type="text"]:enabled{
+            background: green;
+            color: #ffffff;
+        }
+        input[type="text"]:disabled{
+            background: #727272;
+
+        }
+		        input[type="text"]:read-only{
+            background: #000;
+            color: green;
+        }
+        input[type="text"]:read-write{
+            color: #ff6600;
+        }
+		 input[type="checkbox"]:checked{
+            outline: 2px solid green;
+        }
+		  input[type="checkbox"]:default{
+            outline: 2px solid green;
+        }
+		 input[type="radio"]:indeterminate{
+            outline: 2px solid green;
+        }
+		 ::selection{
+            background: green;
+            color: #ffffff;
+        }
+        input[type="text"]::selection{
+            background: #ff6600;
+            color: #ffffff;
+        }
+		   input[type="email"]:invalid{
+            color: red;
+        }
+        input[type="email"]:valid{
+            color: green;
+        }
+		  input[type="text"]:required{
+        background: red;
+        color: #ffffff;
+    }
+        input[type="text"]:optional{
+            background: green;
+            color: #ffffff;
+        }
+		  input[type="number"]:in-range{
+            color: #ffffff;
+            background: green;
+
+        }
+        input[type="number"]:out-of-range{
+            background: red;
+            color: #ffffff;
+        }
+		/*4通用兄弟选择器*/
+		  span~p{
+            background: green;
+        }
+</style>
+</head>
+
+<body>
+<!--1.属性选择器
+[attr*=val]包含
+[attr^=val]开头
+[attr$=val]结尾-->
+<a href="1.html">跳转html</a>
+<a href="1.jpg">跳转jpg</a>
+<hr color="red">
+
+<!--2.伪类选择器以及伪元素
+①类选择器:
+在css中可以使用类选择器把相同的元素定义成不同的样式.比如:
+p.left{text-align:left;}
+p.right{text-align:right;}
+②伪类选择器
+类选择器和伪类选择器的区别自傲与,类选择器我们可以任意起名,而伪类选择器是css 中已经定义好的选择器,不可以随意起名.
+最常见的伪类选择器:
+a:link{color:green;}未被访问的链接
+a:visited{color:red;}已经被访问的链接
+a:hover{color:blue;}鼠标指针移动到链接上
+a:active{color:yellow;}正在被点击的链接-->
+<h1>类选择器</h1>
+<p class='left'>伪类选择器以及伪元素</p>
+<p class="right">伪类选择器以及伪元素</p>
+<a href="javascript:;">伪类选择器</a>
+<!--③伪元素选择器:针对css3中已经定义好的伪元素使用的选择器.
+使用方法:
+选择器:伪元素{属性:值;}
+与类名配合使用
+选择器.类名:伪元素{属性:值;}-->
+<!--④在css中,主要有四个伪元素选择器.
+1)、first-line 第一行的样式
+2)first-letter第一个字的样式
+3)before在某个元素之前插入一些内容
+4)after在某个元素之后插入一些内容-->
+
+<hr color="green">
+
+<ul>
+    <li><a href="index1.html">伪类选择器</a></li>
+    <li><a href="index1.html">伪类选择器</a></li>
+    <li><a href="index1.html">伪类选择器</a></li>
+    <li><a href="index1.html">伪类选择器</a></li>
+    <li><a href="index1.html">伪类选择器</a></li>
+    <li><a href="index1.html">伪类选择器</a></li>
+    <li><a href="index1.html">伪类选择器</a></li>
+</ul>
+
+<!--⑤结构性伪类选择器root,not,empty和target
+1)、root选择器
+root选择器将样式绑定到页面的根元素中.
+2)、not选择器
+想对某个结构元素使用样式,但是系那个排除这个结构元素下面的子结构元素,让他不使用这个样式时候,我们就可以使用not选择器.
+3)、empty选择器
+empty选择器指定当元素中内容为空白时使用的样式.
+4)、target选择器
+target选择器对页面中某个target元素指定样式,该样式只在用户点击了页面中的超链接,并且跳转到target元素后起作用.
+-->
+<hr color="red">
+<br/>
+<table border="1" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>2</td>
+        <td></td>
+        <td>4</td>
+    </tr>
+    <tr>
+            <td>A</td>
+        <td>B</td>
+        <td>C</td>
+        <td></td>
+    </tr>
+</table>
+
+<a href="#A">A</a>
+<a href="#B">B</a>
+<a href="#C">C</a>
+<a href="#D">D</a>
+<div id="A">
+    <h2>标题</h2>
+    <p>内容.........</p>
+</div>
+<div id="B">
+    <h2>标题</h2>
+    <p>内容.........</p>
+</div>
+<div id="C">
+    <h2>标题</h2>
+    <p>内容.........</p>
+</div>
+<div id="D">
+    <h2>标题</h2>
+    <p>内容.........</p>
+</div>
+<!--⑥选择器first-child,last-child,nth-child,nth-last-child,
+1)、first-child选择器
+first-child单独指定第一个子元素的样式
+2)、last-child选择器
+last-child单独指定最后一个子元素的样式
+3)、nth-child选择器
+nth-child(n)选择器匹配正数下来的第N个元素
+nth-chil(odd)选择器匹配下来的奇数个子元素
+nth-chil(even)选择器匹配下来的偶数个子元素
+4)、nth-last-child选择器
+nth-last-child(n)选择器匹配倒数数下来的第N个元素-->
+<ul>
+    <li>第一个项目</li>
+    <li>第二个项目</li>
+    <li>第三个项目</li>
+    <li>第一个项目</li>
+    <li>第一个项目</li>
+    <li>第一个项目</li>
+    <li>第一个项目</li>
+    <li>第一个项目</li>
+</ul>
+<!--⑦选择器nth-of-type和nth-last-of-type,nth-child(An+B),only-childIE8以上才兼容-->
+<hr color="#27BBA6">
+<h1>唯一的</h1>
+<ul>
+    <li>第一个项目</li>
+</ul>
+<!--3.UI元素状态伪类选择器
+什么是UI选择器?
+UI选择器的特征就是指定样式只有当元素处于某种状态下时候,才起作用,默认状态下不起作用!
+E:hover没有兼容性问题
+E:active不支持IE8
+E:focus没有兼容性问题,被用来指定元素获得光标焦点使用的样式,主要在文本框控件获得聚焦点并进行文字输入时使用.
+E:enabled不支持IE8
+E:disabled不支持IE8,指定元素是否可编辑时候的样式
+
+
+E:read-only不支持IE8,safari,chrome选择器指定元素处于只读状态时候的样式
+E:read-write 不支持IE8,safari,chrome选择器指定元素处于非只读状态时候的样式
+E::selection不支持IE8,当元素处于选中状态时候的样式
+E:checked不支持IE8
+E:default只支持firefox
+E:indeterminate:只支持chrome
+
+
+E:invalid
+E:valid
+E:optional
+E:in-range
+E:out-of-range以上四种都不支持IE8.其他都支持
+--><h1>选择器E:hover、E:active和E:focus</h1>
+<form>
+    姓名：<input type="text" placeholder="请输入姓名">
+    <br/>
+    <br/>
+    密码：<input type="password" placeholder="请输入密码">
+</form>
+
+
+<h1>E:enabled伪类选择器与E:disabled伪类选择器</h1>
+<form>
+    姓名：<input type="text" placeholder="请输入姓名" disabled>
+    <br/>
+    <br/>
+    学校：<input type="text" placeholder="请输入学校">
+</form>
+
+
+<h1>read-only伪类选择器与E:read-write伪类选择器</h1>
+<form>
+    姓名：<input type="text" placeholder="请输入姓名" value="朱朝兵" readonly>
+    <br/>
+    <br/>
+    学校：<input type="text" placeholder="请输入学校">
+</form>
+
+<hr color="blue">
+<form>
+    房屋状态：
+    <input type="checkbox">水
+    <input type="checkbox">电
+    <input type="checkbox">气
+    <input type="checkbox">光纤
+</form>
+
+<!--:default支持火狐浏览器,现在chrome浏览器也支持啦-->
+<form>
+    房屋状态：
+    <input type="checkbox" checked>水
+    <input type="checkbox">电
+    <input type="checkbox">气
+    <input type="checkbox">光纤
+</form>
+<!--不支持低版本的IE还有firef浏览器-->
+<form>
+    性别：
+    <input type="radio" name="sex">男
+    <input type="radio" name="sex">女
+</form>
+
+<hr color="#8C20CB">
+<h1>伪类选择器E::selection</h1>
+<p>今天，我们在这里隆重举行南京大屠杀死难者国家公祭仪式，缅怀南京大屠杀的无辜死难者，缅怀所有惨遭日本侵略者杀戮的死难同胞，缅怀为中国人民抗日战争胜利献出生命的革命先烈和民族英雄，表达中国人民坚定不移走和平发展道路的崇高愿望，宣示中国人民牢记历史、不忘过去，珍爱和平、开创未来的坚定立场。</p>
+<input type="text" placeholder="文本">
+
+
+
+<h1>E:invalid伪类选择器与E:valid伪类选择器</h1>
+<form>
+    <input type="email" placeholder="请输入邮箱">
+</form>
+
+
+
+<h1>E:required伪类选择器与E:optional伪类选择器</h1>
+<form>
+    姓名：<input type="text" placeholder="请输入姓名" required>
+    <br/>
+    <br/>
+    学校：<input type="text" placeholder="请输入学校">
+    
+    <hr color="#675412">
+    
+    <h1>E:in-range伪类选择器与E:out-of-range伪类选择器</h1>
+  <input type="number" min="0" max="100" value="0">
+<!--4.通用兄弟选择器
+它是用来指定位于同一个父元素之中的某一个元素之后的所有其他某个种类的兄弟元素所使用的样式.
+-->
+<div>
+    <span>123465164</span>
+    <span>123465164</span>
+    <p>当今时代刷卡接电话啊睡觉看得见</p>
+    <p>当今时代刷卡接电话啊睡觉看得见</p>
+    <p>当今时代刷卡接电话啊睡觉看得见</p>
+
+</div>
+<span>123465164</span>
+<p>当今时代刷卡接电话啊睡觉看得见</p>
+<p>当今时代刷卡接电话啊睡觉看得见</p>
+<p>当今时代刷卡接电话啊睡觉看得见</p>
+<p>当今时代刷卡接电话啊睡觉看得见</p>
+<div>
+    <p>当今时代刷卡接电话啊睡觉看得见</p>
+    <p>当今时代刷卡接电话啊睡觉看得见</p>
+    <p>当今时代刷卡接电话啊睡觉看得见</p>
+</div>
+<p>当今时代刷卡接电话啊睡觉看得见</p>
+<p>当今时代刷卡接电话啊睡觉看得见</p>
+</body>
+</html>

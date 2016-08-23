@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+li{list-style:none;height:80px;width:900px;position:relative;border:1px solid blue;color:red;line-height:80px;}
+li span{height:15px;line-height:15px;}
+</style>
+<script src="my.js"></script>
+</head>
+
+<body>
+<ul id="faceul">
+<li>JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。</li>
+<li>JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。</li>
+<li>JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。</li>
+<li>JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。</li>
+<li>JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。</li>
+</ul>
+<script language="javascript">
+var oUl=document.getElementById('faceul');
+var oLi=oUl.getElementsByTagName('li');
+var iLiHeight=oLi[0].offsetHeight;
+
+for(var i=0;i<oLi.length;i++){
+	var str=oLi[i].innerHTML;
+	oLi[i].innerHTML=null;
+	for(var j=0;j<str.length;j++){
+		
+		oLi[i].innerHTML+='<span>'+str[j]+'</span>';
+	}
+	var aSpan=oLi[i].children;
+	
+	
+	for(var j=0;j<aSpan.length;j++){
+		aSpan[j].style.left=aSpan[j].offsetLeft+'px';
+		aSpan[j].style.top=aSpan[j].offsetTop+'px';
+		aSpan[j].startTop=aSpan[j].offsetTop;
+	}
+	
+	for(var j=0;j<aSpan.length;j++){
+			
+		aSpan[j].style.position='absolute';
+		showPiano(aSpan,j);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+
+
+function showPiano(aSpan,num){
+		var disY=0;
+		var iSpanHeight=aSpan[0].offsetHeight;
+		aSpan[num].onmouseover=function(ev){
+			ev=ev||window.evevt;
+			disY=ev.clientY;
+		}
+		
+		aSpan[num].onmouseout=function(ev)
+				{
+					for(var j=0;j<aSpan.length;j++)
+					{
+						doMove(aSpan[j],{top:aSpan[j].startTop},500,"elasticOut");
+					}
+				};	
+		
+		
+		
+		aSpan[num].onmousemove=function(ev){
+			ev=ev||window.event;
+			var distance=ev.clientY-disY;
+			var flag=distance>0?1:-1;
+			
+			if(this.startTop+distance>=0&&this.startTop+distance<(iLiHeight-iSpanHeight)){
+				
+				//this.style.top=this.startTop+distance+'px';
+				for(var j=0;j<aSpan.length;j++){
+					if(Math.abs(distance)-Math.abs(num-j)>0){
+						aSpan[j].style.top=aSpan[j].startTop+(Math.abs(distance)-Math.abs(num-j))*flag+'px';
+						}
+						else{
+							aSpan[j].style.top=aSpan[j].startTop+"px";
+						}
+					
+				}
+				
+			}
+			
+			}
+		
+		
+	}
+
+</script>
+</body>
+</html>

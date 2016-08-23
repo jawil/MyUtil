@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/cube.css">
+    <script src="https://cdn.bootcss.com/vue/1.0.17/vue.min.js"></script>
+    <!--引入vue.js文件-->
+    <script type="text/javascript" src='http://cdn.bootcss.com/vue-resource/0.7.0/vue-resource.min.js'></script>
+    <script src="js/ajax.js"></script>
+</head>
+<body>
+    <div id="wrap">
+        <input id="btn" type="text" list="valList" v-model='fil' v-on:keyup="check();">
+        <datalist id="valList" >
+            <option v-for='valList in valLists  | filterBy filt ' value="{{valList.movieName}}">{{valList.movieName}}</option>
+        </datalist>
+        <progress value="100" max="200"></progress>
+    </div>
+    <script>
+var  text=new Vue({
+    el:'#wrap',
+    data:{
+    valLists:'',
+    choice:'',
+    fil:'',
+    filt:'333'
+    },
+    ready:function(){
+        console.log(111);
+        this.getValList();
+        console.log(3333);
+
+    },
+    methods:{
+        getValList:function(){
+            this.$http.get('data/data.json').then(function(response){
+                var data= eval('('+response.data+')');
+                this.$set('valLists',data);
+                console.log(typeof this.valLists);
+               },function(response){
+                console.log(erro);
+
+               });
+        },
+       check:function(){
+        var  Vinput=document.querySelector('#btn');
+        if(Vinput.value==''){
+            this.$set('filt','    ');
+        }else{
+             this.$set('filt','');
+        }
+       }
+}
+
+});
+
+
+
+
+</script>
+</body>
+</html>

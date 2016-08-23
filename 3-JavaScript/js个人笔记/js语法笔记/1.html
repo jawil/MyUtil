@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+////通过in和hasOwnproperty检测对象上是否有某个属性
+    var obj={};
+    Object.defineProperty(obj,'x',{
+        value:7,
+       writable:true,
+        configurable:true,
+        enumerable:true
+
+    })
+    obj.x=77;
+    console.log(obj.x);
+    console.log('x' in obj);
+    console.log(obj.hasOwnProperty('x'));
+
+    var arr={
+        name:'jawil',
+        age:23,
+        sex:"man"
+    }
+
+
+
+    //循环遍历对象属性的三种方法
+    for(var p in arr){
+        console.log(p);
+    }
+    console.log(Object.keys(arr));
+    console.log(Object.getOwnPropertyNames(arr));
+
+
+//非常好用的Object.getOwnpropertyDescriptor方法
+    var objArr={
+        name:'jawi',
+        age:22,
+        sex:'man',
+        addr:'The USA'
+    }
+    Object.defineProperty(objArr,'age',{
+        value:100,
+        enumerable:true,
+        configurable:true,
+        writable:true
+    });
+    console.log(Object.getOwnPropertyDescriptor(objArr,'age'));
+
+
+    //检测一个对象是否是另一个对象的原型（或者是否处于原型链当中）
+    var obj={x:1};
+    var obj1=Object.create(obj);
+    console.log(obj.isPrototypeOf(obj1));
+
+    var json={};
+    console.log(json.toString());
+    var arr=[];
+    console.log(arr.toString());//什么也没有，因为内置对象Array重写了Object的toString方法
+    console.log(Object.prototype.toString.call(arr));
+
+
+
+</script>
+</body>
+</html>

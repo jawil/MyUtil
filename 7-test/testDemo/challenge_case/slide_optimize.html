@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery 公告滚动优化</title>
+    <link type="text/css" href="../common.css" rel="stylesheet"/>
+    <style type="text/css">
+        .box_wrap{ color:#fff; position: relative; width: 480px; height: 85px; border-radius: 6px; margin-top: 10px; overflow: hidden; }
+        .box_wrap .n_b_bg{background: url('../images/slide_optimize_bg.jpg') no-repeat;}
+        .n_b_bg{ position: absolute; top: 0; left: 0;  width: 480px; height: 85px; }
+        .head_line_mod { overflow: hidden; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; }
+        
+        .slideTxt{ white-space: nowrap; padding:10px 10px; margin-left:0px; z-index:2; position: absolute; }
+        
+        .normalHeadLine_div { position: absolute; top: 0; }
+        .normalHeadLine_div ul{ margin:8px 0px; }
+        .normalHeadLine_div .list { padding: 0 0 0 8px; height: 25px; cursor: pointer; }
+        .normalHeadLine_div .list:hover{ color:#e43637; }
+    </style>
+</head>
+<body>
+    <h1>滚动代码优化</h1>
+    
+    <div class="box_wrap">
+        <div id="head_line_id" class="head_line_mod">
+            <div class="normalHeadLine_div">
+                <ul>
+                    <li class="list" title="1.测试的一段小蚊子">1.测试的一段小蚊子...</li>
+                    <li class="list" title="2.测试的一段小蚊子">2.测试的一段小蚊子...</li>
+                    <li class="list" title="3.测试的一段小蚊子">3.测试的一段小蚊子...</li>
+                    <li class="list" title="4.测试的一段小蚊子">4.测试的一段小蚊子...</li>
+                    <li class="list" title="5.测试的一段小蚊子">5.测试的一段小蚊子...</li>
+                    <li class="list" title="6.测试的一段小蚊子">6.测试的一段小蚊子...</li>
+                    <li class="list" title="7.测试的一段小蚊子">7.测试的一段小蚊子...</li>
+                    <li class="list" title="8.测试的一段小蚊子">8.测试的一段小蚊子...</li>
+                    <li class="list" title="9.测试的一段小蚊子">9.测试的一段小蚊子...</li>
+                    <li class="list" title="10.测试的一段小蚊子">10.测试的一段小蚊子...</li>
+                    <li class="list" title="11.测试的一段小蚊子">11.测试的一段小蚊子...</li>
+                    <li class="list" title="12.测试的一段小蚊子">12.测试的一段小蚊子...</li>
+                    <li class="list" title="13.测试的一段小蚊子">13.测试的一段小蚊子...</li>
+                    <li class="list" title="14.测试的一段小蚊子">14.测试的一段小蚊子...</li>
+                    <li class="list" title="15.测试的一段小蚊子">15.测试的一段小蚊子...</li>
+                    <li class="list" title="16.测试的一段小蚊子">16.测试的一段小蚊子...</li>
+                    <li class="list" title="17.测试的一段小蚊子">17.测试的一段小蚊子...</li>
+                </ul>
+            </div>
+        </div>
+        <div class="n_b_bg"></div>
+    </div>
+
+    <div class="box_wrap">
+        <div id="head_line_id2" class="head_line_mod">
+            <div class="normalHeadLine_div">
+                <ul>
+                    <li class="list" title="1.测试的一段小蚊子">1.测试的一段小蚊子...</li>
+                    <li class="list" title="2.测试的一段小蚊子">2.测试的一段小蚊子...</li>
+                    <li class="list" title="3.测试的一段小蚊子">3.测试的一段小蚊子...</li>
+                    <li class="list" title="4.测试的一段小蚊子">4.测试的一段小蚊子...</li>
+                    <li class="list" title="5.测试的一段小蚊子">5.测试的一段小蚊子...</li>
+                    <li class="list" title="6.测试的一段小蚊子">6.测试的一段小蚊子...</li>
+                    <li class="list" title="7.测试的一段小蚊子">7.测试的一段小蚊子...</li>
+                    <li class="list" title="8.测试的一段小蚊子">8.测试的一段小蚊子...</li>
+                    <li class="list" title="9.测试的一段小蚊子">9.测试的一段小蚊子...</li>
+                    <li class="list" title="10.测试的一段小蚊子">10.测试的一段小蚊子...</li>
+                    <li class="list" title="11.测试的一段小蚊子">11.测试的一段小蚊子...</li>
+                    <li class="list" title="12.测试的一段小蚊子">12.测试的一段小蚊子...</li>
+                    <li class="list" title="13.测试的一段小蚊子">13.测试的一段小蚊子...</li>
+                    <li class="list" title="14.测试的一段小蚊子">14.测试的一段小蚊子...</li>
+                    <li class="list" title="15.测试的一段小蚊子">15.测试的一段小蚊子...</li>
+                    <li class="list" title="16.测试的一段小蚊子">16.测试的一段小蚊子...</li>
+                    <li class="list" title="17.测试的一段小蚊子">17.测试的一段小蚊子...</li>
+                </ul>
+            </div>
+        </div>
+        <div class="n_b_bg"></div>
+    </div>
+
+    <div class="box_wrap">
+        <div class="slideTxt">这是一很长很长很长很长的文字，主要用来显示文字左右移动的效果，这一段文字貌似不够长， 再加长点</div>
+        <div class="n_b_bg"></div>
+    </div>
+
+    <script type="text/javascript" src="../lib/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        // 待添加 文字滚动功能
+        $(function(){
+            // 优化思路： http://developer.51cto.com/art/201504/473422.htm (尽量不操作、遍历 节点)
+            // 自动滚动（每隔5秒向上滚动）效果，只有滚动条数大于3时滚动； 如片段太少， 节点拼接处理
+            // 鼠标放置上面停止滚动，移开继续滚动；
+            var slideObj = {
+                $headLineWrap:null,
+                init: function(){
+                   this.$headLineWrap = $('#head_line_id');
+                   this.initEvt();
+                },
+                initEvt:function(){
+                    var $ulWrap = this.$headLineWrap.find('.normalHeadLine_div'),
+                        dataLen = $ulWrap.find('li').length,
+                        top = 0,
+                        slideUp_count = 2,
+                        slideTimeOut,
+                        slideUp_mouseover,
+                        outTimeOut;
+
+                    // 节点不够自动拼凑
+                    if(dataLen == 4 || dataLen == 5) {
+                        $ulWrap.find('li:lt(2)').clone().appendTo($ulWrap.find('ul'));
+                    }
+                    if ( dataLen > 3 ){
+                        clearTimeout(slideTimeOut);
+                        slideUp2();
+                    }
+                    // 关于 mouseover 与 mouseenter区别：http://www.cnblogs.com/kingwell/archive/2012/09/09/2677258.html
+                    // mouseover mouseout 与 hover, 很多时候能用css解决 脚本实现的功能，性能更好且更好维护 http://www.cnblogs.com/aimyfly/archive/2012/05/04/2483123.html
+                    $ulWrap.on('mouseover',  stopSlideUp);
+                    $ulWrap.on('mouseleave', startSlideUp);
+
+                    // chrome 1 ~ 4
+                    function slideUp(){
+                        var $hadShowDom = '';
+                        top -= 25*2;
+                        if (slideUp_mouseover === true) {
+                            return false;
+                        } 
+                        clearTimeout(slideTimeOut);
+                        slideTimeOut = setTimeout(function(){
+                            $ulWrap.animate({
+                                'top': top
+                            }, 1000, function(){
+                                // 已移动的节点拼接到最后
+                                $ulWrap.find('ul').append( $ulWrap.find('li:lt(2)') );
+                                top = 0;
+                                $ulWrap.css({'top': top});
+                                slideUp();
+                            });
+                        }, 5 * 1000);
+                    }
+                    // chrome cpu 1 ~ 3
+                    function slideUp2(){
+                        var $hadShowDom = '', hadShowIndex;
+                        clearTimeout(slideTimeOut);
+                        // 当已滚动条数超过一半时自动切换
+                        if ( slideUp_count > parseInt(dataLen/2, 10) ){
+                            hadShowIndex = Math.floor(dataLen/2);
+                            // 将已向上移动的节点移动至最下面
+                            $hadShowDom = $ulWrap.find('li:lt(' + hadShowIndex + ')');
+                            // 如果append的是自己子类，则移动其位置
+                            $ulWrap.find('ul').append($hadShowDom);
+                            slideUp_count = 2;
+                            $ulWrap.css('top', 0);
+                            top = 0;
+                        }
+                        top -= 25*2;
+                        slideTimeOut = setTimeout(function(){
+                            $ulWrap.animate({
+                                'top': top
+                            }, 1000, function(){
+                                slideUp_count += 2;
+                                slideUp2();
+                            });
+                        }, 5 * 1000);
+                    }
+                    // 停止滑动
+                    function stopSlideUp(){
+                        slideUp_mouseover = true;
+                        if (slideTimeOut) {
+                            clearTimeout(slideTimeOut);
+                        }
+                    }
+                    // 开始滑动
+                    function startSlideUp(){
+                        slideUp_mouseover = false;
+                        clearTimeout(outTimeOut);
+                        top = parseInt( $ulWrap.css('top'), 10);
+                        outTimeOut = setTimeout(function(){
+                            slideUp2();
+                        }, 500);
+                    }
+                }
+            };
+
+            var slideObj2 = {
+                $headLineWrap:null,
+                init: function(){
+                   this.$headLineWrap = $('#head_line_id2');
+                   this.initEvt();
+                },
+                initEvt:function(){
+                    var $ulWrap = this.$headLineWrap.find('.normalHeadLine_div'),
+                        dataLen = $ulWrap.find('li').length,
+                        top = 0,
+                        slideUp_count = 3,
+                        slideTimeOut,
+                        slideUp_mouseover,
+                        outTimeOut;
+
+                    // 节点不够自动拼凑
+                    if(dataLen == 4 || dataLen == 5) {
+                        $ulWrap.find('li:lt(2)').clone().appendTo($ulWrap.find('ul'));
+                    }
+                    if ( dataLen > 3 ){
+                        top -= 25 * 3;
+                        slideUp_count += 3;
+                        // 自动先提升3
+                        $ulWrap.css({'top': top});
+                        clearTimeout(slideTimeOut);
+                        slideUp();
+                    }
+                    $ulWrap.on('mouseover',  stopSlideUp);
+                    $ulWrap.on('mouseleave', startSlideUp);
+                    // 滚动代码优化
+                    function slideUp(){
+                        var $hadShowDom = '', hadShowIndex;
+                        clearTimeout(slideTimeOut);
+                        // 当滚动到最后一组时切换 dom节点
+                        if ( slideUp_count >= dataLen - 2 ){
+                            hadShowIndex = slideUp_count - 3;
+                            // 将已向上移动的节点移动至最下面
+                            $hadShowDom = $ulWrap.find('li:lt(' + hadShowIndex + ')');
+                            // 如果append的是自己子类，则移动其位置
+                            $ulWrap.find('ul').append($hadShowDom);
+                            slideUp_count = 3;
+                            $ulWrap.css('top', 0);
+                            top = 0;
+                        }
+                        top -= 25*2;
+                        slideTimeOut = setTimeout(function(){
+                            $ulWrap.animate({
+                                'top': top
+                            }, 1000, function(){
+                                slideUp_count += 2;
+                                slideUp();
+                            });
+                        }, 5 * 1000);
+                    }
+                    // 停止滑动
+                    function stopSlideUp(){
+                        slideUp_mouseover = true;
+                        if (slideTimeOut) {
+                            clearTimeout(slideTimeOut);
+                        }
+                    }
+                    // 开始滑动
+                    function startSlideUp(){
+                        slideUp_mouseover = false;
+                        clearTimeout(outTimeOut);
+                        top = parseInt( $ulWrap.css('top'), 10);
+                        outTimeOut = setTimeout(function(){
+                            slideUp();
+                        }, 500);
+                    }
+                },
+            };
+
+            //  文字左右滚动
+            var wordSlideObj = {
+                parentWidth: 0,
+                animateTime: 0,
+                stopScroll: false,
+                init: function(){
+                    // 文字滚动实现原理： 文字一行显示：white-space: nowrap; 
+                    // 超出父类的长度就是滚动的范围,可以向左也可以向右；
+                    var This = this,
+                        $targetDom = $('.slideTxt');
+                    this.parentWidth = 480;
+                    this.startScroll($targetDom);
+                },
+                startScroll: function($targetDom){
+                    var targetW = $targetDom.width(),
+                        offset = targetW - this.parentWidth + 20,
+                        This = this;
+
+                    This.animateTime = 1000 * (offset/30);
+                    if (offset > 0) {
+                        scrollstart();
+                    }
+                    function scrollstart(){
+                        if (!This.stopScroll) {
+                            $targetDom.animate({
+                                "margin-left": '-' + offset
+                            }, This.animateTime, scrollEnd);
+                        }
+                    }
+                    function scrollEnd(){
+                        if (!This.stopScroll) {
+                            $targetDom.animate({
+                                "margin-left": 0
+                            }, This.animateTime, scrollstart);
+                        }
+                    }
+                },
+                toStop: function(){
+                    this.stopScroll = true;
+                }
+            };
+            
+            wordSlideObj.init();
+            // slideObj.init();
+            // slideObj2.init();
+        });
+    </script>
+</body>

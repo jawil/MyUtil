@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script language="javascript">
+    (function(){
+        var a=5;
+        var getNumber=function(){
+            return a;
+        };
+        var setNumber=function(val){
+            a=val;
+        }
+        window.g=getNumber;
+        window.s=getNumber;
+    })();
+    alert(g());
+</script>
+</body>
+</html>

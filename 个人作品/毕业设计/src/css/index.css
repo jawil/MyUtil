@@ -1,0 +1,658 @@
+@charset "UTF-8";
+* {
+    box-sizing: border-box;
+}
+
+input {
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    background: #F9F1EE;
+}
+
+@charset "UTF-8";
+* {
+    box-sizing: border-box;
+}
+
+input {
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    background: #F9F1EE;
+}
+
+
+/* 经常动画样式表 */
+
+@-webkit-keyframes move1 {
+    0% {
+        top: 0;
+    }
+    100% {
+        top: 8px;
+    }
+}
+
+@-webkit-keyframes move2 {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(-360deg);
+    }
+}
+
+@-webkit-keyframes move3 {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+#loadingshow {
+    width: 1285px;
+    height: 684px;
+    background: url(../loding/loading.png) no-repeat;
+}
+
+#loading {
+    width: 120px;
+    height: 140px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz- transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)
+}
+
+#load {
+    width: 120px;
+    height: 100px;
+    background: url(../loding/loading3.png) no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-animation: .5s move1 infinite alternate linear;
+    -moz-animation: .5s move1 infinite alternate linear;
+}
+
+#loadIco1 {
+    width: 120px;
+    height: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: url(../loding/loading4.png) no-repeat;
+    -webkit-animation: 1.2s move2 infinite linear;
+    -moz-animation: 1.2s move2 infinite linear;
+}
+
+#loadIco2 {
+    width: 120px;
+    height: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: url(../loding/loading5.png) no-repeat;
+    -webkit-animation: 1.2s move3 infinite linear;
+}
+
+#loadtext {
+    width: 120px;
+    height: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: center;
+    line-height: 100px;
+    font: bold 16px/100px Arial;
+    color: #f9725c;
+}
+
+#loadShadow {
+    width: 100px;
+    height: 40px;
+    position: absolute;
+    left: 10px;
+    bottom: 0;
+    background: url(../loding/loading2.png) no-repeat;
+}
+
+
+/* 轮播图样式表 */
+
+#ad-slider-wrap {
+    width: 3.2rem;
+    height: 1.3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.ad-slider-content {
+    width: 12.8rem;
+    height: 1.3rem;
+    display: -webkit-box;
+    display: box;
+    transition: all .2s ease-out;
+}
+
+.ad-slider-content li {
+    height: 1.3rem;
+    width: 3.2rem;
+}
+
+.ad-slider-content li span {
+    background-size: cover;
+}
+
+.ad-slider-content li span {
+    width: 3.2rem;
+    height: 1.3rem;
+    display: block;
+}
+
+.ad-slider-indicators {
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    bottom: 0.1rem;
+    display: -webkit-box;
+    display: box;
+}
+
+.ad-slider-indicators li {
+    width: 0.07rem;
+    height: 0.07rem;
+    border-radius: 50%;
+    background: gray;
+    margin-left: 0.1rem;
+}
+
+.ad-slider-indicators li.current {
+    background: red;
+}
+
+.content-wrap,
+.music-tips,
+.foot-msg {
+    background: #F9F1EE;
+}
+
+
+/* 头部搜索框的样式表 */
+
+header .search-wrap {
+    display: box;
+    display: -webkit-box;
+    height: 0.4rem;
+    /* border: 1px solid red; */
+    background: rgba(1, 1, 1, 0.9);
+}
+
+header .search-wrap div {
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    line-height: 0.4rem;
+}
+
+header .search-wrap .register a {
+    color: #fff;
+    font-size: 0.13rem;
+}
+
+header .search-wrap .search-txt {
+    width: 90%;
+    height: 60%;
+    text-align: center;
+    background: rgba(41, 39, 40, 1);
+    border-radius: 0.2rem;
+    color: #fff;
+}
+
+header .search-wrap div:nth-of-type(2) {
+    width: 60%;
+}
+
+
+/* 发现音乐的样式表 */
+
+#find-music .nav-wrap {
+    display: box;
+    display: -webkit-box;
+    height: 0.4rem;
+    /* border: 1px solid green; */
+    background: rgba(1, 1, 1, 0.85);
+    color: #ADB1B0;
+}
+
+#find-music .nav-wrap div {
+    width: 25%;
+    height: 100%;
+    line-height: 0.4rem;
+    text-align: center;
+}
+
+#find-music .nav-wrap .current {
+    color: #fff;
+    border-bottom: 3px solid #f00;
+    background-image: -webkit-linear-gradient(bottom, #6D1418, #000);
+    background-image: -o-linear-gradient(bottom, #6D1418, #3D191B);
+    background-image: linear-gradient(bottom, #6D1418, #3D191B);
+}
+
+#find-music section {
+    /*     border: 1px solid blue; */
+    position: absolute;
+    top: 0.8rem;
+    bottom: 0.4rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #fff;
+    width: 100%
+}
+
+.music-tips {
+    display: box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    height: 0.55rem;
+    /* border: 1px solid green; */
+    border-radius: 0.05rem;
+}
+
+.music-tips div {
+    flex: 1;
+    -webkit-box-flex: 1;
+    height: 100%;
+    /* line-height: 0.55rem; */
+    text-align: center;
+    display: -webkit-box;
+    display: box;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-box-orient: vertical;
+}
+
+.music-content {
+    display: box;
+    display: -webkit-box;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-flex-wrap: wrap;
+   /*  -webkit-box-lines: multiple; */
+    flex-wrap: wrap;
+}
+
+.music-content div {
+    width: 33%;
+    height: auto;
+    /* border: 1px solid orange; */
+    padding: 0 0.03rem;
+}
+
+.music-content .list-diff {
+    width: 50%;
+}
+
+.music-content .list-diff img {
+    width: 100%;
+    height: 1.5rem;
+}
+
+.content-wrap h1.title-left {
+    text-align: left;
+    padding-left: 0.03rem;
+    position: relative;
+}
+
+.content-wrap .high-quality {
+    height: 0.9rem;
+    display: box;
+    display: -webkit-box;
+    display: flex;
+    display: -webkit-flex;
+    padding: 0.1rem 0.05rem;
+}
+
+.content-wrap .high-quality div {
+    flex: 1.4;
+    -webkit-box-flex: 1.4;
+}
+
+.content-wrap .high-quality p {
+    color: red;
+    font-size: 0.15rem;
+}
+
+.content-wrap .high-quality span {
+    color: #A1A1A1;
+    font-size: 0.10rem;
+}
+
+.content-wrap .high-quality .goog-list {
+    flex: 3;
+    -webkit-box-flex: 3;
+    padding-left: 0.08rem;
+    display: -webkit-box;
+    display: box;
+    display: flex;
+    display: -webkit-flex;
+    /*  align-items:center; */
+    justify-content: center;
+    -webkit-box-pack: center;
+    flex-direction: column;
+    -webkit-box-orient: vertical;
+}
+
+.content-wrap .high-quality div:nth-of-type(3) {
+    flex: 1;
+    -webkit-box-flex: 1;
+    text-align: right;
+    line-height: 0.63rem;
+}
+
+.content-wrap {
+    border: 1px solid gray;
+    padding: 0 0.05rem;
+    margin: 0.03rem;
+}
+
+.content-wrap .title {
+    font-size: 0.18rem;
+    width: 100%;
+    text-align: center;
+}
+
+.music-content .flex-diff {
+    width: 100%;
+}
+
+.flex-diff div {
+    width: 50%;
+    height: auto;
+}
+
+.flex-diff .div-diff {
+    width: 100%;
+}
+
+.foot-msg {
+    height: 0.9rem;
+    /*  border: 1px solid red; */
+    display: -webkit-box;
+    display: box;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    /* box左右居中 */
+    -webkit-box-pack: center;
+    /* 上下居中 */
+    -webkit-box-align: center;
+    /* 竖着排列 */
+    -webkit-box-orient: vertical;
+    /* 所占比例 */
+    -webkit-box-flex: 1;
+    color: #C6C6C6;
+    font-size: 0.13rem;
+}
+
+.foot-msg .btn-adjust {
+    color: red;
+    font-size: 0.14rem;
+    width: 1.2rem;
+    height: 0.3rem;
+    line-height: 0.25rem;
+    text-align: center;
+    border-radius: 0.2rem;
+    /* border: 1px solid red; */
+    outline: none;
+    border: 0;
+}
+
+.song-detail img {
+    width: 100;
+    height: 0.9rem;
+}
+
+.song-detail .nowrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.song-detail .singer-name {
+    font-style: normal;
+    font-size: 0.15rem;
+}
+
+.list-title {
+    /* border: 1px solid purple; */
+    font-size: 0.12rem;
+    line-height: 0.17rem;
+    color: #333333;
+}
+
+.number span {
+    color: #C6C6C6;
+    margin-left: 0.05rem;
+    font-size: 0.12rem;
+}
+
+
+/* 主播电台的样式表 */
+
+.content-wrap .high-quality .song {
+    flex: 5;
+    -webkit-box-flex: 5;
+    display: -webkit-box;
+    display: box;
+    display: flex;
+    display: -webkit-flex;
+    /*  align-items:center; */
+    justify-content: center;
+    -webkit-box-pack: center;
+    flex-direction: column;
+    -webkit-box-orient: vertical;
+}
+
+.content-wrap .high-quality .img {
+    flex: 2.5;
+    -webkit-box-flex: 2.5;
+    padding-top: 0.14rem;
+}
+
+.host-diff {
+    margin-top: 0.1rem;
+    background: #fff;
+    border-radius: 0.05rem;
+    /* border: 1px solid gray; */
+}
+
+.bgc-fff {
+    background: #fff;
+}
+
+.host-list-remmond {
+    height: 3.5rem;
+    border: 1px solid gray;
+    border-radius: 0.05rem;
+    margin: 0 0.03rem;
+    display: -webkit-box;
+    display: box;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-box-orient: vertical;
+}
+
+.host-list-remmond div {
+    flex: 1;
+    -webkit-box-flex: 1;
+    padding: 0.05rem 0.1rem;
+}
+
+.host-list-remmond div:first-child {
+    display: -webkit-box;
+    display: box;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    font-size: 0.17rem;
+    flex: 0.5;
+    -webkit-box-flex: 0.5;
+}
+
+.host-list-remmond div:first-child span {
+    padding-left: 0.05rem;
+}
+
+.bgc-fff .title {
+    font-size: 0.17rem;
+}
+
+hr.circle {
+    border: 1px solid red;
+    width: 0;
+    height: 0.16rem;
+}
+
+span.circle {
+    border: 1px solid red;
+    width: 0;
+    height: 0.15rem;
+    display: inline-block;
+    margin-left: 0.15rem;
+}
+
+.host-list-remmond .good-items {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 2.15rem;
+    word-break: break-all;
+    padding: 0;
+}
+
+.host-list-remmond .good-items p {
+    font-size: 0.15rem;
+}
+
+.host-list-remmond .good-items span {
+    font-size: 0.12rem;
+    color: #B5B5B5;
+}
+
+.host-list-remmond img {
+    vertical-align: middle;
+    border: none;
+    width: 0.6rem;
+    border-radius: 50%;
+}
+
+
+/* 排行榜样式表 */
+
+.ranking-list {
+    padding: 0.05rem;
+    color：#686C6B;
+}
+
+.ranking-list span.title-list {
+    border-left: 0.02rem solid #000;
+    padding: 0.01rem 0.03rem;
+    font-weight: 400;
+    font-size: 0.16rem;
+}
+
+.ranking-list .guanfang>li {
+    height: 0.8rem;
+    padding: 0.03rem 0;
+    display: -webkit-box;
+    display: box;
+}
+
+.ranking-list .guanfang li img {
+    height: 100%;
+    vertical-align: middle;
+}
+
+.ranking-list .guanfang li ol {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.ranking-list .guanfang li ol span {
+    color: gray;
+    font-size: 0.12rem;
+}
+
+.ranking-list .guanfang li ol>li {
+    font-size: 0.12rem;
+    padding-left: 0.05rem;
+}
+
+.ranking-list .guanfang .diff1 {
+    color: #000;
+    font-size: 0.16rem;
+    font-weight: 300;
+}
+
+.ranking-list .guanfang .diff2 {
+    font-size: 0.13rem;
+    color: gray;
+}
+
+
+/* 底部导航的样式表 */
+
+footer .footer-nav {
+    width: 3.2rem;
+    height: 0.4rem;
+    border: 1px solid red;
+    position: fixed;
+    bottom: 0;
+    display: -webkit-box;
+    display: box;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #D53C34;
+}
+
+footer .footer-nav div {
+    flex: 1;
+    -webkit-box-flex: 1;
+    font-size: 0.13rem;
+    text-align: center;
+    line-height: 0.17rem;
+    color: #191919;
+    display: -webkit-box;
+    display: box;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-box-orient: vertical;
+}
+
+footer .footer-nav div.active div {
+    color: #fff;
+}

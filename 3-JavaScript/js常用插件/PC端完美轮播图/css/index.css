@@ -1,0 +1,100 @@
+/*默认样式*/
+        html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        body { /*解决微信兼容问题*/
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        /*导航栏图片样式*/
+        #Carousel {
+            width: 100%;
+            height: 30%;
+            position: relative;
+            overflow: hidden;
+        }
+        #Carousel ul {
+            width: 400%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #Carousel ul li {
+            width: 25%;
+            height: 100%;
+            float: left;
+            position: relative;
+        }
+        #Carousel ul li img {
+            vertical-align: top;
+            width: 100%;
+        }
+        #Carousel ul span {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 20%;
+            width: 100%;
+            background: rgba(1, 1, 1, 0.5);
+        }
+        #Carousel ul span a {
+            color: white;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 70%;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+        }
+        /*按钮切换样式表*/
+        #Carousel .tabBtn {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            max-width: 30%;
+            content: '';
+            display: block;
+            clear: both;
+            text-align: center;;
+        }
+        #Carousel .tabBtn span {
+            float: left;
+            width: 8px;
+            height: 8px;
+            margin: 8px 5px;
+            background: white;
+            border-radius: 50%;
+        }
+        @media only screen and (min-width: 1029px) {
+            /*解决移动端click的bug*/
+            #Carousel .tabBtn span:hover {
+                background: red;
+            }
+        }
+        #Carousel .prev, .next {
+            position: absolute;
+            width: 25px;
+            height: 40px;
+            top: 50%;
+            margin-top: -20px;
+        }
+        #Carousel .prev {
+            background: url("images/iWorksPrev.png") no-repeat rgba(1, 1, 1, 0.1);;
+            background-size: cover;
+            left: 2%
+        }
+        #Carousel .next {
+            background: url("images/iWorksNext.png") no-repeat rgba(1, 1, 1, 0.1);;
+            background-size: cover;
+            right: 2%;
+        }

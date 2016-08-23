@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script src="jquery-1.10.1.min.js"></script>
+<script>
+(function(){
+	function fnDialog(options){//1
+		var defaults={
+			handler:'',
+			title:'default title',
+			content:'default contents',
+			okBtn:false,
+			cancelBtn:false,
+			position:'right',
+			okFn:function(){},
+			cancelFn:function(){}
+		}
+		var settings={};
+		var $parent=this;
+		settings=$.extend(settings,defaults,options);
+		create();
+		bind();
+		
+		function create(){//2
+			$parent.hide();
+			var $title=$('<div class="title"><span style="float:left;">'+settings.title+'</span><span class="close" style="float:right;cursor:pointer; ">X</span></div>');
+			var $content=$('<div class="content">'+settings.content+'</div>');
+			$("#alertTab").append($title);
+			$("#alertTab").append($content);
+			if( settings.okBtn ){
+				var $okBtn = $('<input class="ok" type="button" value="确认">');
+				$parent.append( $okBtn );
+			}
+			if( settings.cancelBtn ){
+				var $cancelBtn = $('<input class="cancel" type="button" value="取消">');
+				$parent.append( $cancelBtn );
+			}
+			
+			}//2
+			
+			function bind(){//3
+				$(settings.handler).on('click',function(){$parent.show();
+				getPostion();
+				
+				});
+				$parent.delegate('.close','click',function(){$parent.hide();});
+				$parent.delegate('.ok','click',function(){settings.okFn();});
+				$parent.delegate('.cancel','click',function(){$parent.hide();settings.cancelFn();});
+				
+				}//3
+			
+			function getPostion(){
+				if(settings.position=='center'){
+					$parent.css({'left':($(window).width()-$parent.outerWidth())/2,
+						'top':($(window).height()-$parent.outerHeight())/2+$(document).scrollTop()});
+					};
+				if(settings.position=='right'){
+					$parent.css({'left':$(window).width()-$parent.outerWidth(),
+						'top':$(window).height()-$parent.outerHeight()+$(document).scrollTop()});
+					};
+				if(settings.position=='left'){
+					$parent.css({'left':0,'top':$(window).height()-$parent.outerHeight()+$(document).scrollTop()});
+					};
+				
+				
+			}
+			
+		
+		};//1
+	$.fn.extend({
+		dialog : fnDialog
+	});
+	
+	})(jQuery);
+</script>
+<script>
+$(function(){
+	
+	$('#alertTab').dialog({
+		handler : '#input1',
+		title : '你好',
+		content : '很好！！！',
+		okBtn : true,
+		cancelBtn : true,
+		okFn : function(){
+			alert(1);
+		},
+		cancelFn : function(){
+			alert(2);
+		}
+	});
+	
+});
+</script>
+
+<style>
+#alertTab{width:300px;height:300px;border:1px solid red;position:absolute;left:100px;top:100px;}
+#alertTab .title{ height:40px; overflow:hidden; border-bottom:1px #000 solid;}
+#alertTab .content{ height:200px; overflow:hidden; border-bottom:1px #000 solid;}
+#alertTab input{margin-top:15px;outline:none;border:none;cursor:pointer;}
+</style>
+</head>
+
+<body>
+<input type="button" value="点击" id="input1">
+<div id="alertTab">
+
+<!--<div class="title">
+<span style="float:left;">title content</span>
+<span class="close" style="float:right;">X</span>
+</div>
+
+
+<div class='content'>
+the alertTab content!
+
+</div>
+
+<input type="button" value="enter"/>
+<input type="button" value="cancle"/>-->
+
+</div>
+</body>
+</html>

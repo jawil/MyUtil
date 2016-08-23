@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+          作用域理解
+        </title>
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    </head>
+    
+    <body>
+        <h3>作用域理解</h3>
+        <!-- 测试按钮 -->
+        <button id='btn1'>按钮1</button>
+        <button id='btn2'>按钮2</button>
+        <button id='btn3'>按钮3</button>
+        <button id='btn4'>按钮4</button>
+        <button id='btn5'>按钮5</button>
+        <script>
+          
+          // 后面函数也能调用
+          // scopeVar();
+          function scopeVar(){
+            alert(a);  //undefined
+            var a = 0;
+            a++;
+            alert(a); // 1
+          }
+
+          // 2. this 工作原理 5种情况：
+          // 2.1 全局范围 this : window
+          // 2.2 函数调用 foo() : window
+          // 2.3 方法调用 test.foo() : test
+          // 2.4 构造函数调用 new foo(): 新的实例
+          // 2.5 显式设置this apply call方法 : 参数1
+
+          // 笔试题1
+          function test1(){
+            var a_obj = {
+              a: 1,
+              aFun: function(){
+                alert(this.a); 
+              }
+            }
+            var b = a_obj.aFun;
+            // 2.2 函数调用
+            b(); // undefined
+            // 2.3 方法调用
+            a_obj.aFun(); // 1
+          }
+          // test1();
+
+          //循环里创建函数 
+          window.onload = function(){
+            // 循环按钮
+            var btns = document.getElementsByTagName('button');
+            var btn = null;
+            for(var i = 0, len = btns.length; i < len; i++){
+              btn = btns[i];
+              btn.onclick = function(){
+                btn.style.background = 'blue'; //btn 永远为 btns[len -1]即最后一个按钮
+                console.log(i);// len 即 5
+                this.style.background = 'red';// this 为当前点击的按钮
+
+              }
+            }
+          }
+
+          // 笔试题2
+          // 对于apply和call两者在作用上是相同的，但两者在参数上有区别的。
+          // 对于第一个参数意义都一样，但对第二个参数：
+          // apply传入的是一个参数数组，也就是将多个参数组合成为一个数组传入，而call则作为call的参数传入（从第二个参数开始）。
+          // 如 func.call(func1,var1,var2,var3)对应的apply写法为：func.apply(func1,[var1,var2,var3])
+
+          var name = "The Window";
+          function test2(){
+            var object = {
+              name : "My Object",
+              getNameFunc : function(){
+                  alert('1.' + this.name);
+                  return function(){
+                      return this.name;
+                  };
+              }
+            };
+            var func = object.getNameFunc(); // 1. My Object
+            alert('2.' + func()); // 2. The Window
+            alert('3.' + func.call(object)); //3. My Object 
+            alert('4.' + func.apply(object)); //4. My Object
+          }
+          // test2();
+          
+          // 题目3：知乎 http://www.zhihu.com/question/33960636
+          // 判断this指向的方法：
+          // 1.函数是否new调用？若是， 则，this指向新对象；
+          // 2.函数是否是bind方法返回？若是，则this指向指定对象；
+          // 3.函数是否通过apply/call调用？若是，则this指向指定对象；
+          // 4.是否作为对象的方法调用？若是，则this指向该对象；
+          // 5.this指向全局。
+
+          // 全局变量
+          var length = 10;
+          function test3(){
+            function fn() {
+              alert(this.length);
+            }
+            var obj = {
+              length: 5,
+              method: function(fn) {
+                fn(); // 根据第五步判断，得出this指向全局对象
+                arguments[0]();
+              }
+            }
+            obj.method(fn, 1); //根据第四步判断，得出this指向arguments对象
+          }
+          test3();
+        </script>
+    </body>
+</html>

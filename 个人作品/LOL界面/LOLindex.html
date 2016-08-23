@@ -1,0 +1,815 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+   <link href="./mycss/LOLindex.css" rel="stylesheet" type="text/css">
+    <script src="./js/sea.js"></script>
+    <script src="./js/move.js"></script>
+    <script language="javascript">
+        window.onload =function(){
+			seajs.use('./js/main.js');
+
+		}
+    </script>
+</head>
+
+<body>
+<div class="bgm">
+
+    <div id="LOL_top"><!--//1英雄联盟的头部开始最顶部的个人信息和商店-->
+        <input class="lab" type="button" readonly value="League of Legends 5.21.15_10_26_20_09"/>
+        <input type="button" class="buto" value="PLAY"/>
+
+        <a id="indexA" href="javascript:;" data-hash="index"><img id="icno" src="img/1.png"></a><!--html5的知识-->
+
+        <span id="showspan">返回大厅</span>
+        <ul class="faceul1 ">
+            <li>－</li>
+            <li>×</li>
+        </ul>
+
+        <div style="width:427px;float:right;margin-top:12px;" class="clear">
+            <img style="height:56px;width:56px;float:left;cursor: pointer;" src="img/3.png"/>
+            <div style="float:left">
+                <input class="username" readonly type="button" value="微醺年华"/>
+                <input class="usermoney" id="mydianjuan" readonly type="button" value="8888"/>
+                <input class="gamebi" readonly type="button" value="63000"/>
+                <br>
+
+
+                <a id="shopA" href="javascript:;" data-hash="shop"><input class="gameshop" type="button" value=""/></a>
+                <!--html5的知识-->
+
+                <input class="personaldata" type="button" value=""/>
+                <input class="question" type="button" value=""/>
+                <input class="setting" type="button" value=""/>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="loadingshow">
+        <div id="loading">
+            <div id="load">
+                <div id="loadIco1"></div>
+                <div id="loadIco2"></div>
+                <div id="loadtext">0%</div>
+            </div>
+            <div id="loadShadow"></div>
+        </div>
+
+    </div>
+
+
+    <div id="ajaxdiv" class="clear" data-hash="index"><!--//主界面的内容-->
+        <div class="clear">
+            <div id="LOL_left">
+                <div id="left_top">
+
+                    <ul class="faceul4 clear">
+                        <li>
+                            <a href="#">
+                                <p>等级要求<span>3</span>级</p>
+                                <p>等级要求<span>3</span>级</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <p>等级要求<span>3</span>级</p>
+                                <p>等级要求<span>3</span>级</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <p>等级要求<span>5</span>级</p>
+                                <p>等级要求<span>5</span>级</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <p>新手推荐</p>
+                                <p>新手推荐</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <p>新手推荐</p>
+                                <p>新手推荐</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul id="gamemodel" class="faceul2 clear">
+                        <li>
+                            <p><img src="img/12.png"/><span>SOLO</span></p>
+                            <span class="model"><strong>单人</strong>开始游戏</span>
+                        </li>
+
+                        <li>
+                            <p><img src="img/13.png"/><span>PREMADE</span></p>
+                            <span class="model"><strong>组队</strong>开始游戏</span>
+                        </li>
+
+
+                        <li>
+                            <p><img src="img/14.png"/><span>ARAM</span></p>
+                            <span class="model"><strong>极地</strong>大乱斗</span>
+                        </li>
+
+
+                        <li>
+                            <p><img src="img/15.png"/><span>COOPYSAL</span></p>
+                            <span class="model"><strong>人机</strong>对战游戏</span>
+                        </li>
+
+
+                        <li>
+                            <p><img src="img/16.png"/><span>TUTORIAL</span></p>
+                            <span class="model"><strong>新人</strong>训练模式</span></li>
+                    </ul>
+                </div>
+
+
+                <div id="left_center">
+                    <div id="lc_left">
+                        <ul id="faceul4" class="clear">
+                            <li><img src="img/17.png"/></li>
+                            <li><img src="img/18.png"/></li>
+                            <li><img src="img/19.png"/></li>
+                            <li><img src="img/20.png"/></li>
+                            <li><img src="img/21.png"/></li>
+                        </ul>
+
+                    </div>
+
+
+                    <ul id="faceul3">
+                        <li style="background:#07414E;color:white;">阿卡丽的神秘商店</li>
+                        <li>季前赛官方介绍</li>
+                        <li>颁奖盛典投票开始</li>
+                        <li>赛季奖励即将开放</li>
+                        <li>丧失和杀手</li>
+                    </ul>
+
+                    <div id="lc_right">
+
+                        <ul id="faceul6" class="clear">
+                            <li>综合</li>
+                            <li>公告</li>
+                            <li>赛事</li>
+                            <li>论坛</li>
+                            <li><a href="#"><img src="img/45.png"/></a></li>
+                        </ul>
+
+                        <p class="bottom-p"><a href="#">英雄联盟用户调查问卷</a>
+                            <span>[调查]</span></p>
+
+                        <div class="newsdiv clear" id="news">
+
+                            <div class="listnews">
+                                <a href="#"><p><strong>2016官方季前赛介绍视频</strong></p></a>
+
+                                <ul class="3Dmove">
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p class="move">颁奖盛典"最佳新星"与"最佳外援"提名揭晓</p></a>
+                                        <em>11/12</em>
+                                    </li>
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p class="move">德玛西亚杯总决赛震撼来袭,内场门票等你拿</p></a>
+                                        <em>11/12</em>
+                                    </li>
+
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p class="move">火爆空前2015LOL高校英雄日长春落幕</p></a>
+                                        <em>11/11</em>
+                                    </li>
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p class="move">颁奖盛典"年度MVP"与"最佳阵容"提名曝光</p></a>
+                                        <em>11/11</em>
+                                    </li>
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p class="move">英雄揭秘:海兽祭祀 俄洛伊</p></a>
+                                        <em>11/11</em>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <div class="listnews">
+
+                                <a href="#"><p><strong>11月13日免费英雄更换公告</strong></p></a>
+
+                                <ul class="3Dmove">
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>战队系统维护公告</p></a>
+                                        <em>11/11</em>
+                                    </li>
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>"皮城警备"开启QQ推荐好友功能</p></a>
+                                        <em>11/11</em>
+                                    </li>
+
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>2015年赛季奖励即将发放</p></a>
+                                        <em>11/10</em>
+                                    </li>
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>QQ推荐好友功能常见问题</p></a>
+                                        <em>11/10</em>
+                                    </li>
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>"丧失&杀手"主题皮肤鬼魅降临</p></a>
+                                        <em>11/10</em>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <div class="listnews">
+
+                                <a href="#"><p><strong>POP战队采访:平凡人的追梦之旅</strong></p></a>
+
+                                <ul class="3Dmove">
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>11.12赛事新闻汇总(高校联赛)</p></a>
+                                        <em>11/13</em>
+                                    </li>
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>11.12赛事新闻汇总城市争霸赛)</p></a>
+                                        <em>11/13</em>
+                                    </li>
+
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>11.11赛事新闻汇总(高校联赛)</p></a>
+                                        <em>11/13</em>
+                                    </li>
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>11.11赛事新闻汇总城市争霸赛)</p></a>
+                                        <em>11/13</em>
+                                    </li>
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>颁奖盛典"最佳新星"与"最佳外援"提名揭晓</p></a>
+                                        <em>11/12</em>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <div class="listnews">
+
+                                <a href="#"><p><strong>S6前大练兵,德杯为你指路</strong></p></a>
+
+                                <ul class="3Dmove">
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>身世浮沉雨打萍,与命运抗争的五大选手</p></a>
+                                        <em>11/13</em>
+                                    </li>
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>神吐槽基情四射!又到一年表白季</p></a>
+                                        <em>11/12</em>
+                                    </li>
+
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>刀妹灵车漂移,卡牌死亡传送</p></a>
+                                        <em>11/12</em>
+                                    </li>
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>盘点S5赛季那些曾经独领风骚的英雄们</p></a>
+                                        <em>11/12</em>
+                                    </li>
+
+                                    <li>
+                                        <div class="trang"></div>
+                                        <a href="#"><p>风格大改全新体验 LOL季前赛一览</p></a>
+                                        <em>11/12</em>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="left_bottom">
+                    <div id="bottom_left">
+                        <ul>
+                            <li><a href="#">新手礼包</a>
+                                <img id="img1" src="img/23.png"/>
+                            </li>
+                            <li id="oliHand"><a href="#">掌上英雄联盟</a>
+                                <img id="img2" src="img/24.png"/>
+                            </li>
+
+                            <li><a href="#">官方周边商城</a>
+                                <img id="img3" src="img/23.png"/>
+                            </li>
+                            <li><a href="#">新手指引</a></li>
+                            <li><a href="#">在线客服</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div id="bottom_center">
+                        <p><strong>本周免费英雄</strong>
+                            <a href="#">查看所有英雄资料</a>
+                        </p>
+                        <ul id="faceul5">
+                            <li><img src="img/26.png"/><a href="#">末日使者</a></li>
+                            <li><img src="img/27.png"/><a href="#">复仇之矛</a></li>
+
+                            <li><img src="img/28.png"/><a href="#">审判天使</a></li>
+
+                            <li><img src="img/29.png"/><a href="#">无极剑圣</a></li>
+
+                            <li><img src="img/30.png"/><a href="#">发条魔灵</a></li>
+
+                            <li><img src="img/31.png"/><a href="#">凛冬之怒</a></li>
+
+                            <li><img src="img/32.png"/><a href="#">刀锋之影</a></li>
+
+                            <li><img src="img/33.png"/><a href="#">瘟疫之源</a></li>
+                            <li><img src="img/34.png"/><a href="#">兽灵行者</a></li>
+                            <li><img src="img/35.png"/><a href="#">邪恶小法师</a></li>
+
+                        </ul>
+                    </div>
+                    <div id="bottom_right">
+
+                        <p id="pSpan">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </p>
+
+                        <a href="#"><img id="gameImg" src="img/37.png"/></a>
+
+                        <a href="#"><p id="oPPP">
+                        </p></a>
+                        <a href="#">
+                            <div id="trangle">
+                            </div>
+                        </a>
+                        <img id="bgmimg" src="img/42.png"/>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="LOL_right">
+
+                <div id="R_top">
+                    <img src="img/49.png"/>
+                    <a href="#"><img src="img/51.png"/></a>
+
+                    <p>
+
+                        <span></span>
+                        <span></span>
+                    </p>
+                </div>
+
+                <div id="R_center1">
+                    <ul id="kanghan">
+                        <li><img src="img/52.png"/></li>
+                        <li><img src="img/53.png"/></li>
+                        <li><img src="img/54.png"/></li>
+
+                    </ul>
+
+                    <a id="prev" href="javascript:;"><</a>
+                    <a id="next" href="javascript:;">></a>
+                </div>
+
+                <div id="R_center2">
+                    <a href="#"><img src="img/56.png"/></a>
+                    <a href="#"><img src="img/57.png"/></a>
+                </div>
+
+
+                <div id="R_bottom">
+                    <p id="title">
+                    </p>
+                    <div class="listnews">
+
+
+                        <ul id="pianoStyle">
+                            <li>
+                                <div class="trang"></div>
+                                <a href="#"><p>11.13测试服:驯龙小炮界面上线</p></a>
+                                <em>11/13</em>
+                            </li>
+
+                            <li>
+                                <div class="trang"></div>
+                                <a href="#"><p>线霸级别被动!S6女枪图文评测</p></a>
+                                <em>11/13</em>
+                            </li>
+
+
+                            <li>
+                                <div class="trang"></div>
+                                <a href="#"><p>防御塔见了都得跑!揭秘联盟最肉英雄</p></a>
+                                <em>11/13</em>
+                            </li>
+
+                            <li>
+                                <div class="trang"></div>
+                                <a href="#"><p>S5赛季末的绝唱 辅助的亡命充分心得</p></a>
+                                <em>11/13</em>
+                            </li>
+
+                            <li>
+                                <div class="trang"></div>
+                                <a href="#"><p>季前赛隐藏改动:ADC崛起的连锁反应</p></a>
+                                <em>11/13</em>
+                            </li>
+
+                            <li>
+                                <div class="trang"></div>
+                                <a href="#"><p>这个可以玩一年!带光效果的千珏插画</p></a>
+                                <em>11/13</em>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div id="game_shop" data-hash="shop"><!--//游戏商店的内容-->
+        <ul id="jptj">
+            <li id="li1">购买点劵</li>
+            <li id="li4">召唤师留言
+                <img src="img1/4.png"/>
+            </li>
+            <li>精品推荐</li>
+            <li>英雄</li>
+            <li>皮肤</li>
+            <li>守卫(眼)皮肤</li>
+            <li>召唤师图标</li>
+            <li>符文</li>
+            <li>加成道具</li>
+            <li>道具包</li>
+            <li>账号</li>
+            <li>最近购买</li>
+        </ul>
+
+
+        <div id="leaveMeassage"
+             style="width:1083px;height:665px;border:1px solid green;float:left;margin-top:-5px;position:relative;display:none">
+
+
+        </div>
+
+
+        <div id="ajax2" style="">
+
+            <div id="exgoods">
+
+                <img id="dicpng" src="img1/6.png"/>
+                <ul id="yuanoul">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                    <li>9</li>
+
+                </ul>
+                <img src="img1/15.png"/>
+                <div id="goodslist">
+                    <ul id="newgoods" class="clear">
+                        <li>
+                            <p>丧失杀手 金克斯</p>
+                            <p class="jikesi">
+                                <span>点劵:6450</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/16.png"/>
+                        </li>
+
+
+                        <li>
+                            <p>丧失杀手 潘森</p>
+                            <p class="jikesi">
+                                <span>点劵:6450</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/17.png"/>
+                        </li>
+                        <li>
+                            <p>丧失杀手 努努</p>
+                            <p class="jikesi">
+                                <span>点劵:6450</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/18.png"/>
+                        </li>
+                        <li><p>丧失克星</p>
+                            <p class="jikesi">
+                                <span>点劵:2000</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/19.png"/>
+                        </li>
+                        <li><p>阴燃饥饿 </p>
+                            <p class="jikesi">
+                                <span>点劵:6450</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/20.png"/></li>
+                        <li><p>掠星魔刃 卡萨丁</p>
+                            <p class="jikesi">
+                                <span>点劵:2000</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/21.png"/></li>
+                        <li><p>炼狱魔女 慰</p>
+                            <p class="jikesi">
+                                <span>点劵:1999</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/22.png"/></li>
+                        <li><p>灵魂烈焰 布兰德</p>
+                            <p class="jikesi">
+                                <span>点劵:6450</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/23.png"/></li>
+                        <li>
+                            <p>丧失杀手 金克斯</p>
+                            <p class="jikesi">
+                                <span>点劵:6450</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/16.png"/>
+
+                        </li>
+                        <li>
+                            <p>丧失杀手 潘森</p>
+                            <p class="jikesi">
+                                <span>点劵:6450</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/17.png"/>
+                        </li>
+                        <li>
+                            <p>丧失杀手 努努</p>
+                            <p class="jikesi">
+                                <span>点劵:6450</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/18.png"/>
+                        </li>
+                        <li><p>丧失克星</p>
+                            <p class="jikesi">
+                                <span>点劵:2000</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/19.png"/>
+                        </li>
+                        <li><p>阴燃饥饿 </p>
+                            <p class="jikesi">
+                                <span>点劵:6450</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/20.png"/></li>
+                        <li><p>掠星魔刃 卡萨丁</p>
+                            <p class="jikesi">
+                                <span>点劵:2000</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/21.png"/></li>
+                        <li><p>炼狱魔女 慰</p>
+                            <p class="jikesi">
+                                <span>点劵:1999</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/22.png"/></li>
+                        <li><p>灵魂烈焰 布兰德</p>
+                            <p class="jikesi">
+                                <span>点劵:6450</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/23.png"/></li>
+                        <li><p>掠星魔刃 卡萨丁</p>
+                            <p class="jikesi">
+                                <span>点劵:2000</span>
+                                <br>
+                                <input type="button" value="购买"/>
+                            </p>
+                            <img src="img1/21.png"/></li>
+                    </ul>
+                </div>
+
+
+                <div id="definescroll">
+                    <span></span>
+                </div>
+
+
+            </div>
+
+
+            <div id="shopright">
+                <img src='img1/24.png'/>
+                <div class="clear1">
+                    <p class="imgp" id="bgmimg1">
+                        <img class="imgclass" src="img1/25.png"/>
+                        <span></span>
+                    </p>
+
+                    <span class="feng">源计划:风</span>
+
+                    <p class="dianjuan">
+                        <span class="spandj">点劵:6900</span>
+                        <br>
+                        <input type="button" value="购买">
+                    </p>
+
+                </div>
+
+                <img src='img1/24.png'/>
+                <div class="clear1">
+                    <p class="imgp" id="bgmimg2">
+                        <img class="imgclass" src="img1/26.png"/>
+                        <span></span>
+                    </p>
+
+                    <span class="feng">源计划:林</span>
+
+                    <p class="dianjuan">
+                        <span class="spandj">点劵:9900</span>
+                        <br>
+                        <input type="button" value="购买">
+                    </p>
+
+                </div>
+
+
+                <img src="img1/27.png"/>
+
+
+                <ul id="popular">
+                    <li><img src="img1/28.png"/>
+                        <span>源计划:雷</span>
+                        <p class="popudian">点券:7900</p>
+                    </li>
+                    <li><img src="img1/29.png"/>
+                        <span>源计划:阴</span>
+                        <p class="popudian">点券:7900</p>
+                    </li>
+                    <li><img src="img1/30.png"/>
+                        <span>源计划:山</span>
+                        <p class="popudian">点券:7900</p>
+                    </li>
+                    <li><img src="img1/31.png"/>
+                        <span>地狱行者 孙悟空</span>
+                        <p class="popudian">点券:3450</p>
+                    </li>
+                    <li><img src="img1/32.png"/>
+                        <span>勇者 阿狸</span>
+                        <p class="popudian">点券:6900</p>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div id="LOL_bottom">
+        <input class="tv1" type="button" value="">
+        <input class="tv2" type="button" value="">
+        <input id="showbox" class="tv3" type="button" value="12">
+        <input class="tv4" type="button" value="LOL电视台">
+
+        <div id="chatbox">
+            <a id="minwindow" href="javascript:;">-<span>最小化</span></a>
+            <p id="circle"><span>点击改变你的状态</span></p>
+            <p id="imgID"><img src="img/62.png"/><span style="color:white">微醺年华</span>
+                <input id="model" type="text" value="在线"></p>
+           <p id="search" > 筛选好友列表</p>
+            <p class='listfriend'>好友列表<img src="img/64.png"/><span>好友选项</span></p>
+            <div class="gamefriends">
+
+                <div id="wrap">
+
+                    <h2> 我的好友 <input id="zhedie" type="button" value="+"></h2>
+
+                    <div><span>微醺年华</span>
+                        <div><span>石原里美</span>
+                            <div><span>佐佐木希</span>
+                                <div><span>桥本环奈</span>
+                                    <div><span>新垣结衣</span>
+                                        <div><span>未来穂香 </span>
+                                            <div><span>酒井法子</span>
+                                                <div><span>山口百惠</span>
+                                                    <div><span>仓木麻衣</span>
+                                                        <div><span>宇多田光</span>
+                                                            <div><span>中岛美嘉</span>
+                                                                <div><span>长泽雅美</span>
+                                                                    <div><span>崛北真希</span>
+                                                                        <div><span>田中千绘</span>
+                                                                            <div><span>工藤静香</span>
+                                                                                <div><span>青山黛玛</span>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+
+</body>
+</html>

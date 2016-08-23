@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+.div1{perspective:800px;width:200px;margin:30px auto;position:relative;}
+#wrap{transform-style:preserve-3d;width:100%;transition:1s;position:relative;}
+
+#wrap h2{cursor:pointer;width:200px;height:40px;font:18px/40px "宋体";text-align:center;color:blue;background:#238BAB;font-weight:bold;z-index:12;position:relative; transform: translateZ(1px);}
+
+#wrap div{transform-style:preserve-3d;transform:rotateX(-120deg);width:100%;transform-origin:top;position:absolute;top:32px;left:0;backface-visibility:hidden;cursor:pointer;}
+#wrap span{height:30px;font:15px/30px "微软雅黑";text-indent:20px;display:block;background:gray;box-shadow:inset 0 0 0 20px rgba(223,223,223,1); transition:1s;color:#DC8E8E;z-index:1;}
+#wrap>div{top:40px;}
+@keyframes open{
+	0%{
+		transform:rotateX(-120deg);
+	}
+	25%{
+		transform:rotateX(30deg);
+	}
+	50%{
+		transform:rotateX(-15deg);
+	}
+	75%{
+		transform:rotateX(8deg);
+	}
+	100%{
+		transform:rotateX(0deg);
+	}
+}
+@keyframes close{
+	0%{
+		transform:rotateX(0deg);
+	}
+	100%{
+		transform:rotateX(-120deg);
+	}
+}
+#wrap .show{animation:2s open;transform:rotateX(0deg);}
+#wrap .hide{animation:0.5s close;transform:rotateX(-120deg);}
+#wrap .show>span{box-shadow:inset 0 0 0 20px rgba(0,0,0,0);}
+</style>
+</head>
+
+<body>
+<div class="div1">
+<div id="wrap">
+  <h2 id="h">我是标题</h2>
+  <div> <span>1</span>
+    <div> <span>2</span>
+      <div> <span>3</span>
+        <div> <span>4</span>
+          <div> <span>5</span>
+            <div> <span>6</span>
+              <div> <span>7</span> 
+              <div> <span>8</span> 
+              
+              </div
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+var oH=document.getElementById('h');
+var oDiv=document.getElementById('wrap');
+var shake=oDiv.getElementsByTagName('div');
+var i=0;
+var timer=null;
+var timer2=null;
+var flag=0;
+oDiv.onmouseenter=function (){
+  clearInterval(timer);
+	i=0;
+	
+		timer=setInterval(function(){
+		shake[i].className="show";
+		i++;
+		if(i==shake.length){
+			clearInterval(timer);
+		}
+		
+		},200);
+		
+}
+oDiv.onmousemove=function(ev){
+	var ev=ev||window.event;
+	
+	var distance=ev.clientX-oLeft(oDiv);
+	if(2*distance<oDiv.offsetWidth){
+		oDiv.style.transform='rotateY(-20deg)';
+	}else{
+		oDiv.style.transform='rotateY(20deg)';
+	}
+	}
+oDiv.onmouseleave=function(){
+	i=shake.length-1;
+	clearInterval(timer);
+	timer=setInterval(function(){
+			shake[i].className="hide";
+			i--;
+			if(i<=2){
+				oDiv.style.transform='rotateY(0deg)';
+			}
+			if(i<0)
+			{
+				clearInterval(timer);
+			
+				
+			}	
+		},200);
+	}
+	
+	function oLeft(obj){
+		var left=0;
+		while(obj){
+		left+=obj.offsetLeft;
+		obj=obj.offsetParent;
+		}
+		return left;
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+.wrap {
+	width: 390px;
+	height: 29px;
+	overflow: hidden;
+	border-top: 2px solid #768572;
+	border-bottom: 2px solid #B7B659;
+	position: relative;
+}
+.box {
+	width: 200%;
+	height: 25px;
+	background: repeating-linear-gradient(-45deg, #9DE858 0, #9DE858 10px, #74BF2E 10px, #74BF2E 20px);
+	background: -webkit-repeating-linear-gradient(-45deg, #9DE858 0, #9DE858 10px, #74BF2E 10px, #74BF2E 20px);
+	border-top: 2px solid #3A4934;
+	border-bottom: 2px solid #757215;
+	position: absolute;
+	top: 0;
+	left: 0;
+	-webkit-animation: 3s move infinite linear;
+	animation: 3s move infinite linear;
+}
+@keyframes move {
+ 0% {
+ left:0;
+}
+ 100% {
+ left:-390px;
+}
+}
+@-webkit-keyframes move {
+ 0% {
+ left:0;
+}
+ 100% {
+ left:-390px;
+}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <div class="box"> </div>
+</div>
+</body>
+</html>

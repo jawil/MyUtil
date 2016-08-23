@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src='http://cdnjsnet.b0.upaiyun.com/vue-resource/0.1.9/vue-resource.min.js'></script>
+</head>
+<body>
+<input type="button" value="查看效果" id="bt"/>
+<script>
+    $(document).ready(function(){
+        data=111111111111;
+        $("#bt").click(function(){
+            $.post("5.json",function(data,status){
+
+                alert("Data:"+data+"\nStatus:"+status);
+            })
+        })
+    });
+</script>
+</body>
+</html>

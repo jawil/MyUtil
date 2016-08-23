@@ -1,0 +1,225 @@
+<!-- 主流浏览器最小化时会停止timeOut计时，所以计数代码需要更新下 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+          计时器
+        </title>
+        <style>
+          .bg{ background-color:#ff4a00; height:100px; color:#FFF; font-size:14px; margin:10px 0px 0px 0px;}
+          .time-val{color:'#fff';font-size:30px;}
+          .count_down{ font-size:20px; line-height: 100px; width:100px; margin:0 auto; text-align: center; }
+        </style>
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    </head>
+    
+    <body>
+        <div id="con_apa" , class='bg'>
+            倒计时
+            <span> 时间（秒）:</span>
+            <span id='time_val' class='time-val'> </span>
+            <input type="button" class='on' id='timeBtn' value='启动'>
+            <input type="button" id='resetTimeBtn' value='复位时间'>
+        </div>
+        
+        <div id="con_apa2" , class='bg'>
+        </div>
+
+        <script src="lib/jquery-1.10.2.min.js", type="text/javascript">
+        </script>
+
+        <script>
+            $(function() {
+                // 计时器写法1
+                function countDown1_init() {
+                  var val_time = 60,
+                      isFirstStart = true,
+                      startTime = 0,
+                      timer = null,
+                      flag = true;
+                  $('#time_val').text(val_time);
+                  $('#timeBtn').on('click', startOrStopTime)
+                  $('#resetTimeBtn').on('click', resetTime)
+                  // 启动、关闭时间
+                  function startOrStopTime(){
+                    var _val_time = 0;
+                    $this = $(this);
+                    if ( $this.hasClass('on') ){
+                      $this.val('关闭');
+                      $this.removeClass('on').addClass('off');
+                      flag = true;
+                      if(isFirstStart){
+                        startTime = new Date().getTime();
+                        isFirstStart = false;
+                      }
+                      _val_time = parseInt( $('#time_val').text(), 10 );
+                      // 获取相对于上次停止时间的时间值
+                      if (_val_time < 60){
+                        startTime = new Date().getTime() - (60 - _val_time) * 1000;
+                      }
+                      timer = setTimeout(updateTime, 1000);
+                    }else if( $this.hasClass('off') ){
+                      $this.val('启动');
+                      $this.removeClass('off').addClass('on');
+                      flag = false;
+                    }
+                  }
+                  // 复位时间
+                  function resetTime(){
+                    val_time = 60;
+                    // isFirstStart = true;
+                    startTime = new Date().getTime();
+                    $('#time_val').text(val_time);
+                  }
+                  function updateTime(){
+                    var nowTime = new Date().getTime();
+                    val_time = Math.floor( (nowTime - startTime)/1000 );
+                    if (val_time > 60 || val_time < 0){
+                      val_time = 0;
+                    }
+                    val_time = 60 - val_time;
+                    if (val_time == 0 || !flag) {
+                      clearTimeout(timer);
+                      return;
+                    }
+                    $('#time_val').text(val_time);
+                    timer = setTimeout(updateTime, 1000);
+                  }
+
+                }
+
+                var $countDownWrap = $('#con_apa2');
+                /**
+                 * 3分钟的倒计时(计时器写法2)： 实际项目中， 计时器与业务逻辑解耦优雅实现
+                 */
+                var CountDown2 = {
+                    //倒计时的总时间
+                    totalTime : 3 * 60,
+                    count : 0,
+                    //启动倒计时的初始时间
+                    startTime : 0,
+                    // 计时器的速度
+                    time : 1000,
+                    countDownObj : null,
+                    //标识倒计时是否已经开始
+                    starting : false,
+                    /**
+                     * 初始化
+                     * 初始化节点，需要传父节点对象作为参数
+                     * @param {object} parent 计时器容器节点，jq对象
+                     */
+                    init : function(parent) {
+                        if (parent && parent.length > 0) {
+                            this.initDom(parent);
+                        }
+                        //标识倒计时已经开始了
+                        this.starting = true;
+                    },
+                    minObj : null,
+                    secObj : null,
+                    initDom : function(parent) {
+                        var dom_str = '',
+                            $countDownDom = null;
+                        dom_str = '<div class="count_down">' +
+                                      '<span class="min">03</span>' +
+                                      '<span class="separate">:</span>' +
+                                      '<span class="sec">00</span>' +
+                                  '</div>';
+                        $countDownDom = $(dom_str);
+                        parent.append($countDownDom);
+                        this.countDownObj = parent.find('.count_down');
+                        this.minObj = this.countDownObj.find('.min');
+                        this.secObj = this.countDownObj.find('.sec');
+                    },
+                    callback : null,
+                    start : function(callback) {
+                        var This = this, date = new Date();
+                        this.callback = callback;
+                        this.startTime = date.getTime();
+                        window.setTimeout(function() {
+                            This.startTimer();
+                        }, this.time);
+                    },
+                    /**
+                     * 开始 倒计时
+                     */
+                    startTimer : function() {
+                        var This = this, timeObj = null, nowTime = new Date().getTime();
+                        this.count = parseInt( (nowTime - this.startTime)/1000, 10 );
+                        if (this.count >= this.totalTime) {//到时间了
+                            if ( typeof this.callback === 'function') {
+                                this.callback();
+                            }
+                            this.reset();
+                            this.startTimer();
+                            return false;
+                        }
+                        timeObj = this.calculateTime(this.totalTime - this.count);
+                        // 根据数字更新 节点信息, 分钟 跟 秒数各一个变量即可
+                        this.updateDom(timeObj);
+                        this.timeout = window.setTimeout(function() {
+                            This.startTimer();
+                        }, this.time);
+                    },
+                    stopTimer : function() {
+                        window.clearTimeout(this.timeout);
+                    },
+                    calculateTime: function(sec){
+                      // 根据传入的秒数计算出 分钟及秒数
+                      var min, sec, result;
+                      if (sec == 0){
+                        result = {
+                          'min': '00',
+                          'sec': '00'
+                        };
+                      }
+                      min = Math.floor( sec/60 );
+                      sec = sec % 60;
+                      result = {
+                        'min': doubleNum(min),
+                        'sec': doubleNum(sec)
+                      };
+                      return result;
+                      function doubleNum(num){
+                        var rel = 0;
+                        if (num >= 10) {
+                          rel = num;
+                        }else {
+                          rel = '0' + num;
+                        }
+                        return rel;
+                      }
+                    },
+                    /**
+                     * 重新设置 初始的时间
+                     */
+                    reset : function() {
+                        this.count = 0;
+                        this.startTime = new Date().getTime();
+                        this.minObj.html('00');
+                        this.secObj.html('00');
+                    },
+                    /**
+                     * 更新 节点
+                     */
+                    updateDom : function(timeObj) {
+                        this.minObj.html(timeObj.min);
+                        this.secObj.html(timeObj.sec);
+                    }
+                }; 
+                // 时间到了后的业务函数
+                function timeOutFn(){
+                  alert('倒计时间到，处理业务吧！');
+                }
+
+                // 计时器1启动
+                countDown1_init();
+                // 计时器2启动
+                CountDown2.init($countDownWrap);
+                CountDown2.start(timeOutFn);;
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+.div1{width:500px;height:300px;background:red;display:none;}
+.disp{display:block;}
+</style>
+</head>
+
+<body>
+<div id="div1">
+<input type="button" value="按钮一"/>
+<input type="button" value="按钮二"/>
+<input type="button" value="按钮三"/>
+<div class="div1">1</div>
+<div class="div1">2</div>
+<div class="div1">3</div>
+</div>
+
+<div id="div2">
+<input type="button" value="按钮一"/>
+<input type="button" value="按钮二"/>
+<input type="button" value="按钮三"/>
+<div class="div1">1</div>
+<div class="div1">2</div>
+<div class="div1">3</div>
+</div>
+
+<script language="javascript">
+	/*var oInput=document.getElementsByTagName('input');
+	var oDivarr=document.getElementById('div1');
+	var oDiv=oDivarr.getElementsByTagName('div');
+	
+	for(var i=0;i<oInput.length;i++){
+		oInput[i].index=i;
+		oInput[i].onclick=function (){
+			
+		for(var i=0;i<oDiv.length;i++){
+			oDiv[i].style.cssText='';
+		}
+		oDiv[this.index].style.display='block';
+		}
+		
+	}*/
+	
+	/*var oInput=null;
+	var oDivarr=null;
+	var oDiv=null;
+	window.onload=function (){
+		
+		oInput=document.getElementsByTagName('input');
+	    oDivarr=document.getElementById('div1');
+	    oDiv=oDivarr.getElementsByTagName('div');
+		
+		init();
+		
+	}
+	
+	function init(){
+		
+	for(var i=0;i<oInput.length;i++){
+		oInput[i].index=i;
+		oInput[i].onclick=change;
+	}
+	
+		
+		function change(){
+			
+		for(var i=0;i<oDiv.length;i++){
+			oInput[i].style.cssText='';
+			oDiv[i].style.display = 'none';
+		}
+		oDiv[this.index].style.display='block';
+		this.style.background='blue';
+		}
+		
+	}*/
+	
+	/*window.onload=function (){
+		var t1 = new Tab('div1');
+	    t1.init();
+		
+		var t2 = new Tab('div2');
+	    t2.init();
+	};
+	
+	function Tab(str){
+		 this.oDivarr=document.getElementById(str);
+		this.oInput=this.oDivarr.getElementsByTagName('input');
+	   
+	    this.oDiv=this.oDivarr.getElementsByTagName('div');
+	}
+	
+	Tab.prototype.init=function (){
+		
+		for(var i=0;i<this.oInput.length;i++){
+		this.oInput[i].index=i;
+		var This=this;
+		this.oInput[i].onclick=function (){
+			
+			This.change(this);
+		}
+		
+			
+	}
+	}
+	
+	Tab.prototype.change=function (obj){
+		
+		for(var i=0;i<this.oDiv.length;i++){
+			this.oInput[i].style.cssText='';
+			this.oDiv[i].style.display = 'none';
+		}
+		this.oDiv[obj.index].style.display='block';
+		obj.style.background='blue';
+		}*/
+		
+		
+	
+</script>
+</body>
+</html>

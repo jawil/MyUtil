@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+
+#div1{width:180px;height:180px;position:relative;border:1px solid blue;}
+#div1 span{width:100px;height:100px;position:absolute;left:0;top:0;background:yellow;opacity:0.5;filter:alpha(opacity=50);display:none;}
+#divf ul{width:180px;height:51px;border:1px solid blue;}
+#div1 img{vertical-align:top;width:180px;height:180px;}
+
+#div2{width:500px;height:500px;border:1px solid red;position:absolute;top:50px;left:250px;overflow:hidden;display:none;}
+
+#div2 img{ position:absolute; left:0; top:0;}
+li img{vertical-align:top;width:36px;height:50px;}
+
+li{list-style:none;float:left;width:36px;height:50px;border:1px solid green;margin-left:5px;}
+</style>
+</head>
+
+<body>
+<div id="divf">
+
+<div id="div1">
+<img src="b2.jpg"/>
+<span></span>
+
+</div>
+<ul>
+<li><img src="b1.jpg"/></li>
+<li><img src="3.jpg"/></li>
+<li><img src="002.jpg"/></li>
+<li><img src="4.jpg"/></li>
+</ul>
+</div>
+
+<div id="div2">
+<img src="b1.jpg"/>
+</div>
+
+
+<script language="javascript">
+	var oDiv=document.getElementById('div1');
+	var oSpan=oDiv.getElementsByTagName('span')[0];
+	var oDiv2 = document.getElementById('div2');
+	var img1 = oDiv.getElementsByTagName('img')[0];
+	var img2 = oDiv2.getElementsByTagName('img')[0];
+	var oUl=oDiv.getElementsByTagName('ul')[0];
+	var oLi=document.getElementsByTagName('li');
+	for(var i=0;i<oLi.length;i++){
+		oLi[i].onmouseover=function(){
+		img2.src=img1.src=this.getElementsByTagName('img')[0].src;
+		for(var i=0;i<oLi.length;i++){
+			oLi[i].style.cssText='';
+		}
+		this.style.borderColor='red';
+		}
+	}
+	oDiv.onmouseenter=function(){
+			oSpan.style.display='block';
+		   oDiv2.style.display='block';
+	}
+	
+	oDiv.onmouseleave= function(){
+		oSpan.style.display = 'none';
+		oDiv2.style.display='none';
+	};
+	
+	oDiv.onmousemove=function (ev){
+		var ev=ev||window.event;
+		var L=ev.clientX-oDiv.offsetLeft-(oSpan.offsetWidth)/2;
+		var T=ev.clientY-oDiv.offsetTop- (oSpan.offsetHeight)/2;
+		L=L<0?0:L;
+		L=L>(oDiv.offsetWidth-oSpan.offsetWidth)?(oDiv.offsetWidth-oSpan.offsetWidth):L;
+		T=T<0?0:T;
+		T=T>(oDiv.offsetHeight - oSpan.offsetHeight)?(oDiv.offsetHeight - oSpan.offsetHeight):T;
+		oSpan.style.left = L + 'px';
+		oSpan.style.top = T + 'px';	
+		
+		var scaleX = L/(oDiv.offsetWidth - oSpan.offsetWidth);
+		var scaleY = T/(oDiv.offsetHeight - oSpan.offsetHeight);
+		
+		img2.style.left = - scaleX * (img2.offsetWidth - oDiv2.offsetWidth) + 'px';
+		img2.style.top = - scaleY * (img2.offsetHeight - oDiv2.offsetHeight) + 'px';		
+		
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta name="renderer" content="webkit">
+      <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/>
+      <meta charset="utf-8">
+      <title>
+          ECMAScript5 理解
+      </title>
+
+    </head>
+    
+    <body>
+      <h3>ECMAScript5 理解</h3>
+      <p>ECMAScript5 浏览器兼容图：</p>
+      <img title="ecma5 兼容" alt="ecma5 兼容" src="images/ECMAScript_1.png"/>
+
+      <h3>关系图: </h3>
+      <img title="ecma5 关系图" alt="ecma5 关系图" src="images/ECMAScript_2.png"/>
+      
+      <h1>对象</h1>
+      
+      <script>
+          // 教程网址： http://yanhaijing.com/es5/#5
+          // http://www.zhihu.com/question/37117614(知识点在于上述ES5 教程)
+          var ecma5Demo = {
+            init: function(){
+              var This = this;
+              // this.demo1();
+              this.demo2();
+            },
+            demo1: function(){
+              // 临时包装对象 成功
+              var box ='Mr.Xiao'; 
+              alert(box.substring(2));
+
+              // 临时包装对象 失败
+              box.name='xiao';
+              box.age=function(){
+                return 10;
+              }
+              alert(box.name);  //undefined
+              alert(box.age());  //报错
+
+              // 没临时包装对象
+              var falseObject=new Boolean(false);
+              var falseValue=false;
+              alert(falseObject instanceof Boolean); //true
+              alert(falseValue instanceof Boolean); //false
+            },
+            consoleDemo: function(){
+              // 不建议在开发时使用console.log 的原因在于， 在低版本浏览器包括IE8(ie6 ie7)使用会出问题；
+              // IE6 IE7 浏览器没该方法 执行该语句会报错
+              // IE8 开始支持该方法， 但console.log({a:'adf'}); 这类型 对象类型不能正常输出，而且会引起其他莫名问题
+              // 更多console 信息： http://www.cnblogs.com/leejersey/archive/2012/11/27/2790998.html
+
+              // console.log 属于BOM 对象方法， 以前的浏览器实现其没有统一规范所致；
+              console.log('旧版本 IE 浏览器对console.log支持很不好！');
+            },
+            demo2: function(){
+              var s_type;
+              s_type = '0';
+              // switch 区分 0 与 ‘0’
+              switch(s_type){
+                case 0:
+                  console.log(0);
+                  break;
+                case 1:
+                  console.log(1);
+                  break;
+                default:
+                  console.log('默认事件处理');
+                  break;
+              }
+            }
+          };
+          ecma5Demo.init();
+
+          // json 规范写法， 键值对都用引号括住；
+
+          // javascript 中的 float 精度问题： javascript使用IEEE 754-2008 标准定义的64bit浮点格式存储number，导致浮点计算不精确
+          // 或者 使用 float 类型的 toFixed(x);方法（使用前确定已经转换成 float类型）
+          // http://www.cnblogs.com/onedayof2010/p/4497488.html
+          var f_a = 0.07,
+              f_r = f_a * 100;
+          // 解决：f_r = parseInt(f_a * 100); 或 f_r = Math.round(f_r);(Math.floor也可以)， 就是将计算后的值强制转换回来。。。
+          console.log('fr:' + f_r);
+
+          // 关闭浏览器检测  http://www.cnblogs.com/zfc2201/archive/2012/06/22/2558471.html, http://www.asheep.cn/skill/onunload.html
+
+          window.onbeforeunload = windowCloseBefore;
+          window.onunload = windowUnload;
+          function windowCloseBefore(){
+            // IE、Chrome、Safari 完美支持
+            // Firefox 不支持文字提醒信息
+            // Opera 不支持
+          }
+          function windowUnload(){
+            //  IE6~IE8刷新页面、关闭浏览器之后、页面跳转之后都会执行；
+            // IE9 刷新页面 会执行，页面跳转、关闭浏览器不能执行；
+            // firefox(包括firefox3.6)关闭标签之后、页面跳转之后、刷新页面之后能执行，但关闭浏览器不能执行；
+            // Safari 刷新页面、页面跳转之后会执行，但关闭浏览器不能执行；
+            // Opera、Chrome 任何情况都不执行。
+          }
+      </script>
+    </body>
+</html>

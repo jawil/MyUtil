@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+<input type="button" value="随机选择">
+<div id="randomNum">
+
+</div>
+</body>
+
+<script>
+    var oInput=document.getElementsByTagName('input')[0];
+    var oDiv=document.querySelector('#randomNum');
+    var json={};
+function getArrNum(inow,allNumber){
+    var arr=[];
+    for(var i=0;i<allNumber;i++){
+        arr.push(i);
+    }
+    var newArr=[];
+    for(var i=0;i<inow;i++){
+        newArr.push(arr[Math.floor(Math.random()*(arr.length))]);
+    }
+    return newArr;
+}
+
+
+/*oInput.onclick=function(){
+    var num=Math.random();
+    var arr=getArrNum(7,35);
+    json[num]=arr;
+    oDiv.innerHTML=getArrNum(7,35);
+    window.location.hash=num;
+
+}
+
+window.onhashchange=function(){
+    oDiv.innerHTML=json[window.location.hash.substring(1)];
+}
+*/
+
+oInput.onclick=function(){
+    var arr=getArrNum(7,35);
+    oDiv.innerHTML=arr;
+    history.pushState (arr,'');//需要在服务器环境才能实现
+
+
+}
+window.onpopstate=function(event){
+    oDiv.innerHTML=event.state;
+}
+
+    </script>
+</html>

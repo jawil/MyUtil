@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src='http://cdn.bootcss.com/vue-resource/0.7.0/vue-resource.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/vue.router/0.7.10/vue-router.min.js"></script>
+</head>
+<style>
+    /*样式重置*/
+    html, body, div, span,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    img, ins, kbd, q, s, samp,
+    small, strike, strong,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+
+        vertical-align: baseline;
+        background: transparent;
+        font-family:Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+    }
+    body {
+        line-height: 1;
+    }
+    ol, ul {
+        list-style: none;
+    }
+    blockquote, q {
+        quotes: none;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    a{text-decoration:none;}
+    img{vertical-align:top;border:none;}
+    /*清除浮动，兼容IE6，淘宝就是这个清除浮动*/
+    .clear{
+        zoom:1;
+    }
+    .clear:after{display:block;content:"";clear:both;}
+
+    html{ width:100%; height:100%;overflow:hidden;}
+    body{width:100%;height:100%;overflow:hidden;position:absolute;top:0;left:0;}/*解决微信兼容问题*/
+    .content-wrap{width:100%;height:100%;position:relative;overflow:hidden;margin:0 auto;}
+    /*导航栏样式表*/
+    #nav{width:100%;height:33%;position:relative;}
+    #nav ul.nav{width:500%;height:100%;position:absolute;top:0;left:0;}
+    #nav ul.nav li{width:20%;height:100%;display:inline;float:left;}
+    #nav ul.nav img{width:100%;height:100%;border:none;vertical-align:top;}
+
+    /*导航栏按钮*/
+    .view-btn {position:absolute;bottom:0;right:0;width:100%;height:33%;background-image:-webkit-linear-gradient(90deg,rgba(0,0,0,0.7) 0, rgba(0,0,0,0.7) 20%,rgba(234,234,234,0.1));}
+    .view-btn #viewBtn{position:absolute;right:0;bottom:0;}
+    .view-btn li{width:8px;height:8px;float:left;border-radius:50%;margin:5px;*display:inline;background:#918d8a;cursor:pointer;}
+    .view-btn li.active{background:#FFF;}
+
+    /*文章列表样式*/
+    #artList{width:100%;height:67%;position:relative;overflow:auto;}
+    #artList .artcle-list{width:100%;height:25%;border-bottom:1px solid gray;padding:8px 5px 8px 8px;box-sizing: border-box;}
+    #artList .artcle-list img{height:100%;float:left;}
+    #artList .contentText{float:left;padding:7px 0 0 10px;box-sizing: border-box;height:100%;max-width:60%;}
+    #artList .contentText p{font-size:12px;margin-top:5px;line-height:16px;}
+
+    /*点击导航详细信息*/
+    #detailedView{width:100%;position:relative;}
+    #detailedView .header{height:9.5%;width:100%;border:1px solid green;position:relative;border-bottom:1px solid #dedede;}
+    #detailedView .header h2{position:absolute;top:50%;transform:translateY(-50%);padding-left:18px;-webkit-transform:translateY(-50%);}
+    #detailedView .content-fail{width:100%;height: auto;}
+    #detailedView .simple{text-indent: 1.2em;padding-top:10px;box-sizing: border-box;position:relative;overflow:hidden;font-size:19px;}
+    #detailedView .simple span{border:1px solid #48b8dd;height:100%;position:absolute;left:3%;}
+    #detailedView .content-fail p:nth-of-type(2n){padding:10px 10px 20px 10px;line-height:26px;font-size:18px;}
+    #detailedView .content-fail img{width:100%;border:none;vertical-align:top;}
+    #detailedView .content-fail .back{position:absolute;top:5%;right:5%;}
+    #detailedView .content-fail .back img{width:20px;height:20px;}
+</style>
+<body>
+<div class="content-wrap" id="contentWrap" >
+   <router-view></router-view>
+</div>
+
+
+<!-- 首页文章和导航栏模块路由-->
+<template id="indexApp">
+    <div id="nav" v-show="!detail">
+
+        <ul class="nav" id="contentUl">
+            <li v-for="img in viewimgs">
+                <a v-link="{name:'article',params:{imgflag:img.nid}}" ><img v-bind:src="img.url" alt="{{img.alt}}"></a>
+            </li>
+        </ul>
+
+        <!--图片切换按钮-->
+        <div class="view-btn">
+            <ul id="viewBtn">
+                <li class="active"></li><li></li><li></li><li></li><li></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div id="artList"  v-show="!detail">
+        <div class="artcle-list" v-for="artical in articals">
+            <img v-bind:src="artical.img">
+            <div class="contentText">
+                <h4>{{artical.title}}</h4>
+                <p>{{artical.synopsis}}</p>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<!--显示详细信息模块路由-->
+<template id="detailShow">
+    <div id="detailedView" class="content-wrap" v-show="detail">
+        <div class="header">
+            <h2>{{detail.title}}</h2>
+        </div>
+
+        <div class="content-fail">
+            <a v-link="{path:'/'}" class="back"><img src="image/back.png"></a>
+            <p class="simple"><span></span><strong>简介</strong></p>
+            <p >{{detail.introduce}}</p>
+            <p class="simple"><span></span><strong>开放时间</strong></p>
+            <p >{{detail.time}}</p>
+            <img v-bind:src="detail.url">
+        </div>
+    </div>
+</template>
+
+
+
+<script>
+    var quanju='';
+
+
+
+    var indexApp=Vue.extend({
+        template:'#indexApp',
+        data:function(){
+            return{
+                viewimgs:'',
+                articals:''
+            }
+        },
+        ready:function(){
+            this.getImg();
+            this.imgMove();
+            this.getArtical();
+
+        },
+        methods:{
+            getImg:function(){
+                this.detail='';
+                this.$http.get('dataImg.json',function(data){
+                    var viewimgs = eval('('+data+')');
+                    quanju=viewimgs;
+                    this.$set('viewimgs',viewimgs);
+                }).error(function(data, status, request) {
+                    console.log('fail' + status + "," + request);
+                });
+
+            },
+            imgMove:function(){
+                function TurnTab(target,btn){//面向对象,后续轮播图可以复用
+                    this.target=target;
+                    this.btn=btn;
+                    this.distance=this.target.outerWidth()/5;
+                    //alert(this.distance);
+                    this.index=0;
+
+                }
+                TurnTab.prototype.init=function(){//初始化
+                    this.bind();
+                    this.timer();
+                }
+
+                TurnTab.prototype.bind=function(){//按钮对应图片
+                    var This=this;
+                    //alert(1);
+                    this.btn.on('touchstart',function(){
+
+                        $(this).attr('class','active').siblings().attr('class','');
+                        This.target.animate({'left':-(This.distance)*($(this).index())},200,'swing');
+                        This.index=$(this).index();
+                        return false;
+                    });
+
+                }
+                TurnTab.prototype.timer=function(){//定时器自动播放
+                    var delay=3000;
+                    var _this=this;
+                    setInterval(function(){
+                        _this.index++;
+                        _this.index=(_this.index===_this.btn.length?0:_this.index);
+                        _this.btn.eq(_this.index).attr('class','active').siblings().attr('class','');
+                        _this.target.animate({'left':-_this.distance*_this.index},200,'swing');
+
+                    },delay);
+
+                }
+
+                var $ul=$('#contentUl');
+                var $li=$('#viewBtn').find('li');//用$('#viewBtn li')微信bug
+                var imgturn=new TurnTab($ul,$li);
+                imgturn.init();
+
+
+            },
+            getArtical:function(){
+                this.$http.get('article.json',function(data){
+                    var articals = eval('('+data+')');
+                    this.$set('articals',articals);
+                    // console.log(data);
+                }).error(function(data, status, request) {
+                    console.log('fail' + status + "," + request);
+                });
+
+            }
+
+
+        }
+
+    });
+
+    var detailShow=Vue.extend({
+        template:"#detailShow",
+        data:function(){
+           return{
+               detail:''
+           }
+        },
+        ready:function(){
+            this.getDetail();
+        },
+        methods:{
+            getDetail:function(){
+                new indexApp().getImg();
+                this.$set('detail',quanju[parseInt(this.$route.params.imgflag)]);
+            }
+        }
+    });
+    var App=Vue.extend({});
+    var router=new VueRouter();
+    router.map({
+        '/':
+        {component:indexApp
+        },
+        'article/:imgflag':{
+            name:'article',
+            component:detailShow
+        }
+    });
+    router.start(App,'#contentWrap');
+
+
+
+</script>
+</body>
+</html>

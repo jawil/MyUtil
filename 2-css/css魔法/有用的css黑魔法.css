@@ -1,0 +1,11 @@
+
+//在可点击的项目上强制手型
+a[href], input[type='submit'], input[type='image'], label[for], select, button, .pointer {
+
+cursor: pointer;
+
+}
+
+body{
+    font:14px/1.4286 'microsoft yahei';
+}

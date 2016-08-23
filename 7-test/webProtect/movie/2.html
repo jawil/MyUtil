@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
+    <script type="text/javascript" src='http://cdnjsnet.b0.upaiyun.com/vue-resource/0.1.9/vue-resource.min.js'></script>
+</head>
+<body>
+<div id='app'>{{json}}</div>
+<script>
+    new Vue({
+        el: '#app',
+        ready: function() {
+            alert(1);
+            this.$http.get('data.json', function(data) {
+                this.$set('json', data);
+            }).error(function(data, status, request) {
+                console.log('fail' + status + "," + request);
+            })
+        },
+        data: {
+        }
+    });
+</script>
+</body>
+</html>

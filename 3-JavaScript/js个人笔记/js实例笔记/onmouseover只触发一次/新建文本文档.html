@@ -1,0 +1,30 @@
+document.getElementById('...').onmouseover = function(e){
+    if( !e ) e = window.event;
+    var reltg = e.relatedTarget ? e.relatedTarget : e.fromElement;
+    while( reltg && reltg != this ) reltg = reltg.parentNode;
+    if( reltg != this ){
+        // 这里可以编写 onmouseenter 事件的处理代码
+    }
+}
+
+ 
+
+document.getElementById('...').onmouseout = function(e){
+    if( !e ) e = window.event;
+    var reltg = e.relatedTarget ? e.relatedTarget : e.toElement;
+    while( reltg && reltg != this ) reltg = reltg.parentNode;
+    if( reltg != this ){
+        // 这里可以编写 onmouseleave 事件的处理代码
+   }
+}
+
+
+
+
+备注：
+W3C在mouseover和mouseout事件中添加了relatedTarget属性
+在mouseover事件中，它表示鼠标来自哪个元素
+在mouseout事件中，它指向鼠标去往的那个元素
+而Microsoft在mouseover和mouseout事件中添加了两个属性
+fromElement，在mouseover事件中表示鼠标来自哪个元素
+toElement，在mouseout事件中指向鼠标去往的那个元素

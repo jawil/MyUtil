@@ -1,0 +1,316 @@
+@charset "utf-8";
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+}
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+    -webkit-text-size-adjust: 100% !important;
+}
+html,body {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+a {
+    text-decoration: none;
+}
+a:active {
+    background-color: transparent;
+}
+a:active,a:hover {
+    outline: 0 none;
+}
+a:focus {
+    outline: 1px dotted;
+}
+a,img {
+    -webkit-touch-callout: none;
+    border: 0 none;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    vertical-align: top;
+    -ms-interpolation-mode: bicubic;
+}
+
+
+abbr,acronym {
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+button,select {
+    text-transform: none;
+}
+button::-moz-focus-inner,input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+code,kbd,pre,samp {
+    font-family: monaco, menlo, consolas, 'courier new', courier, monospace;
+}
+
+dfn {
+    font-style: italic;
+}
+
+fieldset {
+    border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
+}
+
+
+
+hr {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 0;
+}
+
+
+i,em,b{
+  font-style: normal;
+  font-weight: normal;
+}
+
+input::-moz-placeholder,textarea::-moz-placeholder {
+    color: darkGray;
+    opacity: 1;
+}
+
+/* 美化input type=number类型 */
+input[type=number] {
+    -moz-appearance:textfield;
+}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* 美化input type=date类型 */
+/*
+<input type="date" id="currenttime">
+document.getElementById('currenttime').value = new Date().toISOString().substring(0, 10);
+*/
+::-webkit-datetime-edit {
+        /* padding: 1em; */
+    }
+
+::-webkit-datetime-edit-fields-wrapper {
+        background: silver;
+}
+::-webkit-datetime-edit-text {
+        color: red;
+        padding: 0 0.3em;
+}
+::-webkit-datetime-edit-month-field {
+        color: blue;
+}
+
+::-webkit-datetime-edit-day-field {
+        color: green;
+}
+
+::-webkit-datetime-edit-year-field {
+        color: purple;
+}
+::-webkit-inner-spin-button {
+        display: none;
+}
+
+::-webkit-calendar-picker-indicator {
+        background: orange;
+}
+
+
+/* 美化input type=radio和checkbox类型 */
+input[type='radio'],input[type="checkbox"] {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+        width: 30px;
+        height: 30px;
+        border: 1px solid black;
+        outline: none;
+        vertical-align: middle;
+}
+ input[type='radio']:checked,input[type="checkbox"]:checked{
+        background: url('http://i63.tinypic.com/nxtjbs.jpg');
+        background-size:cover;
+}
+
+
+/* 美化input type=file类型 */
+::-webkit-file-upload-button {
+    background: black;
+    color: #fff;
+    padding: 5px;
+}
+::-ms-browse{
+    background: black;
+    color: #fff;
+    padding: 5px;
+}
+
+/* 美化input type=search类型 */
+input[type="search"] {
+    -webkit-appearance: textfield;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+::-webkit-search-cancel-button { -webkit-appearance: none; }
+::-webkit-search-results-button { -webkit-appearance: none; }
+
+/* 美化placeholder属性/ */
+input::-webkit-input-placeholder {
+    color: #ccc;
+    font-size:14px;
+}
+
+input:focus::-webkit-input-placeholder {
+    color: green;
+}
+
+input::-webkit-input-speech-button {
+    display: none;
+}
+
+
+/* 美化表单验证信息*/
+::-webkit-validation-bubble-message {
+  color: #eee;
+  background: black;
+}
+::-webkit-validation-bubble-arrow {
+  background: black;
+  border-color: #444;
+  box-shadow: none;
+}
+
+legend {
+    border: 0 none;
+    white-space: normal;
+    *margin-left: -7px;
+}
+
+mark {
+    background-color: #D2E5FF;
+    color: #000;
+}
+
+pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: auto;
+}
+
+q {
+    quotes: none;
+}
+
+q:before,q:after {
+    content: '';
+    content: none;
+}
+
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+select::-ms-expand { display: none; }
+
+select:disabled option:checked,option:disabled:checked {
+    color: #D2D2D2;
+}
+
+sub,sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+sup {
+    top: -0.5em;
+}
+sub {
+    bottom: -0.25em;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+textarea {
+    overflow: auto;
+    resize: vertical;
+}
+
+
+button,input,optgroup,select,textarea {
+    -webkit-appearance: none;
+    /* border:none; */
+    outline: none;
+}
+
+a,button,input,optgroup,select,textarea {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    /*去掉a、input和button点击时的蓝色外边框和灰色半透明背景*/
+}
+
+ol, ul {
+  list-style: none;
+  list-style-image: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: none;
+}
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}

@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+
+div{width:100px;height:100px;position:absolute;top:0;}
+#div1{background:red;left:0;}
+#div2{background:blue;left:100px;}
+#div3{background:yellow;left:200px;}
+#div4{background:green;left:300px;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3"></div>
+<div id="div4"></div>
+
+<script language="javascript">
+window.onload=function(){
+	var d1 = new Drag();
+	d1.init({    //配置参数
+		id : 'div1'
+	});
+	var d2 = new Drag();
+	d2.init({   //配置参数
+		id : 'div2',
+		toDown : function(){
+			document.title = 'hello';
+			document.body.style.background = 'black';
+		}
+	});
+	
+	var d3 = new Drag();
+	d3.init({    //配置参数
+		id : 'div3',
+		toDown : function(){
+			document.title = '妙味';
+		},
+		toUp : function(){
+			document.title = '课堂';
+		}
+	});
+	
+	var d4 = new Drag();
+	d4.init({    //配置参数
+		id : 'div4',
+		toUp : function(){
+			document.title = 'beybye';
+		}
+	});
+}
+	
+	function Drag(){
+		this.oDiv=null;
+		this.disX=0;
+		this.dixY=0;
+		this.settings={//默认参数
+		toDown:function (){},
+		toUp:function   (){},
+		}
+		
+	}
+	
+	Drag.prototype.init=function(opt){
+		var This=this;
+		this.oDiv=document.getElementById(opt.id);	
+		extend(this.settings,opt);
+		this.oDiv.onmousedown=function(ev){
+			var ev=ev||event;
+			This.fnDown(ev);
+			This.settings.toDown();
+			
+			return false;
+		}
+		
+	}
+	
+	
+	Drag.prototype.fnDown=function (ev){
+		
+		var This=this;
+		this.disX=ev.clientX-this.oDiv.offsetLeft;
+		this.disY=ev.clientY-this.oDiv.offsetTop;
+		document.onmousemove=function (ev){
+		 	var ev=ev||window.event;
+			This.fnMove(ev);	
+		}
+		document.onmouseup=function(){
+			This.fnUp();
+			This.settings.toUp();
+			}
+	}
+	
+	Drag.prototype.fnMove=function(ev){
+		
+		this.oDiv.style.left = ev.clientX - this.disX + 'px';
+		this.oDiv.style.top = ev.clientY - this.disY + 'px';
+	}
+	
+	Drag.prototype.fnUp = function(){
+	document.onmousemove = null;
+	document.onmouseup = null;
+	
+}
+
+
+
+function extend(a,b){
+	
+	for(var attr in b){
+		a[attr]=b[attr];
+	}
+	
+}
+</script>
+</body>
+</html>

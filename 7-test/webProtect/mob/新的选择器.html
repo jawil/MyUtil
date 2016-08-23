@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<style >
+div{
+    background: red;
+    width: 100px;
+    height: 100px;
+    margin:100px;
+
+}
+
+</style>
+<body>
+<div class="div1">
+
+</div>
+
+<div id="div2">
+
+</div>
+
+<div class="div3 div4 div1">
+
+</div>
+
+<script>
+var oDiv=document.querySelector('#div2');
+oDiv.style.backgroundColor='green';
+
+var oDiv1=document.querySelectorAll('.div1')[0];
+oDiv1.style.backgroundColor='black';
+
+var oDiv2=document.getElementsByClassName('div1')[1];
+oDiv2.style.backgroundColor='orange';
+
+var list=oDiv2.classList.toggle('div3');
+
+
+
+</script>
+</body>
+</html>

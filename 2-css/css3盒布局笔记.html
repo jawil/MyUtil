@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+#centerboy{border:5px solid yellow;width:80%;display:-webkit-box;display:-moz-box;position:relative;left:10%;}
+#left{width:30%;border:1px solid red;background:#1AB8A2;padding:10px;-webkit-box-ordinal-group:3;}
+#conter{border:1px solid blue;background:#CD18B0;padding:10px;-webkit-box-flex:1;-moz-box-flex:1;-webkit-box-ordinal-group:1;}
+#right{width:30%;border:1px solid green;background:#C49622;padding:10px;-webkit-box-ordinal-group:2;}
+div#left,div#conter,div#right{box-sizing:border-box;}
+
+#div{width:400px;height:400px;background:blue;transition:all 2s linear;}
+#div:hover{transform:translateX(-50%);}
+#div1{display:-webkit-box;display:-moz-box;-webkit-box-align:end;-webkit-box-pack:end;-moz-box-align:center;-moz-box-pack:center;-o-box-align:center;-o-box-pack:center;-ms-box-align:center;-ms-box-pack:center;box-align:center;box-pack:center;width:300px;height:300px;border:1px solid red;}
+</style>
+</head>
+
+<body>
+   <!--什么是网页的布局？网页布局呢是指在页面中如何对标题、导航栏、主要内容、页脚、表单等各种构成要素进行一个合理的编排。在使用啊CSS3之前呢,主要使用float属性或position属性进行页面的简单布局，但是呢他们也有他们的缺点，比如在两栏或者多栏布局的时候，会出现元素的内容高度不一致，那么导致他们的底部很难对齐，在CSS3中追加了一些新的布局方式，使用这些新的布局方式，除了可以修改之前存在的问题之外，还可以进行更为便捷更为复杂的页面布局。
+
+
+课后目标：
+第一点、掌握CSS3中多栏布局的使用方法，知道为什么要想多栏布局。
+第二点、掌握CSS3中盒布局的方法，知道为什么要使用盒布局。
+第三点、掌握CSS中弹性盒布局的基本概念及使用方法。
+
+
+
+1、column-count属性
+在CSS3中可以通过，column-count属性来进行多栏布局，这个属性的含义是将一个元素中的内容分成多栏进行显示。
+
+
+写法：
+column-count: 栏目数;
+ 兼容性写法：
+ -webkit-column-count:3;
+ -moz-column-count:3;
+需要注意的是，在使用多栏布局的时候，要将元素的宽度设置成多个栏目的总宽度。
+
+
+
+
+2、column-width属性：指定栏目的宽度来生成分栏。
+ 兼容性写法： -webkit-column-width、-moz-column-width
+
+
+
+
+3、column-gap属性：指定栏目与栏目之间的距离
+ 兼容性写法： -webkit-column-gap、-moz-column-gap
+
+
+
+
+4、column-rule属性：栏目与栏目之间增加一条分割线
+ 兼容性写法： -webkit-column-rule、-moz-column-rule
+ 
+
+
+
+盒布局的基础知识
+1、使用float属性和position属性时的缺点
+在CSS3中，除了多栏布局之外，还可以使用盒布局来解决使用float属性和position属性时多栏底部不能对齐的缺点。
+
+
+ 首先来实现一个float属性布局的案例，并且找到缺点。
+
+
+2、使用盒布局
+ 在CSS3中，使用box属性来使用盒布局，在火狐中要把box写成“-moz-box”的形式，在谷歌浏览器中呢需要写成“-webkit-box”的形式。
+
+
+  综合上一个案例，将他修改成盒布局。
+
+
+3、盒布局与多栏布局的区别
+多栏布局的栏目宽度必须相等，指定栏目的宽度的时候也只能统一指定，栏目的宽度不可能全都一样，所以多栏布局比较适合在文字内容页面使用，并不适合整个网页编排时使用。
+ -->
+
+<div id="centerboy">
+    <div id="left">
+        <h2>栏目列表</h2>
+        <ul>
+            <li><a href="index.html">栏目名称</a> </li>
+            <li><a href="index.html">栏目名称</a> </li>
+            <li><a href="index.html">栏目名称</a> </li>
+            <li><a href="index.html">栏目名称</a> </li>
+            <li><a href="index.html">栏目名称</a> </li>
+            <li><a href="index.html">栏目名称</a> </li>
+            <li><a href="index.html">栏目名称</a> </li>
+            <li><a href="index.html">栏目名称</a> </li>
+            <li><a href="index.html">栏目名称</a> </li>
+            <li><a href="index.html">栏目名称</a> </li>
+            <li><a href="index.html">栏目名称</a> </li>
+            <li><a href="index.html">栏目名称</a> </li>
+        </ul>
+    </div>
+    <div id="conter">
+        <p>孙鸿志系在全国工商行政管理会议现场被带走
+            中纪委：发改委人员“调研”14天 其中12天旅游
+            南水北调供水进京 与本地水“同水同价” 问答  专题
+            吉林宝源丰致121死火灾宣判 公司董事长获刑9年
+            云南致5死10伤砍人案侦破：20岁嫌犯精神异常(图)
+            北京公交地铁明起实行新票价 7类人群可免费
+            回顾2014互联网金融：一场疯狂抓钱的游戏
+            iPhone 7无边框视频火爆 如何让用户喜欢这样的设计
+            全国164.9万人今日参加考研 人数持续第二年下降
+            威海村民举报检察长被拘 政法委先定性警方后立案</p>
+    </div>
+    <div id="right">
+        <h2>推荐文章</h2>
+        <ul>
+            <li><a href="index.html">推荐文章</a> </li>
+            <li><a href="index.html">推荐文章</a> </li>
+            <li><a href="index.html">推荐文章</a> </li>
+            <li><a href="index.html">推荐文章</a> </li>
+            <li><a href="index.html">推荐文章</a> </li>
+            <li><a href="index.html">推荐文章</a> </li>
+            <li><a href="index.html">推荐文章</a> </li>
+            <li><a href="index.html">推荐文章</a> </li>
+            <li><a href="index.html">推荐文章</a> </li>
+            <li><a href="index.html">推荐文章</a> </li>
+            <li><a href="index.html">推荐文章</a> </li>
+            <li><a href="index.html">推荐文章</a> </li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+
+
+
+<!--1、使用自适应窗口的弹性盒布局
+如何才能让DIV的宽度跟随浏览器窗口变化而变换呢？在CSS3中我们只要使用一个box-flex属性，使得我们的盒布局变成弹性盒布局就可以了。
+兼容性写法：
+-webkit-box-flex (Safari浏览器、Chrome浏览器时前面加-webkit-)
+-moz-box-flex (Firefox浏览器时前面加-moz-)
+2、改变元素的显示顺序
+使用弹性盒布局的时候，可以通过box-ordinal-group属性来改变各个元素的显示顺序，在每个元素中加入box-ordinal-group属性，这个属性使用一个表示序号的正数属性值，浏览器在显示的时候根据序号从小到大来显示这些元素。
+兼容性写法：
+-webkit-box-ordinal-group (Safari浏览器、Chrome浏览器时前面加-webkit-)
+-moz-box-ordinal-group (Firefox浏览器时前面加-moz-)
+3、改变元素的排列方向
+在使用弹性盒布局的时候，可以通过box-orient来指定多个元素的排列方向。
+值：
+horizontal 在水平行中从左向右排列子元素。
+vertical 从上向下垂直排列子元素。
+兼容性写法：
+-webkit-box-orient:vertical (Safari浏览器、Chrome浏览器时前面加-webkit-)
+-moz-box-orient:vertical (Firefox浏览器时前面加-moz-)
+4、元素的宽度与高度自适应
+在使用盒布局的时候，元素的宽度与高度具有自适应性，就是元素的宽度与高度可以根据排列方向的改变而改变。 
+5、使用弹性盒布局来消除空白
+ 方法就是给子DIV中加入一个box-flex属性
+6、对多个元素使用box-flex属性
+ 让浏览器或者容器中的元素的总宽度或者是总高度都等于浏览器或者是容器的高度。
+ 方法对多个元素使用box-flex属性
+7、指定水平方向与垂直方向的对齐方式
+使用盒布局的时候，可以使用box-pack属性及box-align属性来指定元素中的文字、图像、以及子元素的水平方向或者是垂直方向上的对齐方式。
+ 兼容性写法：
+-webkit-box-pack:值 (Safari浏览器、Chrome浏览器时前面加-webkit-)
+-moz-box-pack:值 (Firefox浏览器时前面加-moz-)
+-webkit-box-align:值 (Safari浏览器、Chrome浏览器时前面加-webkit-)
+-moz-box-align:值 (Firefox浏览器时前面加-moz-)
+ 属性值box-pack属性值的含义box-align属性值的含义start左对齐，文字、图像或子元素被放置在元素最左边顶部对齐，文字.图像或子元素被放置在元素最顶部center中对齐，文字、图像或子元素被放置在元素中部中部对齐，文字、图像或子元素被放置在元素中部end右对齐，文字、图像或子元素被放置在元素最右边底部对齐，文字、图像或子元素被放置在元素最底部start顶部对齐，文字、图像或子元素被放置在元素最顶部左对齐，文字、图像或子元素被放置在元素最左边center中部对齐，文字、图像或子元素被放置在元素最中部中对齐，文字、图像或子元素被放置在元素最中部end底部对齐，文字、图像或子元素被放置在元素最底部右对齐，文字、图像或子元素被放置在元素最右边-->
+ <hr color="red">
+
+<div id="div"></div>
+
+
+
+<body>
+<div id="div1">中</div>
+</body>
+</body>
+</html>

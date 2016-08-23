@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src='http://cdn.bootcss.com/vue-resource/0.7.0/vue-resource.min.js'></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/vue.router/0.7.10/vue-router.min.js"></script>
+    <style>
+        *{padding:0;margin:0;}
+        img{border:none;vertical-align:top;}
+        .filter{padding:20px;background:#efefef;margin-bottom:40px;}
+        #app{width:500px;height:auto;margin:0 auto;}
+        .filter .form-control{width:100%;}
+        .filter .form-control2{width:70%;}
+        .movie-wrap{border-bottom:2px solid green;margin-bottom:20px;}
+        .movie-message{display:inline-block;padding:10px;}
+        .movie-message h4{cursor:pointer;}
+        .btn{display:block;width:50px;height:30px;background:green;color:red;cursor:pointer;text-align:center;line-height:30px;}
+
+
+    </style>
+</head>
+<body>
+<div class="containerd" id="app">
+    <!--简单路由器实现-->
+<!--    <a v-link="{path:'/about-us'}">嘿嘿嘿</a>
+    <a v-link="{path:'/hello'}">哈哈哈</a>
+    <router-view></router-view>-->
+
+    <!--<div class="filter">&lt;!&ndash;搜索模块&ndash;&gt;
+        <input type="text" class="form-control" v-model="liveFilter">
+        <h4>Filter by Genre:</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <select name="" class="form-control2" v-model="genreFilter">
+                    <option value="">All</option>
+                    &lt;!&ndash;<option value="Action">Action</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="SciFi">SciFi</option>
+                    <option value="Crime">Crime</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Adventure">Adventure</option>&ndash;&gt;
+                    <option v-for="genre in genres">{{genre}}</option>
+                </select>
+            </div>
+        </div>
+    </div>-->
+
+    <!--电影内容模块-->
+    <!--<div class="movie-list" v-show="!movie">
+    <div v-for="movie in movies | filterBy liveFilter in 'title' | filterBy genreFilter" class="movie-wrap">
+
+        <img v-bind:src="movie.field_moive_poster[0].url" alt="{{movie.field_moive_poster[0].alt}}">
+
+        <div class="movie-message">
+        <h4><a v-on:click="getTheMovie(movie.uid[0].target_id)">{{movie.title[0].value}}</a></h4>
+        <p>
+            <strong>Director:</strong>{{movie.field_director[0].value}}
+        </p>
+        <strong>Actors:</strong><br>
+        <span v-for="actor in movie.field_actors">
+           {{actor.value}}
+
+            <br>
+        </span>
+        <br>
+        <strong>Genre:</strong>
+        <br>
+        <span v-for="genre in movie.field_genres">
+            {{genre.value}}
+        </span>
+
+        </div>
+    </div>
+    </div>-->
+
+    <!--点击跳转模块-->
+<!--    <div class="single-movie" v-show="movie">
+       <a class="btn"  v-on:click="getMove()">Back</a>
+        <div class="movie-item" v-for="movieItem in movie">
+            <h2>{{movieItem.title[0].value}}</h2>
+
+        </div>
+    </div>-->
+
+<router-view></router-view>
+
+<a v-bind:href="url">百度一下,你就GG!</a>
+
+</div>
+
+<!--路由模块-->
+<!--<template id="hello">
+    <h2>{{message}}</h2>
+</template>
+
+<template id="about-us">
+    <h2>about us</h2>
+    <p>好看附件是浪费就开始了疯狂街上了空间上</p>
+</template>-->
+
+<!--电影列表的路由模块-->
+<template id="movie-list-template">
+    <a v-link="{path:'create'}" class="btn btn-success">Create</a>
+    <a v-link="{path:'register'}" class="btn btn-primary">Resister</a>
+<br>
+    <div class="filter"><!--搜索模块-->
+        <input type="text" class="form-control" v-model="liveFilter">
+        <h4>Filter by Genre:</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <select name="" class="form-control2" v-model="genreFilter">
+                    <option value="">All</option>
+                    <!--<option value="Action">Action</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="SciFi">SciFi</option>
+                    <option value="Crime">Crime</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Adventure">Adventure</option>-->
+                    <option v-for="genre in genres">{{genre}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="movie-list" v-show="!movie"><!--电影列表模块-->
+        <div v-for="movie in movies | filterBy liveFilter in 'title' | filterBy genreFilter" class="movie-wrap">
+
+            <img v-bind:src="movie.field_moive_poster[0].url" alt="{{movie.field_moive_poster[0].alt}}">
+
+            <div class="movie-message">
+                <h4><a v-link="{name:'movie',params:{movieID:movie.uid[0].target_id}}">{{movie.title[0].value}}</a></h4>
+                <p>
+                    <strong>Director:</strong>{{movie.field_director[0].value}}
+                </p>
+                <strong>Actors:</strong><br>
+        <span v-for="actor in movie.field_actors">
+           {{actor.value}}
+
+            <br>
+        </span>
+                <br>
+                <strong>Genre:</strong>
+                <br>
+        <span v-for="genre in movie.field_genres">
+            {{genre.value}}
+        </span>
+
+            </div>
+
+            <!--删除和编辑电影功能-->
+            <div class="col-md-3" style="float:right;">
+                <a v-link="{name:'delete',params:{movieID:movieID:movie.uid[0].target_id}}" class="btn">
+                    Delete
+                </a>
+                <a v-link="{name:'edit',params:{movieID:movieID:movie.uid[0].target_id}}" class="btn">Edit</a>
+            </div>
+
+
+
+        </div>
+    </div>
+</template>
+
+<!--单个电影的路由模块-->
+<template id="single-movie-template">
+
+    <div class="single-movie" v-show="movie">
+       <!-- <a class="btn"  v-on:click="getMove()">Back</a>-->
+        <div class="movie-item" v-for="movieItem in movie">
+            <h2>{{movieItem.title[0].value}}</h2>
+            <img v-bind:src="movieItem.field_moive_poster[0].url">
+
+        </div>
+    </div>
+</template>
+
+<!--创建电影-->
+<template id="create-movie">
+    <h2>Create Movie</h2>
+     <div class="alert alert-success" v-show="success">YOu have add a movie</div>
+    <form v-on:submit="createTheMove">
+        <div class="form-group">
+            <label>Movie title</label>
+            <input v-model="title" type="text" name="title" class="form-control">
+        </div>
+
+        <div class="form-control">
+            <label>Movie body</label>
+            <textarea v-model="body" class="form-control"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-class">Add</button>
+    </form>
+</template>
+
+
+<!--编辑电影的模块路由-->
+<template id="edit-movie">
+    <h2>Eidt movie</h2>
+   <form v-on:sumbit="updateTheMovie">
+        <div v-for="movieItem in movie">
+            <div class="form-group">
+            <label>Movie Title</label>
+            <input type="text" v-model="title" value="{{movieItem.title[0].value}}" name="title" class="form-control">
+            <br>
+        </div>
+
+        <div class="form-control">
+            <label>Movie body</label>
+            <textarea class="form-control" v-model="body">
+            {{movieItem.field_director[0].value}}
+            </textarea>
+        </div>
+        </div>
+        <button type="submit" class="btn btn-success">Update</button>
+    </form>
+
+</template>
+
+
+<!--用户注册的模块路由-->
+<template id="register">
+  <h2>Register</h2>
+    <div class="alert" v-bind:class="{'alert-success':success,'alert-warning':error}"  v-show="message">
+       {{message}}
+    </div>
+    <form v-on:sumbit="registerUser">
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" v-model="name" name="name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" v-model="email" name="email" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" v-model="password" name="password" class="form-control">
+        </div>
+        <button type="sumbit" class="btn btn-success">Register</button>
+    </form>
+</template>
+
+
+
+<script>
+    var App=Vue.extend({});
+    var register=Vue.extend({
+        template:'#register',
+        data:function(){
+            return{
+                username:'',
+                email:'',
+                password:'',
+                message:'',
+                success:'',
+                error:''
+            }
+        },
+        http:{
+            headers:{
+                'Accept':'json',
+                'Content-Type':'application/hal+json',
+                'Authorization':'Basic aXZhbjpwYXNzd29yZA=='
+            }
+        },
+        ready:{
+
+        },
+        methods:{
+             registerUser:function(event){
+                 event.preventDefault();
+                 var data={
+                     '_links':{
+                         'type':{
+                             'href':'http://moviesapi.dev/rest/type/user/user'
+                         }
+                     },
+                     'name':[
+                         {
+                             'value':this.name
+                         }
+                     ],
+                     'mail':[
+                         {
+                             'value':this.email
+                         }
+                     ],
+                     'pass':[
+                         {
+                             'value':this.pass
+                         }
+                     ],
+                     'status':[
+                         {
+                             'value':'1'
+                         }
+                     ],
+                     'roles':[
+                         {
+                             'target':'adminstrator'
+                         }
+                     ]
+                 }
+                 this.$http.post('http://moviesapi.dev/entity/user',data,
+                         function(response){
+                             this.$set('message','You have regoistered! Yaaaay!:');
+                             this.$set('success',true);
+                         }).error(function(response){
+                     this.$set('message','Somethig went wrong!  Please check your info and try again!');
+                     this.$set('error',true);
+                 });
+             }
+        }
+    });
+    var editMovie=Vue.extend({//暂未实现,很遗憾
+        template:'#edit-movie',
+        data:function(){
+            return{
+                movie:'',
+                title:'',
+                body:''
+            }
+        },
+        ready:function(){
+
+            this.getTheMovie();
+
+        },
+        methods: {
+            getTheMovie: function () {
+                this.$http.get(this.$route.params.movieID + '.json', function (data) {
+                    var movie = eval('(' + data + ')');
+                    this.$set('movie', movie);
+                    console.log(movie[0].title[0].value);
+
+
+                }).error(function (data, status, request) {
+                    console.log('fail' + status + "," + request);
+                });
+
+            },
+            updateTheMovie:function(){
+                event.preventDefault();//阻止默认事件
+                this.$http.patch('http://moviesapi.dev/node/'+this.$route.params>movieID,data,function(response){
+                    this.$route.router.go('/');
+                },{
+                    headers:{
+                        'Accept':'json',
+                        'Content-Type':'application/hal+json',
+                        'Authorization':'Basic aXZhbjpwYXNzd29yZA=='
+                    }
+                })
+
+            }
+        }
+
+
+    });
+    var deleteMovie=Vue.extend({//暂未实现,很遗憾
+        template:'#delete-movie',
+        http:{
+            headers:{
+                'Accept':'json',
+                'Content-Type':'application/hal+json',
+                'Authorization':'Basic aXZhbjpwYXNzd29yZA=='
+            }
+        },
+        methods:{
+            deleteTheMovie:function(){
+                this.$http.delete('http://moviesapi.dev/node'+this.$route.params.movieID,
+                function(response){this.$route.router.go('/');})
+            }
+        }
+    });
+    var createMovie=Vue.extend({//暂未实现,很遗憾
+        template:'#create-movie',
+        data:function(){
+            return{
+                title:'',
+                body:'',
+                success:''
+            }
+        },
+        http:{
+            headers:{
+                'Accept':'json',
+                'Content-Type':'application/hal+json',
+                'Authorization':'Basic aXZhbjpwYXNzd29yZA=='
+            }
+        },
+        ready:function(){
+            //this.createTheMovie();
+        },
+        methods:{
+            createTheMovie:function(event){
+                event.preventDefault();
+                var data={
+                    '_links':{
+                        'type':{
+                            'href':'my.com/movie/5.json'
+                        }
+                    },
+                    'title':[
+                        {
+                            'value':'this.title'
+                        }
+                    ],
+                    'body':[
+                        {
+                            'value':'this.body'
+                        }
+                    ]
+                }
+                this.$http.post('my.com/movie/5.json',data,function(response){
+                    this.$set('success','ok');
+                    this.$set('title','');
+                    this.$set('body','');
+                })
+
+
+            }
+        }
+    });
+    var movieList=Vue.extend({
+            template:'#movie-list-template',
+            data:function(){
+        return {
+            hello:'hello movie',
+            movies:'',
+            url:'https://www.baidu.com/',
+            liveFilter:'',
+            genreFilter:'',
+            genres:'',
+            movie:''
+
+        }
+        },
+        ready:function(){
+            this.getMove();
+        },
+        methods:{
+            getMove:function(){
+                this.$set('movie','');
+                this.$http.get('data.json',function(arrString){
+                    var movies = eval('('+arrString+')');
+
+                    this.$set('movies',movies);
+                    //alert(typeof movies);
+                    genresArr=[];
+                    jQuery.each(movies,function(index,movie){
+                        jQuery.each(movie.field_genres,function(index,genre){
+
+                            if(jQuery.inArray(genre,genresArr)===-1){
+                                genresArr.push(genre.value);
+                            }
+                        });
+
+
+                    });
+                    this.$set('genres',genresArr)
+
+                }).error(function(data, status, request) {
+                    console.log('fail' + status + "," + request);
+                });
+
+
+            }
+
+
+
+        }
+
+
+
+    });
+
+    var singMovie=Vue.extend({
+        template:'#single-movie-template',
+        data: function () {
+           return{
+               movie:''
+           }
+        },
+        ready:function(){
+            this.getTheMovie();
+        },
+        methods:{
+            getTheMovie:function(){
+                //alert(movieID);
+                //alert(1111);
+                this.$http.get(this.$route.params.movieID+'.json',function(data){
+                    var movie = eval('('+data+')')
+                    this.$set('movie',movie);
+                    console.log(movie[0].title[0].value);
+
+
+                }).error(function(data, status, request) {
+                    console.log('fail' + status + "," + request);
+                });
+            }
+        }
+    });
+
+
+
+    var router=new VueRouter();
+
+    router.map({
+        '/':{
+            component:movieList
+        },
+        'create':{
+            component:createMovie
+        },
+        'movie/:movieID':{
+            name:'movie',
+            component:singMovie
+        },
+        'delete/:movieID':{
+            name:'delete',
+            component:deleteMovie
+        },
+        'edit/:movieID':{
+            name:'edit',
+            component:editMovie
+        },
+        'register':{
+            component:register
+        }
+
+    });
+    router.start(App,'#app');
+
+
+    //简单路由器实现
+    /*var hello=Vue.extend({
+        template:'#hello',
+        data:function(){
+            return{
+                message:"Hello World!"
+            }
+        }
+    });
+    var aboutus=Vue.extend({
+        template:'#about-us'
+    });
+
+    var App=Vue.extend({});
+    var router=new VueRouter();
+    router.map({
+        '/hello':{
+            component:hello
+        },
+        '/about-us':{
+            component:aboutus
+        }
+    });
+    router.start(App,'#app');*/
+
+
+
+
+
+
+
+   /* var moiveApp=new Vue({
+        el:'#app',
+        data:{
+            hello:'hello movie',
+            movies:'',
+            url:'https://www.baidu.com/',
+            liveFilter:'',
+            genreFilter:'',
+            genres:'',
+            movie:''
+        },
+        ready:function(){
+
+            this.getMove();
+
+
+        },
+        methods:{
+            getMove:function(){
+                this.$set('movie','');
+               this.$http.get('data.json',function(arrString){
+                   var movies = eval('('+arrString+')');
+
+                    this.$set('movies',movies);
+                   //alert(typeof movies);
+				   genresArr=[];
+                   jQuery.each(movies,function(index,movie){
+                       jQuery.each(movie.field_genres,function(index,genre){
+
+                           if(jQuery.inArray(genre,genresArr)===-1){
+                               genresArr.push(genre.value);
+                           }
+                       });
+
+
+                   });
+                   this.$set('genres',genresArr)
+
+                }).error(function(data, status, request) {
+                   console.log('fail' + status + "," + request);
+               });
+
+
+            },
+            getTheMovie:function(movieID){
+                //alert(movieID);
+                this.$http.get(movieID+'.json',function(data){
+                    var movie = eval('('+data+')')
+                    this.$set('movie',movie);
+                    console.log(movie[0].title[0].value);
+
+
+                }).error(function(data, status, request) {
+                    console.log('fail' + status + "," + request);
+                });
+            }
+
+        }
+
+
+    });*/
+</script>
+</body>
+</html>

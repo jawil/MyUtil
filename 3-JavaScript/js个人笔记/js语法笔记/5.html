@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script language="javascript" type="text/javascript">
+/*  function Person(){
+        this.mouth=true;
+    }
+    Person.prototype.info=function(){
+        return 'hello world';
+    };
+    Person.prototype.name='lulin';
+    var p1=new Person();
+    console.log(p1.constructor);
+    console.log(p1.constructor.prototype.constructor);
+    console.log(p1.constructor.prototype.name);
+    console.log(p1.__proto__==Person.prototype);
+    console.log(Person.prototype.constructor);*/
+function Shape(){
+    this.name='shape';
+    this.age=15;
+    this.toString=function(){
+        return this.name;
+    }
+}
+Shape.prototype.info='hello';
+function TwoDShape(){
+    this.name='2D shape';
+}
+function Triangle(side,height){
+    this.name='triangle';
+    this.side=side;
+    this.height=height;
+    this.getArea=function(){
+        return this.side*this.height/2;
+    }
+}
+TwoDShape.prototype=new Shape();
+Triangle.prototype=new TwoDShape();
+//重置constructor属性
+TwoDShape.prototype.constructor=TwoDShape;
+Triangle.prototype.constructor=Triangle;
+var $new=new TwoDShape();
+    console.log($new.name);
+    console.log($new.info);
+    console.log($new.toString());
+
+
+$new.info='world';
+$new.age=1;
+var $new1=new Shape();
+console.log($new.info);//world
+    console.log($new1.info);//hello
+console.log($new.age);
+console.log($new1.age);
+
+
+
+</script>
+</body>
+</html>

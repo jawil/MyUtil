@@ -1,0 +1,884 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script src="move.js"></script>
+<script src="my.js"></script>
+<script language="javascript">
+window.onload=function(){
+	console.time('hello');
+	var oUl1=document.getElementById('faceul3');//左侧中间公告活动图片轮播特效
+	var oUl2=document.getElementById('faceul4');
+	var oLi1=oUl1.getElementsByTagName('li');
+	var oLi2=oUl2.getElementsByTagName('li');
+	var iLen = oLi1.length;
+	var iWidth = oLi2[0].offsetWidth;
+	var number=0;
+	var timer=null;
+	timer=setInterval(show,3000);
+	for(var i=0;i<oLi1.length;i++){
+		oLi1[i].index=i;
+		
+		
+	oLi1[i].onmouseout=function(){
+		timer=setInterval(show,3000);
+	}
+	oLi1[i].onmouseover=function(){
+		clearInterval(timer);
+		number=this.index;
+		for(var i=0;i<oLi1.length;i++){
+			oLi1[i].style.cssText='';
+	}
+	this.style.backgroundColor='#07414E';
+	this.style.color='white';
+	startMove(oUl2, {
+				left : -this.index * iWidth
+			});
+	}
+	}
+	
+	
+	
+	
+	function show(){
+			number++;
+			number=number>4?0:number;
+			for(var i=0;i<oLi1.length;i++){
+			oLi1[i].style.cssText='';
+	}
+	       oLi1[number].style.backgroundColor='#07414E';
+		    oLi1[number].style.color='white';
+			startMove(oUl2, {
+				left : -number * iWidth
+			});
+			}
+			
+			
+			
+	
+	
+	var oLiHand=document.getElementById('oliHand');//底部左侧掌上英雄联盟特效
+	var oImg=document.getElementById('img2');
+	oLiHand.onmouseover=function(){
+		oImg.style.display='block';
+		oImg.style.zIndex=9999;
+	}
+	oLiHand.onmouseout=function(){
+		oImg.style.display='none';
+	}
+		
+		
+		
+		
+		
+		
+	var oUlhero=document.getElementById('faceul5');//底部中侧免费英雄特效
+	var oLihero=oUlhero.getElementsByTagName('li');
+	var oAhero=oUlhero.getElementsByTagName('a');
+	for(var i=0;i<oLihero.length;i++){
+		oLihero[i].index=i;
+		oLihero[i].onmouseover=function(){
+			
+			 oAhero[this.index].style.display='block';
+		}
+		
+		
+		oLihero[i].onmouseout=function(){
+			
+			 oAhero[this.index].style.display='none';
+		}
+	}
+		
+		
+		
+		
+		
+		 
+		var oP=document.getElementById('pSpan');//底部右侧视频图片轮播特效
+		var oSpan=oP.getElementsByTagName('span');
+		var oGameimg=document.getElementById('gameImg');
+		var arrUrl=['img/37.png','img/38.png','img/39.png','img/40.png','img/41.png'];
+		oSpan[0].style.backgroundColor='#16DCDB';
+		
+		var time2=null;
+		var flagnumber=0;
+		
+		time2=setInterval(function(){
+			flagnumber++;
+			
+			flagnumber=flagnumber>4?0:flagnumber;
+			for(var i=0;i<oSpan.length;i++){
+					
+					oSpan[i].style.cssText='';
+					
+			}
+			oGameimg.src=arrUrl[flagnumber];
+			oSpan[flagnumber].style.backgroundColor='#16DCDB';
+			},2000);
+			
+			
+		
+		for(var i=0;i<oSpan.length;i++){
+			oSpan[i].index=i;
+			oSpan[i].onmouseover=function(){
+				for(var i=0;i<oSpan.length;i++){
+					
+					oSpan[i].style.cssText='';
+					
+				
+			}
+			flagnumber=this.index;
+			this.style.backgroundColor='#16DCDB';
+			oGameimg.src=arrUrl[this.index];
+		}
+		}
+		
+		
+		
+		
+		var opppp=document.getElementById('oPPP');//底部右侧视频播放六边形点击特效
+	    var odddd=document.getElementById('trangle');
+		 opppp.onmouseover=odddd.onmouseove=oGameimg.onmouseover=function(){
+			opppp.style.borderColor='#43BACA';
+			odddd.style.borderLeftColor='#43BACA';
+		}
+		
+		oGameimg.onmouseout=function(){
+			opppp.style.cssText='';
+			odddd.style.cssText='';
+		}
+		
+		
+		
+		
+		
+		
+		
+		var oulnews=document.getElementById('faceul6');//中间右侧窗口栏滚动特效
+		var oliNews=oulnews.getElementsByTagName('li');
+		var odivnews=document.getElementById('news');
+		var distance=odivnews.getElementsByTagName('div')[0].offsetWidth;
+		oliNews[0].style.backgroundColor='#07414E';
+		for(var i=0;i<oliNews.length-1;i++){
+			oliNews[i].index=i;
+		oliNews[i].onmouseover=function(){
+	
+		for(var i=0;i<oliNews.length-1;i++){
+			oliNews[i].style.cssText='';
+	}
+	this.style.backgroundColor='#07414E';
+	this.style.color='white';
+	doMove(odivnews, {
+				left : -this.index * distance
+			},200,'easeIn' ,function(){});
+	}
+		}
+		
+		
+		
+		
+		
+		var listDiv=document.getElementsByClassName('listnews');//小三角形光标运动
+		
+		for(var i=0;i<listDiv.length;i++){
+			var listLi=listDiv[i].getElementsByTagName('li');
+	        
+			for(var j=0;j<listLi.length;j++){
+				listLi[j].onmouseout=function(){
+					this.getElementsByTagName('div')[0].style.cssText='';
+					doMove(this.getElementsByTagName('div')[0], {
+				left :0
+			},100,'easeIn' ,function(){});
+				}
+				
+				listLi[j].onmouseover=function(){
+					
+					this.getElementsByTagName('div')[0].style.borderLeftColor='white';
+					doMove(this.getElementsByTagName('div')[0], {
+				left :5
+			},100,'easeIn' ,function(){});
+				
+				}
+			}
+			}
+		
+		
+	
+	var laDiv=document.getElementById('R_top');//改名卡和拉克丝轮播
+	var laSpan=laDiv.getElementsByTagName('span');
+	var laImg=laDiv.getElementsByTagName('img')[0];
+	laSpan[0].style.backgroundColor="#16DAD9";
+	var laUrl=['img/49.png','img/50.png'];
+	var lanumber=0;
+	setInterval(function(){
+		lanumber++;
+        lanumber=lanumber>1?0:lanumber;
+		for(var i=0;i<laSpan.length;i++){
+				laSpan[i].style.cssText='';
+			}
+			laImg.src=laUrl[lanumber];
+			laSpan[lanumber].style.backgroundColor="#16DAD9";
+	        
+	},4000);
+	for(var i=0;i<laSpan.length;i++){
+		laSpan[i].index=i;
+		laSpan[i].onmouseover=function(){
+			for(var i=0;i<laSpan.length;i++){
+				laSpan[i].style.cssText='';
+			}
+		laImg.src=laUrl[this.index];
+		lanumber=this.index;
+		this.style.backgroundColor='#16DAD9';	
+		}
+		
+	}
+				
+	var kanoul=document.getElementById('kanghan');
+	var kandiv=document.getElementById('R_center1');
+	var kanA=kandiv.getElementsByTagName('a');
+	var kanwidth=kanoul.getElementsByTagName('li')[0].offsetWidth;
+	//alert(kanwidth);
+	var kannumber=0;
+	kanA[0].onclick=function(){
+		kannumber--;
+		kannumber=kannumber<0?2:kannumber;
+		startMove(kanoul,{left:-kannumber*kanwidth});
+	}
+	
+	kanA[1].onclick=function(){
+		kannumber++;
+		kannumber=kannumber>2?0:kannumber;
+		//alert(kannumber);
+		startMove(kanoul,{left:-kannumber*kanwidth});
+		
+	}
+	setInterval(function(){
+		kannumber++;
+		kannumber=kannumber>2?0:kannumber;
+		startMove(kanoul,{left:-kannumber*kanwidth});
+		},2500);
+	
+	var modelOul=document.getElementById('gamemodel');
+	var modelOspan=modelOul.getElementsByTagName('span');
+	var modelOli=modelOul.getElementsByTagName('li');
+	var modelOp=modelOul.getElementsByTagName('p');
+	//alert(modelOspan[1].innerHTML);
+	//alert(modelOli.length);
+	//var mouseCount=true;
+	
+	for(var i=0;i<modelOli.length;i++){
+		modelOli[i].index=i*2+1;
+	
+	
+		
+		
+	modelOli[i].onmouseover=function(e){//直接用onmouseenter即可
+			if( !e ) 
+			e = window.event;  
+    var reltg = e.relatedTarget ? e.relatedTarget : e.fromElement;  
+    while( reltg && reltg != this )
+	 reltg = reltg.parentNode;  
+     if( reltg != this ){  
+        // 这里可以编写 onmouseenter 事件的处理代码
+		    doMove(modelOspan[this.index],{top:-80},20,'easeIn',function(){doMove(this,{top:20},200,'easeOut');this.onmouseover=function(){};});
+            doMove(modelOp[(this.index-1)/2],{left:-100},20,'easeIn',function(){doMove(this,{left:8},200,'easeOut');this.onmouseover=function(){};});  
+    }  
+			
+			
+			
+		}
+		
+	}
+	
+	console.timeEnd('hello');
+	
+}
+
+</script>
+<style>
+*{padding:0;margin:0;}
+html{-webkit-text-size-adjust:none;}
+img{vertical-align:top;border:none;}
+li{list-style:none;}
+.bgm{background:#06161B;width:1285px;margin:0 auto;position:relative;}
+#LOL_top{width:1280px;height:80px;background:url(img/61.png) repeat-x;cursor: pointer;position:relative;}
+#LOL_top  #icno{position:absolute;left:0;top:20px;}
+#LOL_top .lab{color:#999999;background:#06161B;border:none;position:absolute;left:0;top:0;width:240px;font-size:10px;cursor:default;}
+#LOL_top .buto{width:155px;height:55px;color:#FDECCF;background:url(img/2.png) no-repeat;border:none;font-size:20px;margin-top:15px;margin-left:560px;cursor: pointer;}
+#LOL_top .faceul1{float:right;}
+#LOL_top .faceul1 li{float:left;color:#B98E53;width:30px;height:25px;border:1px solid #002933;text-align:center;line-height:25px;font-weight:bold;font-size:17px;}
+
+#LOL_left .faceul2{padding:0 0 0 17px;position:relative;}
+#LOL_left .faceul2 li{overflow:hidden;width:162px;height:67px;border:4px solid #9B6F41;border-radius:7%;float:left;margin-left:13px;background:url(img/11.png) no-repeat;position:relative;font-family:"微软雅黑";cursor: pointer;}
+#LOL_left .faceul2 li .model{color:#7DFEFA;position:absolute;left:45px;top:20px;}
+#LOL_left .faceul2 li p{position:absolute;left:8px;top:22px;font-size:10px;color:#25979C;}
+#LOL_left .faceul2 li p span{color:#279496;position:absolute;left:45px;top:20px;}
+
+
+
+#lc_left{width:562px;height:239px;margin:0 20px 20px 20px;overflow:hidden;position:relative;}
+#LOL_left .faceul4{padding:0 0 0 17px;margin-top:8px;color:#3F919A;background:url(img/10.png) no-repeat;}
+#LOL_left .faceul4 li{width:165px;height:40px;float:left;margin-left:16px;text-align:center;font-size:80%;cursor: pointer;}
+#LOL_left .faceul4 li p{margin-top:15px;font-size:13px;}
+#LOL_left .faceul4 li p span{border-radius:50%;display:inline-block;width:18px;height:18px;font-size:16px;background:#165362;}
+
+
+#LOL_left{width:965px;height:685px;float:left;background:#000000;}
+#LOL_right{width:315px;height:685px;float:left;}
+#LOL_bottom{width:1280px;height:35px;background:#06161B;}
+#LOL_bottom input{width:70px;height:29px;border:1px solid #244F5C;float:right;margin-left:3px;background:#0F2127;color:#B18C58;font-size:15px;font-weight:bold;cursor:pointer;}
+#LOL_bottom .tv1{background:url(img/59.png) no-repeat;}
+#LOL_bottom .tv2{background:url(img/58.png) no-repeat;}
+#LOL_bottom .tv3{background: url(img/60.png) no-repeat;}
+#LOL_bottom .tv4{width:90px;margin-right:5px;}
+#LOL_bottom input:hover{border:1px solid #01F9F9;}
+
+.clear{zoom:1;}
+.clear:after{content:""; display:block;clear:both;}
+#left_top{height:140px;background:#000000;}
+
+
+#left_center{height:300px;position:relative;background:#000000;}
+#left_center #faceul3{position:absolute;left:20px;bottom:15px;;}
+#left_center #faceul3 li{width:113px;height:43px;background:#010000;float:left;color:#267280;font-size:12px;text-align:center;line-height:43px;cursor: pointer;}
+
+
+
+
+#left_center #lc_left ul{width:2820px;position:absolute;left:0;top:0;}
+#left_center #lc_left ul li{float:left;width:562px;height:239px;}
+#left_center #lc_left ul li img{width:562px;height:239px;cursor: pointer;}
+
+
+
+
+#left_bottom{ height:190px;padding:20px 20px 30px 20px;background:#000000;}
+#left_bottom #bottom_left{width:150px;height:210px;float:left;}
+#left_bottom #bottom_left ul {margin-top:-10px;}
+#left_bottom #bottom_left ul li{width:140px;height:30px;margin-top:9px;background:url(img/22.png) no-repeat;text-align:center;line-height:30px;position:relative;}
+#left_bottom #bottom_left ul li a{color:#76C0CA;font-size:13px;text-decoration:none;}
+#left_bottom #bottom_left ul li a:hover{color:#B5F6FF;}
+#left_bottom #bottom_left ul li #img1,#img3{position:absolute;right:0;top:0;width:30px;height:30px;}
+#left_bottom #bottom_left ul li #img2{position:absolute;left:148px;top:-40px;display:none;}
+
+
+
+#left_bottom  #bottom_center{width:425px;height:210px;float:left;margin-left:8px;}
+#left_bottom  #bottom_center p{color:#FFF5FB;width:405px;height:40px;background:url(img/25.png) no-repeat;line-height:40px;text-indent:35px;cursor: default;}
+#left_bottom  #bottom_center p a{float:right;font-size:13px;color:#76C0CA;text-decoration:none;}
+#left_bottom  #bottom_center p a:hover{text-decoration:underline;color:#6A91B6;}
+#left_bottom  #bottom_center  ul li{width:70px;height:70px;float:left;margin:5px;position:relative;}
+#left_bottom  #bottom_center  ul li img{cursor: pointer;}
+#left_bottom  #bottom_center  ul li a{width:70px;height:70px;background:#144D56;position:absolute;top:0;left:0;opacity:0.7;filter:alpha(opacity=70);line-height:70px;text-decoration:none;color:#FFFFFF;
+line-height:90px;font-size:13px;text-align:center;display:none;}
+
+
+
+
+#left_bottom  #bottom_right{width:335px;height:210px;float:left;position:relative;color:white;margin-top:5px;}
+#left_bottom  #bottom_right p{position:absolute;right:10px;bottom:10px;text-align: center;}
+#left_bottom  #bottom_right p span{padding:0px 7px;margin-left:5px;border-radius:50%;background:#FFFFFF;cursor:pointer;}
+#left_bottom  #bottom_right #gameimg{width:335px;height:190px;}
+#left_bottom  #bottom_right #bgmimg{position:absolute;right:-10px;top:0;opacity:0.8;cursor: pointer;filter:alpha(opacity=80);}
+#left_bottom  #bottom_right #bgmimg:hover{opacity:1;filter:alpha(opacity=80);}
+#left_bottom  #bottom_right #oPPP{position:absolute;left:150px;top:50px;width:50px;height:50px;border:4px solid #FFFFFF;border-radius:20px;text-align:center;cursor:pointer;}
+#trangle{ width: 0; height: 0; border-top: 8px solid transparent; border-left: 16px solid #FFFFFF; border-bottom: 8px solid transparent; position:absolute;top:70px;left:175px;cursor:pointer;}
+
+
+
+#lc_right{width:350px;height:283px;position:absolute;top:0px;left:600px;overflow:hidden;}
+#lc_right .bottom-p{color:white;width:350px;height:40px;position:absolute;bottom:0;left:0;background:url(img/48.png) 0px 10px no-repeat;line-height:40px;text-indent:20px;}
+#lc_right .bottom-p a{color:white;text-decoration:none;font-size:15px;}
+#lc_right .bottom-p a:hover{text-decoration:underline;}
+#lc_right .bottom-p span{color:#76C0CA;font-size:13px;float:right;margin-top:1px;margin-right:5px;}
+#lc_right #faceul6 {width:350px;background:url(img/46.png) no-repeat;}
+#lc_right #faceul6 li{color:#5BB8CC;float:left;width:67px;height:30px;text-align:center;line-height:30px;cursor:pointer;}
+#lc_right .newsdiv{width:1410px;height:210px;position:absolute;top:30px;left:0;}
+.listnews{width:350px;height:210px;float:left;}
+.listnews  a{text-decoration:none;}
+.listnews  a:hover{text-decoration:underline;color:white;}
+.listnews p{height:50px;text-align:center;line-height:50px;color:white;font-size:15px;background:url(img/47.png);}
+.listnews li{height:30px;border:1px solid #091826;position:relative;background:#03080E;}
+.listnews .trang{ width: 0; height: 0; border-top: 5px solid transparent; border-left: 10px solid #295359; border-bottom: 5px solid transparent; position:absolute;top:70px;left:175px;position:absolute;top:18px;left:0;}
+.listnews li p{height:30px;line-height:30px;font-size:13px;text-align:left;text-indent:20px;color:#76C0CA;display:inline-block;background:#03080E;}
+.listnews li a:hover p{text-decoration:underline;color:#B5F6FF;}
+.listnews li span{color:#76C0CA;font-size:13px;float:right;margin-top:10px;margin-right:5px;}
+
+
+
+
+#R_top{height:155px;position:relative;}
+#R_top a{opacity:0.8;filter:alpha(opacity=80);}
+#R_top a:hover{opacity:1;filter:alpha(opacity=100);}
+#R_top  p{position:absolute;color:white;right:25px;bottom:55px;text-align: center;}
+#R_top  p span{padding:0px 7px;background:white;border-radius:50%;background:#FFFFFF;cursor:pointer;margin-left:5px;}
+
+
+
+#R_center1{height:135px;position:relative;overflow:hidden;}
+#R_center1 ul{width:940px;height:135px;position:absolute;left:0;top:0}
+#R_center1 ul li{width:310px;height:135px;float:left;}
+#R_center1 ul li img{width:310px;height:135px;cursor:pointer;}
+#R_center1  a{position:absolute;left:0;top:0;width:30px;height:30px;border:1px dotted #0ED1D9;font-size:20px;font-weight:bold;text-decoration:none;text-align:center;line-height:30px;color:#0ED1D9;border-radius:50%;}
+#R_center1  a:hover{opacity:0.5;filter:alpha(opacity=50);}
+#R_center1 #prev{top:50px;left:5px;}
+#R_center1 #next{top:50px;left:275px;}
+
+
+
+#R_center2{height:150px;}
+#R_center2 img{margin:10px 0px 10px 15px;float:left;}
+#R_bottom{height:235px;}
+
+#R_bottom #title{background:url(img/55.png) no-repeat;width:305px;height:35px;}
+#R_bottom .listnews{width:310px;height:190px;}
+.username{width:177px;height:23px;background:#00404A;color:#E2E5E5;font-size:16px;text-align:center;border:none;border-right:1px solid white;cursor:default;}
+.usermoney{width:90px;height:23px;background:#002429 url(img/4.png) no-repeat 5px 3px;color:#E2E5E5;text-align:center;margin-left:-8px;border:none;font-size:16px;cursor:default;}
+.gamebi{width:90px;height:23px;background:#002429 url(img/5.png) no-repeat 5px 0px;color:#E2E5E5;text-align:center;margin-left:-8px;border:none;font-size:16px;cursor:default;}
+.gameshop{background:url(img/6.png) no-repeat;width:150px;height:28px;border:1px solid #5C553B;cursor: pointer;}
+.personaldata{background:url(img/7.png) no-repeat;width:152px;height:28px;border:1px solid #5C553B;cursor: pointer;margin-left:-10px;margin-top:4px;}
+.question{background:url(img/8.png) no-repeat;width:32px;height:28px;border:1px solid #5C553B;cursor: pointer;margin-left:-10px;margin-top:4px;}
+.setting{background:url(img/9.png) no-repeat;width:30px;height:28px;border:1px solid #5C553B;cursor: pointer;margin-left:-10px;margin-top:4px;}
+</style>
+</head>
+
+<body>
+<div class="bgm">
+
+<div id="LOL_top"><!--//1英雄联盟的头部开始最顶部的个人信息和商店-->
+<input class="lab" type="label" readonly value="League of Legends 5.21.15_10_26_20_09"/>
+<input type="button"  class="buto" value="PLAY"/>
+<img id="icno" src="img/1.png"/>
+
+<ul class="faceul1 ">
+<li>－</li>
+<li>×</li>
+</ul>
+
+<div style="width:427px;float:right;margin-top:12px;" class="clear">
+<img style="height:56px;width:56px;float:left;cursor: pointer;" src="img/3.png"/>
+<div style="float:left">
+<input class="username" readonly type="label" value="张世洋"/>
+<input class="usermoney" readonly type="label" value="3000"/>
+<input class="gamebi"  readonly="readonly" type="label" value="6300"/>
+</br>
+<input class="gameshop" type="button" value=""/>
+<input class="personaldata" type="button" value=""/>
+<input class="question" " type="button" value=""/>
+<input class="setting" type="button" value=""/>
+</div>
+</div>
+
+</div>
+
+
+<div class="clear">
+
+
+<div id="LOL_left">
+<div id="left_top">
+
+<ul class="faceul4 clear">
+<li><p>等级要求<span>3</span>级</p></li>
+<li><p>等级要求<span>3</span>级</p></li>
+<li><p>等级要求<span>5</span>级</p></li>
+<li><p>新手推荐</p></li>
+<li><p>新手推荐</p></li>
+</ul>
+
+<ul id="gamemodel" class="faceul2 clear">
+<li>
+<p ><img src="img/12.png"/><span>SOLO</span></p>
+<span class="model"><strong>单人</strong>开始游戏</span>
+</li>
+
+<li>
+<p ><img src="img/13.png"/><span >PREMADE</span></p>
+<span class="model"><strong>组队</strong>开始游戏</span>
+</li>
+
+
+<li>
+<p ><img src="img/14.png"/><span>ARAM</span></p>
+<span class="model"><strong>极地</strong>大乱斗</span>
+</li>
+
+
+<li>
+<p ><img src="img/15.png"/><span >COOPYSAL</span></p>
+<span class="model"><strong>人机</strong>对战游戏</span>
+</li>
+
+
+<li>
+<p ><img src="img/16.png"/><span >TUTORIAL</span></p>
+<span class="model"><strong>新人</strong>训练模式</span></li>
+</ul>
+</div>
+
+
+
+<div id="left_center" >
+ <div id="lc_left" >
+  <ul id="faceul4" class="clear">
+  <li><img src="img/17.png"/></li>
+  <li><img src="img/18.png"/></li>
+  <li><img src="img/19.png"/></li>
+  <li><img src="img/20.png"/></li>
+  <li><img src="img/21.png"/></li>
+  <ul>
+  
+</div>
+
+
+<ul id="faceul3" >
+  <li style="background:#07414E;color:white;">阿卡丽的神秘商店</li>
+  <li>季前赛官方介绍</li>
+  <li>颁奖盛典投票开始</li>
+  <li>赛季奖励即将开放</li>
+  <li>丧失和杀手</li>
+  </ul>
+  
+<div id="lc_right">
+
+<ul id="faceul6" class="clear">
+<li>综合</li>
+<li>公告</li>
+<li>赛事</li>
+<li>论坛</li>
+<li><a href="#"><img src="img/45.png"/></a></li>
+</ul>
+
+<p class="bottom-p"><a href="#">英雄联盟用户调查问卷</a>
+<span>[调查]</span></p>
+
+<div class="newsdiv" id="news" >
+
+<div class="listnews">
+
+<a  href="#"><p><strong>2016官方季前赛介绍视频</strong></p></a>
+
+<ul >
+<li><div class="trang"></div>
+<a href="#"><p>颁奖盛典"最佳新星"与"最佳外援"提名揭晓</p></a>
+<span>11/12</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>德玛西亚杯总决赛震撼来袭,内场门票等你拿</p></a>
+<span>11/12</span>
+</li>
+
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>火爆空前2015LOL高校英雄日长春落幕</p></a>
+<span>11/11</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>颁奖盛典"年度MVP"与"最佳阵容"提名曝光</p></a>
+<span>11/11</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>英雄揭秘:海兽祭祀 俄洛伊</p></a>
+<span>11/11</span>
+</li>
+</ul>
+</div>
+
+
+<div class="listnews">
+
+<a  href="#"><p><strong>11月13日免费英雄更换公告</strong></p></a>
+
+<ul>
+<li><div class="trang"></div>
+<a href="#"><p>战队系统维护公告</p></a>
+<span>11/11</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>"皮城警备"开启QQ推荐好友功能</p></a>
+<span>11/11</span>
+</li>
+
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>2015年赛季奖励即将发放</p></a>
+<span>11/10</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>QQ推荐好友功能常见问题</p></a>
+<span>11/10</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>"丧失&杀手"主题皮肤鬼魅降临</p></a>
+<span>11/10</span>
+</li>
+</ul>
+</div>
+
+
+<div class="listnews">
+
+<a  href="#"><p><strong>POP战队采访:平凡人的追梦之旅</strong></p></a>
+
+<ul>
+<li><div class="trang"></div>
+<a href="#"><p>11.12赛事新闻汇总(高校联赛)</p></a>
+<span>11/13</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>11.12赛事新闻汇总城市争霸赛)</p></a>
+<span>11/13</span>
+</li>
+
+
+<li><div class="trang"></div>
+<a href="#"><p>11.11赛事新闻汇总(高校联赛)</p></a>
+<span>11/13</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>11.11赛事新闻汇总城市争霸赛)</p></a>
+<span>11/13</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>颁奖盛典"最佳新星"与"最佳外援"提名揭晓</p></a>
+<span>11/12</span>
+</li>
+</ul>
+</div>
+
+
+<div class="listnews">
+
+<a  href="#"><p><strong>S6前大练兵,德杯为你指路</strong></p></a>
+
+<ul>
+<li><div class="trang"></div>
+<a href="#"><p>身世浮沉雨打萍,与命运抗争的五大选手</p></a>
+<span>11/13</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>神吐槽基情四射!又到一年表白季</p></a>
+<span>11/12</span>
+</li>
+
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>刀妹灵车漂移,卡牌死亡传送</p></a>
+<span>11/12</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>盘点S5赛季那些曾经独领风骚的英雄们</p></a>
+<span>11/12</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>风格大改全新体验 LOL季前赛一览</p></a>
+<span>11/12</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="left_bottom">
+<div id="bottom_left">
+<ul >
+<li><a href="#">新手礼包</a>
+<img id="img1" src="img/23.png"/>
+</li>
+<li id="oliHand"><a href="#">掌上英雄联盟</a>
+<img id="img2" src="img/24.png"/>
+</li>
+
+<li><a href="#">官方周边商城</a>
+<img  id="img3" src="img/23.png"/>
+</li>
+<li><a href="#">新手指引</a></li>
+<li><a href="#">在线客服</a></li>
+</ul>
+</div>
+
+
+<div id="bottom_center">
+<p><strong>本周免费英雄</strong>
+<a href="#">查看所有英雄资料</a>
+</p>
+<ul id="faceul5">
+<li><img src="img/26.png"/><a  href="#">末日使者</a></li>
+<li><img src="img/27.png"/><a  href="#">复仇之矛</a></li>
+
+<li><img src="img/28.png"/><a  href="#">审判天使</a></li>
+
+<li><img src="img/29.png"/><a  href="#">无极剑圣</a></li>
+
+<li><img src="img/30.png"/><a  href="#">发条魔灵</a></li>
+
+<li><img src="img/31.png"/><a  href="#">凛冬之怒</a></li>
+
+<li><img src="img/32.png"/><a  href="#">刀锋之影</a></li>
+
+<li><img src="img/33.png"/><a  href="#">瘟疫之源</a></li>
+<li><img src="img/34.png"/><a  href="#">兽灵行者</a></li>
+<li><img src="img/35.png"/><a  href="#">邪恶小法师</a></li>
+
+</ul>
+</div>
+<div id="bottom_right">
+
+<p id="pSpan">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</p>
+
+<a href="#"><img id="gameImg" src="img/37.png"/></a>
+
+<a href="#"><p id="oPPP">
+</p></a>
+<a href="#"><div id="trangle">
+</div></a>
+<img id="bgmimg" src="img/42.png"/>
+</div>
+
+
+</div>
+</div>
+
+
+<div id="LOL_right">
+
+<div id="R_top">
+<img src="img/49.png"/>
+<a href="#"><img src="img/51.png"/></a>
+
+<p>
+
+<span></span>
+<span></span>
+</p>
+</div>
+
+<div id="R_center1">
+<ul id="kanghan">
+<li><img src="img/52.png"/></li>
+<li><img src="img/53.png"/></li>
+<li><img src="img/54.png"/></li>
+
+</ul>
+
+<a id="prev" href="javascript:;"><</a>
+<a id="next" href="javascript:;">></a>
+</div>
+
+<div id="R_center2">
+<a href="#"><img src="img/56.png"/></a>
+<a href="#"><img src="img/57.png"/></a>
+</div>
+
+
+<div id="R_bottom">
+<p id="title">
+</p>
+<div class="listnews">
+
+
+<ul>
+<li><div class="trang"></div>
+<a href="#"><p>11.13测试服:驯龙小炮界面上线</p></a>
+<span>11/13</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>线霸级别被动!S6女枪图文评测</p></a>
+<span>11/13</span>
+</li>
+
+
+<li><div class="trang"></div>
+<a href="#"><p>防御塔见了都得跑!揭秘联盟最肉英雄</p></a>
+<span>11/13</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>S5赛季末的绝唱 辅助的亡命充分心得</p></a>
+<span>11/13</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>季前赛隐藏改动:ADC崛起的连锁反应</p></a>
+<span>11/13</span>
+</li>
+
+<li>
+<div class="trang"></div>
+<a href="#"><p>这个可以玩一年!带光效果的千珏插画</p></a>
+<span>11/13</span>
+</li>
+
+</ul>
+</div>
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="LOL_bottom">
+<input class="tv1" type="button" value=""/>
+<input class="tv2" type="button" value=""/>
+<input class="tv3" type="button" value="12"/>
+<input class="tv4" type="button" value="LOL电视台"/>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</body>
+</html>

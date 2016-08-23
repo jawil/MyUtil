@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <style>
+    #dragImg {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        margin: 200px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="dragImg">请把图片拖放此区</div>
+    <ul class="upload"></ul>
+    <script>
+    var oDiv = document.querySelector('#dragImg');
+    var oUl = document.querySelector('.upload');
+
+    oDiv.ondragenter = function() {
+        this.innerHTML = '可以释放啦';
+    }
+    oDiv.ondragover = function(ev) {
+        var ev = ev || window.event;
+        ev.preventDefault();
+    }
+    oDiv.ondragleave = function() {
+        this.innerHTML = '请把图片拖放此区';
+    }
+    oDiv.ondrop = function(ev) {
+        var ev = ev || window.event;
+        ev.preventDefault();
+        var fs = ev.dataTransfer.files;
+        for (var i = 0; i < fs.length; i++) {
+            if (fs[i].type.indexOf('image') != -1) {
+                var fd = new FileReader();
+                fd.readAsDataURL(fs[i]);
+                fd.onload = function() {
+                    var oLi = document.createElement('li');
+                    var oImg = document.createElement('img');
+                    oImg.src = this.result;
+                    oLi.appendChild(oImg);
+                    oUl.appendChild(oLi);
+                    oDiv.innerHTML = '上传成功啦';
+                }
+            } else {
+                alert('亲。请上传图片！')
+
+            }
+
+
+        }
+
+
+    }
+    </script>
+</body>
+
+</html>

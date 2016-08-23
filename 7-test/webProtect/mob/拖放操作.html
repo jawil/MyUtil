@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    #text {
+        background-color: green;
+        width: 100px;
+        height: 100px;
+        margin: 100px;
+    }
+
+    .nav li {
+        list-style: none;
+        width: 100px;
+        height: 100px;
+        background-color: #ff0000;
+        margin: 20px;
+    }
+    </style>
+</head>
+
+<body>
+    <ul class="nav">
+        <li class="nav1" draggable="true"></li>
+        <li class="nav2"></li>
+        <li class="nav3"></li>
+        <li class="nav4"></li>
+    </ul>
+    <div id="text"></div>
+    <script>
+    var oLi = document.querySelectorAll('ul li');
+    //var oLi=document.getElementsByClassName('nav1')[0];
+    //oLi.style.backgroundColor="black";
+    var oDiv = document.querySelector('#text');
+    var oUl = document.querySelector('.nav');
+    var i = 0;
+    for (var i = 0; i < oLi.length; i++) {
+        oLi[i].index = i;
+        oLi[i].ondragstart = function(ev) {
+            this.style.backgroundColor = "black";
+            document.title = 'start';
+            //兼容火狐浏览器,解决火狐下的问题
+            //必须设置dataTransfer对象才可以拖拽除图片外的其他标签
+
+            var ev = ev || window.event;
+            ev.dataTransfer.setData('name', this.index);
+            ev.dataTransfer.effectAllowed = 'copyLink'; //设置鼠标的样式
+            /* dataTransfer对象
+             setData() : 设置数据 key和value(必须是字符串)
+             getData() : 获取数据，根据key值，获取对应的value
+             dataTransfer对象_2
+             effectAllowed
+             effectAllowed : 设置光标样式(none, copy, copyLink, copyMove, link, linkMove, move, all 和 uninitialized)
+             setDragImage
+             三个参数：指定的元素，坐标X，坐标Y*/
+            ev.dataTransfer.setDragImage(oDiv, 50, 50);
+        }
+
+
+        oLi[i].ondrag = function() {
+            document.title = 'move';
+        }
+        oLi[i].ondragend = function() {
+            document.title = 'end';
+        }
+
+
+        oDiv.ondragenter = function() {
+            this.style.backgroundColor = "yellow";
+        }
+        oDiv.ondragover = function(ev) { //enter和leave之间连续触发
+            document.title = i++;
+            ev.preventDefault();
+
+        }
+        oDiv.ondragleave = function() {
+            this.style.backgroundColor = "orange";
+        }
+
+        oDiv.ondrop = function(ev) { //要想触发drop事件,就必须在dragover当中阻止 默认事件
+
+                this.style.backgroundColor = 'blue';
+                var ev = ev || window.event;
+                //alert(ev.dataTransfer.getData('name'));
+                oUl.removeChild(oLi[ev.dataTransfer.getData('name')]);
+                for (var i = 0; i < oLi.length; i++) {
+                    oLi[i].index = i;
+                }
+
+            }
+            //解决火狐无法拖拽的问题
+
+
+    }
+    </script>
+
+</html>

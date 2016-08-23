@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>无标题文档</title>
+<style>
+body{margin:0; padding:0}
+#to_top{width:30px; height:40px; padding:20px; font:14px/20px arial; text-align:center;  background:#06c; position:absolute; cursor:pointer; color:#fff}
+</style>
+<script>
+window.onload = function(){
+  var oTop = document.getElementById("to_top");
+  var screenw = document.documentElement.clientWidth || document.body.clientWidth;//可视区尺寸
+  var screenh = document.documentElement.clientHeight || document.body.clientHeight;//可视区尺寸
+  oTop.style.left = screenw - oTop.offsetWidth +"px";//javascript 中 offsetWidth 是对象的可见宽度，包滚动条等边线，会随窗口的显示大小改变
+  oTop.style.top = screenh - oTop.offsetHeight + "px";
+  window.onscroll = function(){
+    var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+    oTop.style.top = screenh - oTop.offsetHeight + scrolltop +"px";
+  }
+  oTop.onclick = function(){
+    document.documentElement.scrollTop = document.body.scrollTop =0;
+  }
+  
+  window.onresize = function() {
+	 screenw = document.documentElement.clientWidth || document.body.clientWidth;
+     screenh= document.documentElement.clientHeight || document.body.clientHeight;
+  oTop.style.left = screenw - oTop.offsetWidth +"px";
+  oTop.style.top = screenh- oTop.offsetHeight + "px";
+
+ 
+	
+}
+
+
+
+
+}
+
+
+
+
+</script>
+</head>
+
+<body style="height:1500px;">
+
+<h1>返回顶部</h1>
+
+
+<div id="to_top">返回顶部</div>
+</body>
+</html>

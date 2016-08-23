@@ -1,0 +1,52 @@
+[{
+	'title':[
+		{
+		'value':"American Beauty"
+		}
+	],
+	
+	'uid':[
+		{
+		'target_id':"2",
+		'url':"/user/2"
+		}
+	],
+
+	'field_actors':[
+		{
+		'value':"Kevin Spacey"
+		},
+		{
+		'value':"Annette Bening"
+		},
+		{
+		'value':"Thora Birch"
+		}
+		],
+	
+	'field_director':[
+		{
+		'value':"Sum Meades"
+		}
+		],
+
+	'field_moive_poster':[
+		{
+		'target_id':"2",
+		'alt':"american beauty",
+		'title':"",
+		'width':"214",
+		'height':"317",
+		'url':"image/America beauty.jpg"
+		}
+		],
+	'field_genres':[
+		{
+		'value':'Comedy'
+		},
+		{
+		'value':'Drama'
+		}
+		]
+}
+]

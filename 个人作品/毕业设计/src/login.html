@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <title>斗鱼云音乐</title>
+    <!-- js响应式代码 -->
+    <script>
+     document.getElementsByTagName("html")[0].style.fontSize = window.innerWidth / 3.2 + "px";
+        (function(doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function() {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    docEl.style.fontSize = 100 * (clientWidth / 320) + 'px';
+                };
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <link rel="stylesheet" href="css/reset/cube.min.css">
+    <!-- 公共重置样式 -->
+    <link rel="stylesheet" href="css/bug/bug.css">
+    <link rel="stylesheet" href="css/login.css">
+    <style>
+    html {
+        font-size: 31.25vw;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <div class="tab-wrap">
+                <div class="logo-tab">
+                    <div :class="{'current':btntab}"></div>
+                    <div :class="{'current':!btntab}"></div>
+                </div>
+                <!-- <span class="tips"><i>*</i>为必填项</span> -->
+            </div>
+        </header>
+        <section>
+            <span class="icon-yinlee17d83"></span>
+            <span class="title">斗鱼云音乐</span>
+            <template v-if="btntab==true">
+                <div class="form">
+                    <em class="icon-yonghuming"></em>
+                    <label>用户名</label>
+                    <input class="form-list form-list-diff" v-model="mobile.data" type="text" placeholder="{{mobile.placeholder||constText[0]}}" @click="reset(mobile)" :class="{'error':mobile.error}">
+                    <span>﹡</span>
+                </div>
+                <div class="form">
+                    <em class="icon-youxiang"></em>
+                    <label>邮箱</label>
+                    <input class="form-list" type="text" v-model="email.data" type="text" placeholder="{{email.placeholder||constText[3]}}" @click="reset(email)" :class="{'error':email.error}">
+                    <span>﹡</span>
+                </div>
+            </template>
+            <template v-if="btntab==false">
+                <div class="form">
+                    <em class="icon-yonghuming"></em>
+                    <label>用户名</label>
+                    <input class="form-list" type="text" v-model="username.data" type="number" placeholder="{{username.placeholder||constText[2]}}" @click="reset(username)" :class="{'error':username.error}">
+                    <span>﹡</span>
+                </div>
+                <div class="form">
+                    <em class="icon-mima"></em>
+                    <label>密码</label>
+                    <input class="form-list" type="password" v-model="passwdlogin.data" placeholder="{{passwdlogin.placeholder||constText[1]}}" @click="reset(passwdlogin)" :class="{'error':passwdlogin.error}">
+                    <span>﹡</span>
+                </div>
+            </template>
+            <template v-if="btntab==true">
+                <div class="form">
+                    <em class="icon-mima"></em>
+                    <label>密码</label>
+                    <input class="form-list" type="password" v-model="passwdreg.data" placeholder="{{passwdreg.placeholder||constText[1]}}" @click="reset(passwdreg)" :class="{'error':passwdreg.error}">
+                    <span>﹡</span>
+                </div>
+                <div class="form">
+                    <em class="icon-querenmima"></em>
+                    <label>确认密码</label>
+                    <input class="form-list" type="password" v-model="twicepass.data" placeholder="{{twicepass.placeholder||constText[4]}}" @click="reset(twicepass)" :class="{'error':twicepass.error}">
+                    <span>﹡</span>
+                </div>
+            </template>
+        </section>
+        <footer>
+            <div class="footer">
+                <div class="login-res">
+                    <div>
+                        <input type="button" :class="{'active':btntab}" value="登陆" v-on:click="login">
+                    </div>
+                    <div>
+                        <input type="button" :class="{'active':!btntab}" value="注册" v-on:click="register">
+                    </div>
+                </div>
+                <template v-if="btntab==false">
+                    <div class="third-logo">
+                        <i>----------</i><span>第三方登陆</span><i>----------</i>
+                    </div>
+                    <div class="thirdparty">
+                        <p><span class="icon-qq"></span></p>
+                        <p><span class="icon-weixin"></span></p>
+                        <p><span class="icon-weibo"></span></p>
+                    </div>
+                </template>
+            </div>
+        </footer>
+    </div>
+    <script src="script/libs/vue.min.js"></script>
+    <script src="script/libs/vue-resource.min.js"></script>
+    <script src="script/views/js/common.js"></script>
+    <script>
+    (function() {
+        var data = {
+            mobile: {
+                data: "",
+                placeholder: "",
+                error: false
+            },
+            username: {
+                data: "",
+                placeholder: "",
+                error: false
+
+            },
+            passwdlogin: {
+                data: "",
+                placeholder: "",
+                error: false
+            },
+            passwdreg: {
+                data: "",
+                placeholder: "",
+                error: false
+            },
+            twicepass: {
+                data: "",
+                placeholder: "",
+                error: false
+            },
+            email: {
+                data: "",
+                msg: '获取验证码',
+                status: true,
+                placeholder: "",
+                error: false
+            },
+            //是否自动登陆
+            auto: false,
+            //placeholder默认值
+            constText: ["请输入您的用户名", "输入您的密码", '请填写您的用户名', '请填写您的邮箱', '请再次输入您的密码'],
+            //用户登陆按钮状态
+            loginBtn: false,
+            //登录注册切换按钮
+            btntab: false,
+            flag: true
+        };
+        var APP = new Vue({
+            el: '#app',
+            data: data,
+            http: httpHeader,
+            ready: function() {
+
+            },
+            computed: {
+                sendData: function() {
+                    return {
+                        mobile: this.username.data,
+                        passwd: this.passwdlogin.data
+                    }
+                },
+                registerData: function() {
+                    return {
+                        username: this.mobile.data,
+                        passwd: this.passwdreg.data,
+                        email: this.email.data
+                    }
+                }
+            },
+            methods: {
+                login: function() {
+                    this.btntab = false;
+
+                    if (this.flag) {
+
+                        var ischeck = this.check();
+                        console.log(ischeck);
+                    }
+                    this.flag = true;
+
+                    if (ischeck) {
+                        var _this = this;
+                        console.log(222222222222);
+                        // var url = config.getURL('usr_login');
+                        console.log(this.sendData);
+                        this.$http.post('login.php', this.sendData).then(
+                            //successCallback
+                            function(response) {
+                                var data = response.data;
+                                console.log(typeof data);
+                                if (typeof data == 'object') {
+                                    DP.strogeAll(data);
+                                    DP.set("islogin", true);
+                                    console.log(DP.get('id'));
+                                    window.location.href = './';
+                                } else {
+                                    layout.alert(data, 1000);
+
+                                }
+                            },
+                            //errorCallback
+                            function(response) {
+                                layout.alert();
+                            });
+                    }
+                },
+                register: function() {
+                    this.btntab = true;
+                    if (!this.flag) {
+                        var ischeck = this.check();
+                    }
+                    this.flag = false;
+                    if (ischeck) {
+                        var _this = this;
+                        console.log(222222222222);
+                        // var url = config.getURL('usr_login');
+                        console.log(this.registerData);
+                        this.$http.post('register.php', this.registerData).then(
+                            //successCallback
+                            function(response) {
+                                var data = response.data;
+                                console.log(typeof data);
+                                if (data === 0) {
+                                    layout.alert('恭喜你注册成功', 1000);
+                                    window.location.href = "login.html";
+                                } else {
+                                    layout.alert('该用户名已被注册', 1000);
+                                }
+                            },
+                            //errorCallback
+                            function(response) {
+                                layout.alert();
+                            });
+                    }
+
+                },
+                //获取手机验证码
+                getVCode: function() {
+                    if (/\d{11}/.test(this.mobile.data)) {
+                        //var url = config.getURL('usr_getvcode');
+                        var count = 60;
+                        var _this = this;
+                        if (this.code.status) {
+                            var timer = setInterval(function() {
+                                if (count <= 0) {
+                                    _this.code.status = true;
+                                    _this.code.msg = "获取验证码";
+                                    clearInterval(timer);
+                                } else {
+                                    _this.code.msg = count + "秒";
+                                    count--;
+                                }
+                            }, 1000);
+                        }
+                        this.code.status = false;
+                    } else {
+                        this.mobile.data = "";
+                        this.mobile.error = true;
+                        this.mobile.placeholder = "手机号码格式错误!";
+                    }
+                },
+                setError: function(key, msg) {
+                    this[key].data = "";
+                    this[key].error = (msg ? true : false);
+                    this[key].placeholder = msg;
+                },
+                reset: function(val) {
+                    val.placeholder = "";
+                    val.error = false;
+                },
+                check: function() {
+                    var status = true;
+                    if (this.btntab) {
+                        if (this.mobile.data == "") {
+                            this.setError('mobile', "用户名不能为空！");
+                            status = false;
+                        }
+                        if (this.email.data == "") {
+                            this.setError('email', "邮箱不能为空!");
+                            status = false;
+                        }
+                        if (this.twicepass.data == "") {
+                            this.setError('twicepass', "确认密码不能为空！");
+                            status = false;
+                        }
+                        if (this.passwdreg.data == "") {
+                            this.setError('passwdreg', "密码不能为空！");
+                            status = false;
+                        }
+                        var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+                        if (!reg.test(this.email.data)) {
+                            this.setError('email', "邮箱格式不正确!");
+                            status = false;
+                        }
+                        if (this.passwdreg.data.length < 6 || this.passwdreg.data.length > 16) {
+                            this.passwdreg.error = this.twicepass.error = true;
+                            this.passwdreg.data = this.twicepass.data = "";
+                            this.passwdreg.placeholder = this.twicepass.placeholder = "密码长度应为6-16位!";
+                            status = false;
+                        }
+                        if (this.passwdreg.data != this.twicepass.data) {
+                            this.passwdreg.error = this.twicepass.error = true;
+                            this.passwdreg.data = this.twicepass.data = "";
+                            this.passwdreg.placeholder = this.twicepass.placeholder = "两次输入密码不一致!";
+                            status = false;
+                        }
+                        this.setError('passwdlogin', "");
+                        this.setError('username', "");
+
+
+
+
+                    } else {
+                        if (this.passwdlogin.data == "") {
+                            this.setError('passwdlogin', "密码不能为空！");
+                            status = false;
+                        }
+                        if (this.username.data == "") {
+                            this.setError('username', "用户名不能为空！");
+                            status = false;
+                        }
+                        this.setError('mobile', "");
+                        this.setError('email', "");
+                        this.setError('twicepass', "");
+                        this.setError('passwdreg', "");
+
+                    }
+                    return status;
+                }
+            }
+
+        });
+
+
+    }());
+    </script>
+</body>
+
+</html>

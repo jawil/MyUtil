@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+.div1{width:100px;height:100px;position:absolute;background:red;}
+
+</style>
+
+</head>
+
+<body>
+11111
+<div class="div1" id="div2">
+<script language="javascript">
+var oDiv=document.getElementById('div2');
+oDiv.onmousedown=function (ev){
+	var ev=ev||event;
+	var disX=ev.clientX-this.offsetLeft;
+	var disY=ev.clientY-this.offsetTop;
+	document.onmousemove=function(ev){
+		var ev=ev||event;
+		oDiv.style.left=ev.clientX-disX+'px';
+		oDiv.style.top=ev.clientY-disY+'px';
+	}
+	document.onmouseup=function(){
+		document.onmousemove=document.onmouseup=null;
+		}
+	}
+</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<script language="javascript">
+
+var arr=[25,45,26,96,254,90,4,6,84,27,66,88];
+
+function qsort(arr){
+	if(arr.length<=1){
+		return arr;
+	}
+	//var flag=arr[Math.floor(arr.length/2)];
+	var num=Math.floor(arr.length/2);
+	var flag=arr.splice(num,1);
+	var arr1=[];
+	var arr2=[];
+	for(var i=0;i<arr.length;i++){
+	if(arr[i]<flag){
+	arr1.push(arr[i]);	
+	}
+	else{
+		arr2.push(arr[i]);
+	}
+	}
+	return qsort(arr1).concat(flag,qsort(arr2));
+		
+}
+
+
+
+
+ alert(qsort(arr));
+	
+	
+	
+
+
+</script>
+</body>
+</html>

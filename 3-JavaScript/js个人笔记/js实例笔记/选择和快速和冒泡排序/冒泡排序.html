@@ -1,0 +1,32 @@
+<html>
+<head>
+
+</head>
+<body>
+<script language="javascript">
+var arr=[2,1,3,4,10,8,7,9];
+var temp=0;
+var flag=false;
+for(var i=0;i<arr.length-1;i++){
+ document.writeln('×ÔÑ§Ç°¶Ë'+'&nbsp;');
+	for(var j=0;j<arr.length-i-1;j++){
+		if(arr[j]>arr[j+1]){
+			temp=arr[j];
+			arr[j]=arr[j+1];
+			arr[j+1]=temp;
+			flag=true;
+
+		}
+	}
+	if(flag){
+		flag=false;
+	}else{
+		break;
+	}
+}
+	for(var k=0;k<arr.length;k++){
+  document.writeln(arr[k]+'&nbsp;');
+	}
+</script>
+</body>
+</html>

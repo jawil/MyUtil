@@ -1,0 +1,106 @@
+<script>
+1通过vue.js的vm.$get('expression')来实现不同组件的数据利用
+
+
+①vm.$get('expression'):
+
+参数：
+{String} expression
+用法：
+
+从 Vue 实例获取指定表达式的值。如果表达式抛出错误，则取消错误并返回 undefined。
+
+示例：
+
+var vm = new Vue({
+  data: {
+    a: {
+      b: 1
+    }
+  }
+})
+vm.$get('a.b') // -> 1
+vm.$get('a.b + 1') // -> 2
+
+
+自己的例子,实践
+
+ <div id="test">
+    </div>
+    <div id="test2">
+    </div>
+    var vm = new Vue({
+        el: '#test',
+        data: {
+            a: 4
+        }
+    })
+
+  console.log(vm.$get('a'));输出4
+    var vm2 = new Vue({
+        el: '#test2',
+        data: {
+            b: 8
+        },
+        ready: function() {
+            this.getNumber();
+        },
+        methods: {
+            getNumber: function() {
+
+                console.log(vm.$get('a'));还是输出4
+            }
+        }
+
+
+    });
+
+
+②vm.$set('keypath','value')
+参数：
+
+{String} keypath
+{*} value
+用法：
+
+设置 Vue 实例的属性值。多数情况下应当使用普通对象语法，如 vm.a.b = 123。这个方法只用于下面情况：
+
+使用 keypath 动态地设置属性。
+
+设置不存在的属性。
+
+如果 keypath 不存在，将递归地创建并建立追踪。如果用它创建一个顶级属性，实例将被强制进入“ digest 循环”，在此过程中重新计算所有的 watcher。
+
+示例：
+
+var vm = new Vue({
+  data: {
+    a: {
+      b: 1
+    }
+  }
+})
+
+// keypath 存在
+vm.$set('a.b', 2)
+vm.a.b // -> 2
+// keypath 不存在
+vm.$set('c', 3)
+vm.c // ->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>

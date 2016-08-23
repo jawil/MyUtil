@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta name="renderer" content="webkit">
+      <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/>
+      <meta charset="utf-8">
+      <title>
+        vue vs jquery
+      </title>
+      <link rel="stylesheet" type="text/css" href="../common.css"/>
+      <link rel="stylesheet" type="text/css" href="../reset.css"/>
+      <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+      <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+      <style>
+        /*注册流程vue*/
+        body{ background: #f9f9f9; color: #666; }
+        .tc{ text-align: center; }
+        .c_b{ zoom:1; }
+        .pb15, .inputbg{ padding-bottom: 15px; }
+        .pb40{ padding-bottom:40px; }
+        .c_b:before, .c_b:after{ content: ""; display: block; }
+        .cb:after{ clear:both; }
+        .layout{ width:960px; margin:0 auto; }
+        .n-frame{ border: 1px solid #e6e6e6; background: #fff; padding: 34px 34px 0; border-radius: 10px; min-height: 400px; _height: 400px; }
+        .title-item{ padding-bottom: 10px; border-bottom: 1px solid #e6e6e6; margin-bottom: 20px; clear: both; }
+        .dis_bot35{ padding-bottom: 35px; }
+        .title-big, .title-biger{ font-size: 16px; color: #333; line-height: 1.5; font-weight: bold; }
+        .title-big{ font-size:18px; }
+        .device-frame .title-item{ margin-bottom: 0; }
+        .mauto, .regbox{ margin:0 auto; }
+        .regbox{ width: 332px; padding: 30px 0; line-height: 20px; }
+        .listwrap{ margin-bottom: 15px; position: relative; }
+        div#reg-phone-select-cty{ height: 40px; padding-left: 14px; line-height: 40px; display: inline-block; vertical-align: middle; border: 1px solid #e8e8e8; -o-border-radius: 4px; border-radius: 4px; color: #555; cursor: pointer; }
+        .tits tt{ float: left; width: 275px; border-right: 1px solid #e8e8e8; cursor: pointer; }
+        .icon_cirarr{ float: right; background: url(../images/icon_user.png); width: 16px; height: 16px; margin: 11px 12px 0 12px; }
+        .labelbox{ height: 40px; line-height: 40px; display: inline-block; }
+        .labelbox input{ height: 20px; line-height: 20px; padding: 10px; display: inline-block; }
+        .inputbg input{ width: 310px; height: 20px; line-height: 20px; }
+        .labelbox, .tits_list, .borderbox{   border: 1px solid #e8e8e8; -o-border-radius: 4px; border-radius: 4px; }
+        .inputcode .code{ width:170px; }
+        .chkcode_img{ margin-left: 7px; vertical-align: middle; cursor: pointer; }
+        .btn332{ width: 330px; height: 42px; margin: 0 auto; line-height: 42px; text-align: center; font-size: 14px; display: block; cursor: pointer; border: 1px solid #e8e8e8; -o-border-radius: 4px; border-radius: 4px; }
+        .btn_reg_1{ background-color: #ff6f3d; margin-top: 15px; border: 1px solid rgba(186,186,186,0.3); color: #fff; }
+        .btn_reg_1:hover{ background: #ff936a; }
+        .btn_reg_2{ background: #fff; margin-top: 10px; border: 1px solid #ddd;color: #7c7c7c; }
+        .btn_reg_2:hover{ color: #333; }
+        .step2{ padding-top:20px; }
+        .step2 .step2_txt{ padding-bottom: 10px; }
+        .step2 .step2_txt p{ padding-bottom: 10px; }
+        .inputcode .resendcode{ width: 190px; width: 185px\9; max-width: 260px; }
+        .remain{ margin-left: 8px; vertical-align: middle; display: inline-block; height: 40px; line-height: 40px; border: 1px solid #e8e8e8; -o-border-radius: 4px; border-radius: 4px; }
+        .remain a{ color: #000; cursor: pointer; padding: 0px 10px; display: block; }
+        .remain a:hover{ background: #ececec !important; color: #888; }
+        .regagabox{ padding-bottom:30px; }
+        .confirm_box{ padding-bottom: 10px; font-size: 14px;color: #333; }
+        .single_imgarea{ text-align: center; }
+        .marauto{ margin:0 auto;}
+        .cursor_d{ cursor: default; }
+        .na-img-area{ width: 80px; height: 80px; border: 2px solid #e3e3e3; border-radius: 50%; padding: 4px; background: #fff; position: relative; z-index: 4; cursor: pointer; }
+        .na-img-bg-area{ background: url(../images/n-avator-bg.png) 0 0 no-repeat; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; }
+        .single_imgarea .us_name{ padding-top:10px; }
+        .step3 dt{ margin:15px 0px; }
+        .n_succ img{ margin:58px 0 14px; }
+        .n_succ .fixed_bot{ margin: 45px auto 30px; }
+        .demo-panel{ margin-bottom: 20px; }
+        .demo-panel h1{ font-size:18px; margin:10px; }
+        .radius-btn.active{ background-color:#ddd; }
+        /*注册流程1： 1.1版本 */
+        .process-regs{ margin:10px 10px auto; width:80%; padding:10px; color:#fff; text-align:center; line-height: 100px; }
+        .process-reg{ float:left; width:150px; height:100px; margin:10px 10px; background-color:#ccc; }
+        .process-reg.active{ background-color:#FF6F3D; }
+        .btn-radius{ display:none; border-radius: 5px; cursor:pointer; padding:5px; margin: 5px; background-color: #eee; }
+        .btn-radius:hover{ background-color:#ddd; }
+        .btn-radius.active{ display: block; }
+        .fix{ *zoom:1; }
+        .fix:after,.fix:before{ display:block; content:"clear"; height:0; clear:both; overflow:hidden; visibility:hidden; }
+        /*购物列表2*/
+        .buy-list{ font-size:14px; margin:10px 20px; width:450px; height:400px; border:1px solid #ccc; }
+        .buy-list fieldset{ font-size:16px; border-bottom:1px solid #ccc; }
+        .buy-list legend{ padding:10px; }
+        .buy-list ul{ margin-bottom:40px; padding:20px; }
+        .buy-list li{ margin:15px 0px; height:30px; }
+        .buy-list .buy-list-f{ float:right; margin:0px 20px; }
+        .buy-list-f .good-total{ float:left; margin:20px; color:red; }
+        .buy-list .good-label{ margin:0px 20px; }
+        .buy-list .good-set{ float:right; }
+        .good-set .set-min,
+        .good-set .set-count,
+        .good-set .set-add{ padding:5px; float:left; }
+        .good-set .set-min{ border:1px solid #ccc; border-right:0px; }
+        .good-set .set-count{ border:1px solid #ccc; width:5em; text-align:center; }
+        .good-set .set-add{ border:1px solid #ccc; border-left:0px; }
+        .buy-list .confirm-list-f{ margin:0px 20px; }
+        .confirm-list-f .btn-l{ float:left; }
+        .confirm-list-f .btn-r{ float:right; }
+        .buy-list .con-l-label{ margin-right: 40px; }
+        .buy-list .con-l-count{ font-size:16px; font-weight: bold; }
+        .buy-list .con-l-total{ text-align:right; padding:10px 20px; }
+        .buy-list-tip{ text-align:center; }
+        .buy-list-tip .tip-img{ margin:20px 0px; }
+        /*表单 demo*/
+        .speeddial{ width: 177px; height: 160px; cursor: pointer; margin:15px; overflow: hidden; background-color: rgba(255,255,255,.2); -webkit-transition: left .3s,top .3s; box-shadow: 0 6px 5px rgba(0,0,0,.1),0 2px 2px rgba(0,0,0,.1); opacity: 1; border-radius: 4px; background-position: 50%; background-size: cover; background-repeat: no-repeat; background-origin: border-box;}
+        .add-btn{ display: inline-block; background: rgba(228,233,233,.45); color: #d1d5d5; text-align: center; font-size: 75px; line-height: 148px; }
+        .speeddial .speeddial-inner{ width: 100%; height: 100%; background-size: cover; border-radius: 4px;}
+        .speeddial:hover{ color: #ff8000;-webkit-transform: scale(1.02) translateZ(0);}
+        .bs-example{ display:inline-block; width:480px; position: relative;padding: 25px 15px 15px;margin: 15px;border-color: #e5e5e5 #eee #eee;border-style: solid;border-width: 1px; border-radius: 4px 4px 0 0; }
+        .form-demo{ box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
+        .form-group{ margin-bottom: 15px; }
+        .form-demo label{ display: inline-block; max-width: 100%; margin-bottom: 5px; font-weight: 700; }
+        .form-control{ box-sizing: border-box; display: block; width: 100%; height: 34px; padding: 6px 12px; font-size: 14px;line-height: 1.42857143;color: #555;background-color: #fff;background-image: none;border: 1px solid #ccc; border-radius: 4px;-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);box-shadow: inset 0 1px 1px rgba(0,0,0,.075);-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; }
+        .form-control:focus{border-color: #66afe9;outline: 0;-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);}
+        .btn{display: inline-block;padding: 6px 12px;margin-bottom: 0;font-size: 14px;font-weight: 400;line-height: 1.42857143;text-align: center;white-space: nowrap;vertical-align: middle;-ms-touch-action: manipulation;touch-action: manipulation;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;background-image: none;border: 1px solid transparent;border-radius: 4px;}
+        .btn-default{color: #333;background-color: #fff;border-color: #ccc;}
+        .btn-default:hover{color: #333;background-color: #e6e6e6;border-color: #adadad;}
+        .bs-example-wrap{ display: inline-block; }
+        .bs-example-wrap-v{ display: block; width:1115px; text-align:justify; }
+        .add-btn-wrap{ display:inline-block; width:480px; padding: 25px 15px 15px 0px;margin: 15px 15px 15px 0px;}
+        .bs-example-block{ display: block; }
+        .result-form-panel{ border: 1px solid #ddd; text-align:center; padding:10px; margin:10px auto; width:90%; }
+        .table-h{ color: blue; font-weight: bold; }
+        .table-h td{ width:20%; }
+        .result-form-panel table{ width:100%; border:1px solid #ccc; border-collapse: collapse; }
+        .result-form-panel tr{ line-height: 2em; border: 1px solid #ccc; }
+        .result-form-panel tr:hover{ background-color: #f5f5f5; }
+        .result-form-panel td{ padding-left:10px; border-left: 1px solid #ccc; }
+        td:first-child{ border-left: 0px; }
+        .sex-radios label{ margin: 0px 15px 0px 0px; }
+      </style>
+    </head>
+
+    <body> 
+      <div class="btn-list">
+        <button class="radius-btn" v-on="click: showType = 1" v-class="active:showType == 1">注册流程(vue)</button>
+        <button class="radius-btn" v-on="click: showType = 1.1" v-class="active:showType == 1.1">注册流程(jq)</button>
+        <button class="radius-btn" v-on="click: showType = 2" v-class="active:showType == 2">购物列表(vue)</button>
+        <button class="radius-btn" v-on="click: showType = 2.1" v-class="active:showType == 2.1">购物列表(jq)</button>
+        <button class="radius-btn" v-on="click: showType = 3" v-class="active:showType == 3">提交表单(vue)</button>
+        <button class="radius-btn" v-on="click: showType = 3.1" v-class="active:showType == 3.1">提交表单(jq)</button>
+      </div>
+
+      <div class="demo-panel" v-show="showType == 1">
+        <h1 class="register-demo">1.注册流程(vue)</h1>
+        <!-- 注册流程 -->
+        <div class="layout">
+          <div class="n-frame">
+            <div class="title-item dis_bot35 t_c">
+              <h4 class="title-big">注册账号</h4>
+            </div>
+            <div>
+              <!-- 步骤1 -->
+              <div class="regbox" v-show="demo1.step == 1">
+                <div class="phone_step1">
+                  <div class="listwrap" id="select-cycode">
+                    <div class="listtit" id="reg-phone-select-cty">
+                      <span class="tits dis_box c_b">
+                        <tt id="select-cycode-result">中国+86</tt>
+                        <i class="icon_cirarr"></i>
+                      </span>
+                    </div>
+                    <div></div>
+                  </div>
+                  <div class="inputbg pb15">
+                    <label class="labelbox" for>
+                      <input type="tel" name="phone" value="135XXXXXXXX" data-type="PH" placeholder="请输入手机号码">
+                    </label>
+                  </div>
+                  <div class="inputbg inputcode dis_box">
+                    <label class="labelbox">
+                      <input class="code" type="text" name="icode" value="vc6qu3" autocomplete="off" placeholder="图片验证码">
+                    </label>
+                    <img alt="图片验证码" title="看不清换一张" class="chkcode_img" src="../images/miCode.jpg">
+                  </div>
+                  <div>
+                    <input class="btn332 btn_reg_1" id="submit-step" data-to="phone-step2" type="submit" value="立即注册" v-on="click: demo1.step = 2">
+                  </div>
+                </div>
+              </div>
+              <!-- 步骤2 -->
+              <div class="regbox" v-show="demo1.step == 2">
+                <div class="step2 phone_step2">
+                  <div class="step2_txt">
+                    <p>我们已经发送一条验证短信至 <span class="address-place">+852 135XXXXXXXX</span></p>
+                    <p>请输入短信中的验证码</p>
+                  </div>
+                  <div class="inputbg inputcode dis_box">
+                    <label class="labelbox wap_resend_label">
+                      <input class="resendcode" type="text" placeholder="请输入验证码" value="3344" name="ticket">
+                    </label>   
+                    <span class="remain"><a class="color333 send-status" href="javascript:void(0)">重新发送</a></span>
+                  </div>
+                  <div class="fixed_bot mar_phone_dis2">
+                    <input class="btn332 btn_reg_1  submit-step" type="submit" value="下一步" v-on="click: demo1.step = 3" />
+                    <input class="btn332 btn_reg_2  change-view" data-to="phone-step1" type="button" value="返回" v-on="click:demo1.step = 1" />
+                  </div>
+                </div>
+              </div>
+              <!-- 步骤3 -->
+              <div class="regbox" v-show="demo1.step == 3">
+                <div class="regagabox phone-confirm">
+                  <div class="confirm_box">
+                    <div class="single_imgarea">
+                      <div class="na-img-area marauto cursor_d">
+                        <div class="na-img-bg-area us-portraitUrl"></div>
+                      </div>
+                      <p class="us_name us-userName">xxdxxdx</p>
+                      <p class="us_id us-userId">277XX55</p>
+                    </div>
+                    <div class="pt10 pb40 t_c">这个帐号是你的吗？</div>
+                  </div>
+                  <div class="fixed_bot">
+                    <a class="btn332 btn_reg_2 submit-token-login" href="javascrip:void(0);" v-on="click: demo1.step = 6">是我的，直接登录</a>
+                    <input class="btn332 btn_reg_2  change-view" data-to="phone-step3" data-source="tokenRegister" type="button" value="不是我的，注册新帐号" v-on="click:demo1.step = 4" />
+                  </div>
+                </div>
+              </div>
+              <!-- 步骤4 -->
+              <div class="regbox" v-show="demo1.step == 4">
+                <div class="step3 phone_step3">
+                  <dl>
+                    <dt>
+                      <h4>
+                        您注册的手机号为<span class="register-ph-num">13535XXXXXXX</span>
+                      </h4>
+                      <h4>请设置您的密码：</h4>
+                    </dt>
+                    <dd>
+                      <div class="inputbg">
+                        <label class="labelbox" for="">
+                          <input class="set-password" type="password" data-error=".error-password" name="password" placeholder="请输入密码" value="123" />
+                        </label>
+                      </div>
+                    </dd>
+                    <dd>
+                      <div class="inputbg">
+                        <label class="labelbox" for="">
+                          <input name="repassword" type="password" data-repeat=".set-password" data-error=".error-password" placeholder="请输入确认密码" value="123"/>
+                        </label>
+                      </div>
+                    </dd>
+                  </dl>
+                  <div class="fixed_bot mar_phone_dis3">
+                    <input class="btn332 btn_reg_1 submit-step" type="submit" value="提交" v-on="click: demo1.step = 5" />
+                  </div>
+                </div>
+              </div>
+              <!-- 步骤5 -->
+              <div class="regbox" v-show="demo1.step == 5">
+                <div class="phone_step4">
+                  <div class="t_c n_succ">
+                    <img class="dis_none" width="68" height="68" src="../images/succ.jpg" alt="">
+                    <h4>注册成功! </h4>
+                    <div class="fixed_bot mar_phone_dis4">
+                      <a class="btn332 btn_reg_1 login-redirect" v-on="click:demo1.step=6" href="javascript:void(0);">
+                        登录
+                      </a>
+                    </div>
+                  </div>  
+                </div>
+              </div>
+              <!-- 步骤6 -->
+              <div class="regbox" v-show="demo1.step == 6">
+                <div class="phone_step4">
+                  <div class="t_c n_succ">
+                    <img class="dis_none" width="68" height="68" src="../images/succ.jpg" alt="">
+                    <h4>登陆成功! </h4>
+                    <div class="fixed_bot mar_phone_dis4">
+                      <a class="btn332 btn_reg_1 login-redirect" v-on="click:demo1.step=1" href="javascript:void(0);">
+                        返回注册
+                      </a>
+                    </div>
+                  </div>  
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-panel" v-show="showType == 1.1" id="regDemo" >
+        <h1>1.1注册流程（jq） </h1>
+        <div class="process-regs fix">
+          <div class="process-reg active" id="proReg1">填写手机号</div>
+          <div class="process-reg" id="proReg2" >输入验证码</div>
+          <div class="process-reg" id="proReg3" >设置密码</div>
+          <div class="process-reg" id="proReg4" >立即注册</div>
+        </div>
+
+        <div class="btn-list">
+          <button class="active btn-radius" id="stepBtn1" >提交手机号</button>
+          <button class="btn-radius" id="stepBtn2" >提交验证码</button>
+          <button class="btn-radius" id="stepBtn3" >提交密码</button>
+          <button class="btn-radius" id="stepBtn4" >确认注册成功</button>
+        </div>
+      </div>
+      
+      <div class="demo-panel" v-show="showType == 2">
+        <h1 class="buy-list-demo">2.购物列表(vue)</h1>
+        <form class="buy-list" v-show="demo2.step == 1">
+          <fieldset>
+            <legend>购物车列表</legend>
+          </fieldset>
+
+          <ul>
+            <li v-repeat="good in demo2.goodList" data-price="{{good.price}}">
+              <input type="checkbox" v-model="good.selected" name="{{good.id}}" class="sel_box" />
+              <label class="good-label">{{good.name}}</label>
+              <label>{{good.price}}元</label>
+              <div class="good-set">
+                <a href="javascript:void(0);" class="set-min" v-show="good.count <= 1">&nbsp;</a>
+                <a href="javascript:void(0);" class="set-min" v-show="good.count > 1" v-on="click: minGoodCount($index)">-</a>
+                <input type="text" v-model="good.count" v-on="blur: editCount(good)" class="set-count" />
+                <a href="javascript:void(0);" class="set-add" v-on="click: addGoodCount($index)">+</a>
+              </div>
+            </li>
+          </ul>
+
+           <div class="buy-list-f">
+              <div class="good-total" v-text="demo2.totalPrice | formatPrice">0.00</div>
+              <button class="radius-btn" v-on="click: confirmOrder(event)">去支付</button>
+          </div>  
+        </form>
+        <form class="buy-list" v-show="demo2.step == 2">
+          <fieldset>
+            <legend>确认订单</legend>
+          </fieldset>
+
+          <ul>
+            <li v-repeat="good in demo2.selectedList">
+              <span class="con-l-label" v-text="good.name"></span> <span class="con-l-label">${{good.price}}</span> 
+              X<span class="con-l-count" v-text="good.count"></span>
+            </li>
+            <p class="con-l-total">总价格 ￥<span v-text="demo2.totalPrice"></span></p>
+          </ul>
+          <div class="confirm-list-f">
+              <button class="radius-btn btn-l" v-on="click: goBack()">返回</button>
+              <button class="radius-btn btn-r" v-on="click: submitOrder()">提交订单</button>
+          </div>  
+        </form>
+        <div class="buy-list buy-list-tip" v-show="demo2.step == 3">
+          <div class="tip-img"><img class="dis_none" width="68" height="68" src="../images/succ.jpg" alt=""></div>
+          <span>提交订单成功！</span>
+          <button class="radius-btn btn-l" v-on="click: goBack()">返回</button>
+        </div>
+      </div>
+
+      <div class="demo-panel" v-show="showType == 2.1">
+        <h1 class="buy-list-demo">2.1购物列表(jq)</h1>
+        <form class="buy-list" id="buyStep1">
+          <fieldset>
+            <legend>购物车列表</legend>
+          </fieldset>
+
+          <ul>
+            <li data-price="45" data-gId="good1">
+              <input type="checkbox" class="sel_box" />
+              <label class="good-label">商品1</label>
+              <label>45元</label>
+              <div class="good-set">
+                <a href="javascript:void(0);" class="set-min">&nbsp;</a>
+                <input type="text" class="set-count" value="1" />
+                <a href="javascript:void(0);" class="set-add">+</a>
+              </div>
+            </li>
+            <li data-price="56" data-gId="good2">
+              <input type="checkbox" class="sel_box"/>
+              <label class="good-label">商品2</label>
+              <label>56元</label>
+              <div class="good-set">
+                <a href="javascript:void(0);" class="set-min">&nbsp;</a>
+                <input type="text" class="set-count" value="1" />
+                <a href="javascript:void(0);" class="set-add">+</a>
+              </div>
+            </li>
+            <li data-price="30" data-gId="good3">
+              <input type="checkbox" class="sel_box" />
+              <label class="good-label">商品3</label>
+              <label>30元</label>
+              <div class="good-set">
+                <a href="javascript:void(0);" class="set-min">&nbsp;</a>
+                <input type="text" class="set-count" value="1" />
+                <a href="javascript:void(0);" class="set-add">+</a>
+              </div>
+            </li>
+          </ul>
+
+           <div class="buy-list-f">
+              <div class="good-total">0.00</div>
+              <button class="radius-btn" id="goBuy">去支付</button>
+          </div>  
+        </form>
+        <form class="buy-list" id="buyStep2">
+          <fieldset>
+            <legend>确认订单</legend>
+          </fieldset>
+
+          <ul>
+            <li>
+              <span class="con-l-label">商品2</span> <span class="con-l-label">$45</span> 
+              X<span class="con-l-count">3</span>
+            </li>
+            <li>
+              <span class="con-l-label">商品3</span> <span class="con-l-label">$75</span> 
+              X<span class="con-l-count">2</span>
+            </li>
+          </ul>
+          <div class="confirm-list-f">
+              <button class="radius-btn btn-l goBack">返回</button>
+              <button class="radius-btn btn-r" id="submitOrder">提交订单</button>
+          </div>  
+        </form>
+        <div class="buy-list buy-list-tip" id="buyStep3">
+          <div class="tip-img"><img class="dis_none" width="68" height="68" src="../images/succ.jpg" alt=""></div>
+          <span>提交订单成功！</span>
+          <button class="radius-btn btn-l goBack">返回</button>
+        </div>
+      </div>
+
+      <div class="demo-panel form-demo" v-show="showType == 3">
+        <div class="add-form-panel" v-show="demo3.step == 1">
+          <p>登高参赛报名申请， 提交表单：1~3；超过一张表单提交的成员会成为一队，不足3人则与其他队伍随机匹配</p>
+          <h1 class="form-demo">3提交表单(vue)</h1>
+          <div class="bs-example-wrap-v">
+            <div class="bs-example" v-repeat="formData in demo3.formList">
+              <form id="bsForm1">
+                <div class="form-group">
+                  <label for="name">姓名:</label>
+                  <input class="form-control" v-model="formData.userName" name="userName" placeholder="填写姓名">
+                </div>
+                <div class="form-group">
+                  <label for="sex">性别:</label>
+                  <div class="sex-radios">
+                    <label>
+                      <input type="radio" name="sex" value="男" v-model="formData.sex" checked>
+                      男
+                    </label>
+                    <label>
+                      <input type="radio" name="sex" value="女" v-model="formData.sex">
+                      女
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>工号:</label>
+                  <input class="form-control" name="jobId" v-model="formData.jobId" placeholder="填写工号">
+                </div>
+                <div class="form-group">
+                  <label>身份证号:</label>
+                  <input class="form-control" name="userId" v-model="formData.userId" placeholder="填写身份证">
+                </div>
+                <div class="form-group">
+                  <label>手机号:</label>
+                  <input class="form-control" name="mobile" v-model="formData.mobile" placeholder="填写手机号">
+                </div>
+              </form>
+            </div>
+            
+            <div class="add-btn-wrap" v-show="demo3.formList.length < 3">
+              <div class="speeddial  add-btn" title="新增表单" v-on="click: addForm()">
+                <div class="speeddial-inner">
+                  <div class="addBtn-icon">+</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <input class="btn332 btn_reg_1" readonly="true" value="提交" v-on="click: demo3.step = 2">
+          </div>
+        </div>
+        <div class="result-form-panel" v-show="demo3.step == 2">
+          <h1>提交成功</h1>
+          <table class="table-panel" id="table_2">
+            <tr class="table-h">
+              <td>姓名</td>
+              <td>性别</td>
+              <td>工号</td>
+              <td>身份证</td>
+              <td>手机号</td>
+            </tr>
+            <tr class="user-tr" v-repeat="formData in demo3.formList">
+              <td v-text="formData.userName"></td>
+              <td v-text="formData.sex"></td>
+              <td v-text="formData.jobId"></td>
+              <td v-text="formData.userId"></td>
+              <td v-text="formData.mobile"></td>
+            </tr>
+          </table>
+
+          <div>
+            <input class="btn332 btn_reg_1" readonly="true" v-on="click: demo3.step = 1" value="返回">
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-panel form-demo" id="formDemo" v-show="showType == 3.1">
+        <div class="add-form-panel" id="addFormPanel">
+          <p>登高参赛报名申请， 提交表单：1~3；超过一张表单提交的成员会成为一队，不足3人则与其他队伍随机匹配</p>
+          <h1 class="form-demo">3.1提交表单(jq)</h1>
+          <div class="bs-example-wrap">
+            <div class="bs-example" data-no="1">
+              <form id="bsForm1">
+                <div class="form-group">
+                  <label for="name">姓名:</label>
+                  <input class="form-control" name="userName" placeholder="填写姓名">
+                </div>
+                <div class="form-group">
+                  <label for="sex">性别:</label>
+                  <div class="sex-radios">
+                    <label>
+                      <input type="radio" name="sex" value="男" checked>
+                      男
+                    </label>
+                    <label>
+                      <input type="radio" name="sex" value="女">
+                      女
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>工号:</label>
+                  <input class="form-control" name="jobId" placeholder="填写工号">
+                </div>
+                <div class="form-group">
+                  <label>身份证号:</label>
+                  <input class="form-control" name="userId" placeholder="填写身份证">
+                </div>
+                <div class="form-group">
+                  <label>手机号:</label>
+                  <input class="form-control" name="mobile" placeholder="填写手机号">
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="speeddial  add-btn" title="新增表单">
+            <div class="speeddial-inner">
+              <div class="addBtn-icon">+</div>
+            </div>
+          </div>
+          <div>
+            <input class="btn332 btn_reg_1" id="subForm" readonly="true" value="提交">
+          </div>
+        </div>
+        <div class="result-form-panel" id="resultForm">
+          <h1>提交成功</h1>
+          <table class="table-panel" id="table_2">
+            <tr class="table-h">
+              <td>姓名</td>
+              <td>性别</td>
+              <td>工号</td>
+              <td>身份证</td>
+              <td>手机号</td>
+            </tr>
+          </table>
+          <div>
+            <input class="btn332 btn_reg_1" readonly="true" id="backForm" value="返回">
+          </div>
+        </div>
+      </div>
+
+      <script type="text/javascript" src="./vue.js"></script>
+      <script type="text/javascript" src="../utils/base.js"></script>
+      <!-- // <script type="text/javascript" src="../lib/jquery-1.8.3.min.js"></script> -->
+      <script type="text/javascript" src="../lib/jquery-1.10.2.min.js"></script>
+
+      <script type="text/javascript">
+        // 全局变量
+        var xq = {};
+
+        init();
+
+        function init() {
+          var vm = null;
+
+          // 阻止默认事件(原生js) 
+          function preventDefault(event) {
+            var event = EventUtil.getEvent();
+            EventUtil.preventDefault(event);
+            EventUtil.stopPropagation(event);
+            return false;
+          }
+
+          // 过滤器得写在 new 之前
+          Vue.filter('formatPrice', function (val) {
+            if ( (typeof val) != "number" ) {
+              return val;
+            } else {
+              return '$' + val.toFixed(2);
+            }
+          });
+          vm = new Vue({
+            el: 'body',
+            data: {
+              showType: 3,
+              demo1: {
+                'step': 1,
+                'regStep': 1
+              },
+              demo2: {
+                'step': 1,
+                goodList: [
+                  {'name':'商品1', 'price':'45', 'id':'good1', 'count': 1, 'selected': false},
+                  {'name':'商品2', 'price':'56', 'id':'good2', 'count': 1, 'selected': false},
+                  {'name':'商品3', 'price':'30', 'id':'good3', 'count': 1, 'selected': false}
+                ],
+                selectedList: [],
+                'totalPrice': 0
+              },
+              demo3: {
+                'step': 1,
+                formList: [{'userName':'', 'sex':'男', 'jobId':'', 'userId':'', 'mobile': ''}]
+              }
+            },
+            methods: {
+              addGoodCount: function(index){
+                var count = parseInt(this.demo2.goodList[index].count, 10);
+                this.demo2.goodList[index].count = count + 1;
+                if ( !this.demo2.goodList[index].selected ) {
+                  this.demo2.goodList[index].selected = true;
+                }
+              },
+              minGoodCount: function(index){
+                var count = parseInt(this.demo2.goodList[index].count, 10);
+                if (count <= 1) {
+                  return false;
+                }
+                count--;
+                this.demo2.goodList[index].count = count;
+                if ( !this.demo2.goodList[index].selected ) {
+                  this.demo2.goodList[index].selected = true;
+                }
+              },
+              editCount: function(good) {
+                if ( good.count == 0 || isNaN(Number(good.count)) ) {
+                  good.count = 1;
+                  // alert('价格必须为大于零的数字！');
+                }if (good.count > 1) {
+                  good.selected = true;
+                }
+              },
+              confirmOrder: function(event) {
+                if (this.demo2.totalPrice == 0) {
+                  alert('请选择购买的商品。');
+                } else {
+                  this.demo2.step = 2;
+                }
+                preventDefault(event);
+              },
+              goBack: function(event){
+                this.demo2.step = 1;
+                preventDefault(event);
+              },
+              submitOrder: function(event) {
+                this.demo2.step = 3;
+                preventDefault(event);
+              },
+              addForm: function() {
+                var formObj = {
+                  'userName':'',
+                  'sex':'',
+                  'userId': '',
+                  'jobId':'',
+                  'mobile':''
+                };
+                // 新增表单数据
+                this.demo3.formList.push(formObj);
+              }
+            },
+            // 监听 某属性变换
+            watch: {
+              'demo2.goodList': {
+                handler: function(val , oldVal){
+                  var i, len, good, totalPrice = 0, seledArray = [];
+                  // 更新 订单价格  
+                  for (i = 0, len = this.demo2.goodList.length; i < len; i++) {
+                    good = this.demo2.goodList[i];
+                    if (good.selected) { 
+                      seledArray.push(good);
+                      totalPrice += good.count * parseInt(good.price, 10); 
+                    }
+                  }
+                  this.demo2.selectedList = seledArray;
+                  this.demo2.totalPrice = totalPrice;
+                },
+                deep: true
+              }
+            }
+          });
+          xq.vm = vm;
+        }
+
+        // jquery 代码
+        $(function(){
+
+          // 购物列表(2.1 )
+          var BuyList = {
+            // 头部定义模块变量
+            $buyList: null,
+            $buyStep1: null,
+            $buyStep2: null,
+            $buyStep3: null,
+            init: function(){
+              var This = this;
+
+              this.$buyList = $('.buy-list');
+              this.$buyStep1 = $('#buyStep1');
+              this.$buyStep2 = $('#buyStep2');
+              this.$buyStep3 = $('#buyStep3');
+
+              this.$buyStep2.hide();
+              this.$buyStep3.hide();
+              this.initEvt();
+            },
+            refreshPrice: function(){
+              var totalPrice = 0.00,
+                  $ul = this.$buyStep1.find('ul');
+
+              $ul.find('li').each(function(i, n){
+                var $li = $(n),
+                    price = parseFloat( $li.attr('data-price') ),
+                    count = parseInt( $li.find('.set-count').val(), 10 );
+
+                if ( $li.find('.sel_box').is(':checked') ) {
+                  totalPrice += price * count;
+                }
+
+              });
+              this.$buyStep1.find('.good-total').text( totalPrice.toFixed(2) );
+            },
+            // 渲染生成确认订单页面
+            renderOrderList: function(){
+              var $ul = this.$buyStep2.find('ul'),
+                  $buyUl = this.$buyStep1.find('ul'),
+                  goodList = [],
+                  i, len, htmlStr = '',
+                  totalPrice = 0;
+
+              totalPrice = this.$buyStep1.find('.good-total').text();
+              // 获得用户选中的商品
+              $buyUl.find('li').each(function(i, n){
+                var $li = $(n),
+                    goodId = $li.attr('data-gId'),
+                    price = parseFloat( $li.attr('data-price') ),
+                    name = $li.find('.good-label').text(),
+                    goodObj = {},
+                    count = parseInt( $li.find('.set-count').val(), 10 );
+                goodObj = {
+                  id: goodId,
+                  price: price,
+                  goodName: name,
+                  count: count
+                };
+                if ( $li.find('.sel_box').is(':checked') ) {
+                  goodList.push(goodObj);
+                }
+              });
+              $ul.empty();
+              $ul.next('.con-l-total').remove();
+              this.$buyStep1.hide();
+              this.$buyStep2.show();
+              // 根据用户选中的商品， 渲染ul列表
+              for(i = 0, len = goodList.length; i < len; i++) {
+                goodObj = goodList[i];
+                htmlStr += '<li data-gId="' + goodObj.id + '">' + 
+                              '<span class="con-l-label">' + goodObj.goodName + '</span>' +
+                              '<span class="con-l-label">$' + goodObj.price + '</span>' +
+                              'X <span class="con-l-count">' + goodObj.count + '</span>' +
+                          '</li>';
+              }
+              $ul.append(htmlStr);
+              // 加入总价格UI
+              $ul.append('<p class="con-l-total">总价格 ￥' + totalPrice + '</p>');
+            },
+            goStep1: function(){
+              this.$buyStep2.hide();
+              this.$buyStep3.hide();
+              this.$buyStep1.show();
+            },
+            initEvt: function(){
+              var This = this;
+
+              this.$buyStep1.find('.sel_box').on('click', selGood);
+              this.$buyStep1.find('.set-add').on('click', addGoodCount);
+              this.$buyStep1.find('.set-min').on('click', minGoodCount);
+              this.$buyStep1.find('.set-count').on('blur', inputBlur);
+              this.$buyStep1.find('#goBuy').on('click', confirmOrder);
+              
+              $('.buy-list').find('.goBack').on('click', goBack);
+              this.$buyStep2.find('#submitOrder').on('click', submitOrder);
+
+              function selGood(){
+                This.refreshPrice();
+              }
+              function addGoodCount(e){
+                var $this = $(this),
+                    $input = $this.prev('input'),
+                    $li = $this.parents('li'),
+                    $minBtn = $this.siblings('.set-min'),
+                    $selBox = $li.find('.sel_box');
+
+                var inputVal = parseInt($input.val(), 10);
+                inputVal++;
+                if ( inputVal > 1 ){
+                  $minBtn.html('-');
+                }
+                $input.val(inputVal);
+                if ( !$selBox.is(':checked') ){
+                  $selBox.trigger('click');
+                } else {
+                  This.refreshPrice();
+                }
+              }
+              function minGoodCount(e){
+                var $this = $(this),
+                    $input = $this.next('input'),
+                    $li = $this.parents('li'),
+                    $addBtn = $this.siblings('.set-add'),
+                    $selBox = $li.find('.sel_box');
+
+                var inputVal = parseInt($input.val(), 10);
+                if (inputVal <= 1) {
+                  return false;
+                }
+                inputVal--;
+                if (inputVal <= 1) {
+                  $this.html('&nbsp;');
+                }
+                $input.val(inputVal);
+                if ( !$selBox.is(':checked') ){
+                  $selBox.trigger('click');
+                } else {
+                  This.refreshPrice();
+                }
+              }
+              // 保证输入框输入为数字
+              function inputBlur(e){
+                var $this = $(this),
+                    inputVal = $this.val(),
+                    $selBox = $this.parents('li').find('.sel_box');
+                    $minBtn = $this.siblings('.set-min');
+
+                // Number() parseInt() 区别，N 判断整个整数，而p只判断前半部分数字
+                // 如：Number('78n') -> NaN, parseInt('78n') -> 78
+                if ( !inputVal || isNaN( Number(inputVal) ) ) {
+                  $this.val(1);
+                  // $minBtn.html('-');
+                  alert('价格必须为数字!');
+                  return false;
+                }
+                if ( inputVal > 1 ){
+                  $minBtn.html('-');
+                } else {
+                  $minBtn.html('&nbsp;');
+                }
+                if ( !$selBox.is(':checked') ){
+                  $selBox.trigger('click');
+                } else {
+                  This.refreshPrice();
+                }
+              }
+              // 确认订单步骤
+              function confirmOrder(){
+                // 下一步前的校验
+                if ( parseInt(This.$buyStep1.find('.good-total').text(), 10) == 0 ) {
+                  alert('请选择购买的商品。');
+                  return false;
+                } 
+                This.renderOrderList();
+                return false;
+              }
+              function goBack(){
+                This.goStep1();
+                return false;
+              }
+              // 提交订单
+              function submitOrder(e){
+                This.$buyStep2.hide();
+                This.$buyStep3.show();
+                return false;
+              }
+
+            }
+          };
+
+          // 注册相关 代码
+          registInit();
+          // 购买列表相关代码
+          BuyList.init(); 
+
+          // 提交表单（3.1）
+          var submitForm = {
+            $formPanel: null,
+            $addBtn: null,
+            $subForm: null,
+            $resultForm: null,
+            init: function() {
+              var This = this;
+              this.$formPanel = $('#formDemo');
+              this.$addBtn = $('#formDemo').find('.add-btn');
+              this.$subForm = $('#formDemo').find('#subForm');
+              this.$addFormPanel = $('#formDemo').find('#addFormPanel');
+              this.$resultForm = $('#formDemo').find('#resultForm');
+              this.$backBtn = $('#formDemo').find('#backForm');
+              this.$resultForm.hide();
+              this.initEvt();
+            },
+            initEvt: function() {
+              var This = this;
+              this.$addBtn.on('click', function(){
+                This.addForm();                
+              });
+              this.$subForm.on('click', function(){
+                This.subForm();
+              });
+              this.$backBtn.on('click', function(){
+                This.backForm();
+              });
+            },
+            addForm: function(){
+              var formStr = '',
+                  This = this,
+                  formNo = 0,
+                  $formWrap = this.$formPanel.find('.bs-example-wrap:last');
+              formNo = parseInt( $formWrap.find('.bs-example:last').attr('data-no'), 10);
+              formNo = formNo + 1;
+              // 当前表单容器填满，新增容器，否则填满之（容器最多放两表单）
+              if ( $formWrap.find('.bs-example').length > 1 ) {
+                $formWrap.after('<div class="bs-example-wrap"></div>');
+                $formWrap = this.$formPanel.find('.bs-example-wrap:last');
+              } else {
+                $formWrap.addClass('bs-example-block');
+              }
+              formStr = '<div class="bs-example" data-no="' + formNo + '"><form id="bsForm' + formNo + '"><div class="form-group"><label for="name">姓名:</label><input class="form-control" name="userName" placeholder="填写姓名" /></div><div class="form-group"><label for="sex">性别:</label><div class="sex-radios"><label><input type="radio" name="sex" value="男" checked>                      男</label><label><input type="radio" name="sex" value="女">                      女</label></div></div><div class="form-group"><label>工号:</label><input class="form-control" name="jobId" placeholder="填写工号" /></div><div class="form-group"><label>身份证号:</label><input class="form-control" name="userId" placeholder="填写身份证" /></div><div class="form-group"><label>手机号:</label><input class="form-control" name="mobile" placeholder="填写手机号" /></div></form></div>';
+              $formWrap.append(formStr);
+              // 最多三个表单
+              if ( formNo >= 3) {
+                this.$addBtn.hide();
+              }
+            },
+            subForm: function(){
+              var formDatas = [], i, len, formObj, trStr = '', trList = '';
+              // 获取表单数据
+              this.$formPanel.find('form').each(function(index, domEle){
+                var formDom = domEle,
+                    i, len, sexVal,
+                    formObj = {};
+                for(i = 0, len = formDom.sex.length; i <len; i++) {
+                  if (formDom.sex[i].checked) {
+                    sexVal = formDom.sex[i].value;
+                    break;
+                  }
+                }
+                formObj = {
+                  'userName': formDom.userName.value,
+                  'sex': sexVal,
+                  'jobId': formDom.jobId.value,
+                  'userId': formDom.userId.value,
+                  'mobile': formDom.mobile.value
+                };
+                formDatas.push(formObj);
+              });
+              // 将用户填写的数据 填入新表格
+              for (i = 0, len = formDatas.length; i < len; i++) {
+                formObj = formDatas[i];
+                trStr = '<tr class="user-tr">' +
+                  '<td>' + formObj.userName + '</td>' +
+                  '<td>' + formObj.sex + '</td>' +
+                  '<td>' + formObj.jobId + '</td>' +
+                  '<td>' + formObj.userId + '</td>' +
+                  '<td>' + formObj.mobile + '</td>' +
+                '</tr>';
+                trList += trStr;
+              }
+              this.$resultForm.find('#table_2').find('tr.user-tr').remove();
+              this.$resultForm.find('#table_2').find('tbody').append(trList);
+              this.$resultForm.show();
+              this.$addFormPanel.hide();
+            },
+            backForm: function(){
+              this.$resultForm.hide();
+              this.$addFormPanel.show();
+            }
+          };
+          submitForm.init();
+
+          // 1.1注册流程jq实现
+          function registInit(){
+            var $regDemo = $('#regDemo'),
+                $stepBtn1 = $regDemo.find('#stepBtn1'),
+                $stepBtn2 = $regDemo.find('#stepBtn2'),
+                $stepBtn3 = $regDemo.find('#stepBtn3'),
+                $stepBtn4 = $regDemo.find('#stepBtn4');
+
+            $stepBtn1.on('click', submitMobile);
+            $stepBtn2.on('click', submitAuthCode);
+            $stepBtn3.on('click', submitPas);
+            $stepBtn4.on('click', submitReg);
+            function submitMobile() {
+              $regDemo.find('.process-reg').removeClass('active');
+              $regDemo.find('#proReg2').addClass('active');
+              $stepBtn1.hide();
+              $stepBtn2.show();
+            }
+            function submitAuthCode() {
+              $regDemo.find('.process-reg').removeClass('active');
+              $regDemo.find('#proReg3').addClass('active');
+              $stepBtn2.hide();
+              $stepBtn3.show();
+            }
+            function submitPas() {
+              $regDemo.find('.process-reg').removeClass('active');
+              $regDemo.find('#proReg4').addClass('active');
+              $stepBtn3.hide();
+              $stepBtn4.show();
+            }
+            function submitReg() {
+              $regDemo.find('.process-reg').removeClass('active');
+              $regDemo.find('#proReg1').addClass('active');
+              $stepBtn4.hide();
+              $stepBtn1.show();
+            }
+            // 如果只是当前功能一个函数也能搞定
+            function commonSubmit(){
+              var $this = $(this), btn_index;
+              $regDemo.find('.process-reg').removeClass('active');
+              btn_index = $this.index() + 2;
+              if ( btn_index > 4 ) {
+                btn_index = 1;
+              }
+              $regDemo.find('#proReg' + btn_index).addClass('active');
+              $this.hide();
+              if ( $this.next('.btn-radius').length > 0 ) {
+                $this.next('.btn-radius').show();
+              } else {
+                $regDemo.find('.btn-radius:first').show();
+              }
+            }
+          }
+
+        });
+      </script>
+    </body>
+</html>

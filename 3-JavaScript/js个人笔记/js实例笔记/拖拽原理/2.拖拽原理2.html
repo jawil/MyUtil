@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 {width: 100px; height: 100px; background: red; position: absolute;}
+</style>
+<script>
+window.onload = function() {
+	
+	/*
+	1.拖拽的时候，如果有文字被选中，会产生问题
+		原因：当鼠标按下的时候，如果页面中有文字被选中，那么会触发浏览器默认拖拽文字的效果
+			解决：
+				标准：阻止默认行为
+				非标准ie：全局捕获
+	*/
+	
+	var oDiv = document.getElementById('div1');
+	
+	oDiv.onmousedown = function(ev) {
+		var ev = ev || event;
+		
+		var disX = ev.clientX - this.offsetLeft;
+		var disY = ev.clientY - this.offsetTop;
+		
+		if ( oDiv.setCapture ) {
+			oDiv.setCapture();
+		}
+		
+		document.onmousemove = function(ev) {
+			var ev = ev || event;
+			
+			oDiv.style.left = ev.clientX - disX + 'px';
+			oDiv.style.top = ev.clientY - disY + 'px';
+		}
+		
+		document.onmouseup = function() {
+			document.onmousemove = document.onmouseup = null;
+			//释放全局捕获 releaseCapture();
+			if ( oDiv.releaseCapture ) {
+				oDiv.releaseCapture();
+			}
+		}
+		
+		//return false;
+		
+	}
+	
+}
+</script>
+</head>
+
+<body>
+	jafldsfjdsjfkl
+	<div id="div1"></div>
+</body>
+</html>

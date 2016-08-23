@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+body{margin:0; padding:0}
+.div1,.div2{width:100px;height:250px;background:red;padding:20px; text-align:center; position:absolute; }
+
+</style>
+</head>
+
+<body style="height:2500px;">
+<div class="div1">
+1
+</div>
+
+<div class="div2">
+2
+</div>
+
+<script>
+var clientWidth=document.documentElement.clientWidth||document.body.clientWidth;
+var clientHeight=document.documentElement.clientHeight||document.body.clientHeight;
+var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+//alert(clientWidth);
+var oDiv=document.getElementsByTagName('div');
+oDiv[0].style.top=(clientHeight-oDiv[0].offsetHeight)/2+'px';
+oDiv[1].style.top=(clientHeight-oDiv[1].offsetHeight)/2+'px';
+oDiv[1].style.left=clientWidth-oDiv[1].offsetWidth+'px';
+
+window.onscroll = function(){
+    scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+    oDiv[0].style.top =(clientHeight - oDiv[0].offsetHeight)/2+ scrolltop +'px';
+	oDiv[1].style.top =(clientHeight - oDiv[1].offsetHeight)/2 + scrolltop +'px';
+  }
+  
+  window.onresize = function() {
+	clientWidth=document.documentElement.clientWidth||document.body.clientWidth;
+    clientHeight=document.documentElement.clientHeight||document.body.clientHeight;
+	 oDiv[0].style.top =(clientHeight - oDiv[0].offsetHeight)/2+ scrolltop +'px';
+      oDiv[1].style.left=clientWidth-oDiv[1].offsetWidth+'px';
+	  oDiv[1].style.top =(clientHeight - oDiv[1].offsetHeight)/2 + scrolltop +'px';
+
+ 
+	
+}
+</script>
+</body  >
+</html>
