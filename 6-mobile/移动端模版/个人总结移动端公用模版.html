@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1" />
+    <!-- 很迷惑吧，IE定义的meta为啥会出现chrome呢？其实设置为chrome=1时，则会在IE9及以下浏览器中激活Chrome Frame ，强制IE使用Chrome Frame渲染页面。 -->
+    <meta name="application-name" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!-- 此类型meta使用最广泛，其中，又属keywords和description这两个名称的使用率最高，是搜索引擎优化的主要手段之一，推荐大家使用。设置keywords和description这两个meta时，尽量使用简洁和语义明确的词语，下面的示例展示的是BBC新闻网站设置的application-name、keywords和description对应的meta信息：
+    <meta name="application-name" content="BBC"/>
+    <meta name="description" content="Breaking news, sport, TV, radio and a whole lot more. The BBC informs, educates and entertains - wherever you are, whatever your age." />
+    <meta name="keywords" content="BBC, bbc.co.uk, bbc.com, Search, British Broadcasting Corporation, BBC iPlayer, BBCi" /> -->
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no">
+    <metaname="format-detection" content="telephone=no" />
+    <!--    initial-scale=1.0 ：设置缩放比例为1.0；
+            minimum-scale=1.0 和 maximum-scale=1.0 ：最小缩放比例和最大缩放比例；
+            user-scalable=no ：禁止用户自由缩放，user-scalable 默认值为 yes 。 -->
+    <metaname="format-detection" content="email=no" />
+    <!--  content 里面的参数：telephone=no 是禁止浏览器自动识别手机号码，email=no 是禁止浏览器自动识别Email。 -->
+    <title></title>
+    <link rel="stylesheet" href="css/cube.min.css">
+    <!-- 引入样式重置压缩版,来自阿里的cube.css -->
+    <script>
+    document.getElementsByTagName("html")[0].style.fontSize = window.innerWidth / 3.2 + "px";
+    /*在可视区宽度320px的标准模式下,3.2rem表示整个可视区的宽度，320px宽度手机3.2rem就表示320px，480px的宽度手机就3.2rem就表示480px，以此类推。 在320px的标准模式下，1rem就表示100px，默认body字体为0.14rem，14÷100=0.14，不同屏幕自动缩放大小，实现响应式.
+    在320px标准模式下的换算单位:1px=1/100rem=0.01rem;
+     */
+    document.documentElement.style.height = window.innerHeight + 'px';
+    /* 在各移动端浏览器中经常会出现这种页面高度100 % 的渲染错误， 页面低端和系统自带的导航条重合了， 高度的不正确我们需要重置修正它， 通过 javascript代码重置掉
+     */
+    document.addEventListener('touchstart', function() {
+        document.getElementsByTagName('audio')[0].play();
+        document.getElementsByTagName('audio')[0].pause();
+    });
+    /* 经过简单的测试发现预加载、自动播放的有效性受操作系统、浏览器 （webview）、版本等的影响，苹果官方规定必须由用户手动触发才会载入音频，那么我们捕捉一次用户输入后，让音频加载实现预加载:
+     */
+    </script>
+    <style>
+    html {
+        /*  font-size: 62.5%;为了更好的计算，兼容更多不同分辨率的屏幕，使用js计算根节点字体大小*/
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        /* 禁止出现滚动条影响美观 */
+        -webkit-transform: translate3d(0, 0, 0);
+        /*  在部分android机型的微信环境中会出现事件无法触发、表单无法输入的情况，我们针对需要输入或者触发事件的元素设置样式：
+        -webkit-transform: translate3d(0,0,0) ，不过新版本的微信已经直接修复了该问题,仅仅为了兼容低版本微信。 */
+    }
+
+    body {
+        font-size: 0.14rem;
+        /* 14÷100=0.14*/
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        /* 禁止出现滚动条影响美观 */
+        position: absolute;
+        top: 0;
+        left: 0;
+        /* 解决微信下vue获取内容的bug */
+        font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+        /*使用无衬线字体*/
+        -webkit-text-size-adjust: 100%!important;
+        /*禁止IOS调整字体大小*/
+    }
+
+    html,
+    body {
+        -webkit-user-select: none;
+        /*禁止选中文本*/
+        user-select: none;
+    }
+    /* 去掉浏览器各种蛋疼的好丑的样式 */
+
+    a,
+    img {
+        -webkit-touch-callout: none;
+        /*禁止长按链接与图片弹出菜单*/
+        border: 0 none;
+        /* 1 */
+        width: auto;
+        /* 2 */
+        height: auto;
+        /* 3 */
+        max-width: 100%;
+        /* 4 */
+        vertical-align: top;
+        /* 5 */
+        -ms-interpolation-mode: bicubic;
+        /* 6 */
+    }
+
+    @media only screen and (min-width: 1024px) {
+        /* 表明是PC端就固定字体大小,默认16px ,浏览器默认大小就是16px*/
+        body {
+            font-size: 16px !important;
+            overflow: auto !important;
+        }
+    }
+
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+        -webkit-appearance: none;
+        /*去掉webkit默认的表单样式*/
+    }
+
+    a,
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        /*去掉a、input和button点击时的蓝色外边框和灰色半透明背景*/
+    }
+
+    input::-webkit-input-placeholder {
+        color: #ccc;
+        /*修改webkit中input的planceholder样式*/
+        /*   placeholder的文字在ios下可以换行，android不行 */
+    }
+
+    input:focus::-webkit-input-placeholder {
+        color: #f00;
+        /*修改webkit中focus状态下input的planceholder样式*/
+    }
+
+    input::-webkit-input-speech-button {
+        display: none;
+        /*隐藏Android的语音输入按钮*/
+    }
+
+    #text {
+        border: 1px solid red;
+        width: 3.2rem;
+        height: 3.2rem;
+        font-size: 0.4rem;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="text">
+        闪电微官网
+    </div>
+</body>
+
+</html>
+<!-- 1、首先我们需要定位问题，我们可以使用下列方法：
+        A、DOM隔离定位法
+        不断由大范围到小范围隔离出DOM，从而找出、触发问题的DOM元素
+        B、样式、JS剔除法
+        不断剔除一些JS、CSS观察调试检查是否是由部分JS、CSS属性引起问题
+        C、多运行环境测试法
+        在多环境中测试，排查是否是由于特定环境引起
+        D、PC与手机联合调试法
+        联合PC与手机进行定位，如：通过Mac远程调试iPhone/iPad
+    2、我们解决问题可以尝试如下的方式：
+      * 尝试、转思维、绕解决
+      * 优雅降权、区分处理、沟通
+      * 搜索与提问......
+     和以下的思维：
+      * 替代
+      * 绕道
+      * 分割......
+    3、在解决问题的过程中我们需要学会利用搜索和沟通资源解决问题：
+      A、google
+      B、stackoverflow
+      C、同事、朋友、QQ群、论坛等
+    Google和stackoverflow让你更容易更精确的快速搜索出问题相关的资料，同时、朋友QQ群、论坛等让你可以直接的跟人沟通出别人所遇到的问题及解决方案。
+    在发现、解决问题后，更重要的是要学会如何总结问题：
+    A、总结记录问题产生条件、解决方法和解决过程
+    B、尽可能分析原理、产生的条件，避免重蹈覆辙
+    C、分享给更多的人
+    无穷无尽的坑，走的人多了，总结分享的多了，坑也就越来越平了 -->
