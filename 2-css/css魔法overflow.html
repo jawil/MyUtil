@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <style>
+  * {
+       padding: 0;
+       margin: 0;
+       box-sizing: border-box;
+   }
+
+   div{
+    width: 400px;
+   }
+   img{
+    width: 120px;
+    height: 120px;
+    float: left;
+    margin-right: 50px;
+   }
+   p{
+    word-break: break-all;
+    overflow: hidden;
+   }
+    </style>
+</head>
+
+<body>
+    <div>
+        <img src="11.jpg" alt="">
+        <p>daeeeeeeeeeeeeeeeeeeeeeeggggggggggggggggggggggggg dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffada dafda adfa adadaffa</p>
+    </div>
+
+
+
+    <pre>
+ word-break:break-all和word-wrap:break-word都是能使其容器如DIV的内容自动换行。
+
+它们的区别就在于：
+
+1，word-break:break-all 例如div宽200px，它的内容就会到200px自动换行，如果该行末端有个英文单词很长（congratulation等），它会把单词截断，变成该行末端为conra(congratulation的前端部分)，下一行为tulation（conguatulation）的后端部分了。
+
+2，word-wrap:break-word 例子与上面一样，但区别就是它会把congratulation整个单词看成一个整体，如果该行末端宽度不够显示整个单词，它会自动把整个单词放到下一行，而不会把单词截断掉的。
+
+3，word-break;break-all 支持版本：IE5以上 该行为与亚洲语言的 normal 相同。也允许非亚洲语言文本行的任意字内断开。该值适合包含一些非亚洲文本的亚洲文本。 WORD-WRAP:break-word 支持版本：IE5.5以上 内容将在边界内换行。如果需要，词内换行( word-break )也将发生。表格自动换行，避免撑开。 word-break : normal | break-all | keep-all 参数： normal : 依照亚洲语言和非亚洲语言的文本规则，允许在字内换行 break-all : 该行为与亚洲语言的normal相同。也允许非亚洲语言文本行的任意字内断开。该值适合包含一些非亚洲文本的亚洲文本 keep-all : 与所有非亚洲语言的normal相同。对于中文，韩文，日文，不允许字断开。适合包含少量亚洲文本的非亚洲文本 语法： word-wrap : normal | break-word 参数： normal : 允许内容顶开指定的容器边界 break-word : 内容将在边界内换行。如果需要，词内换行（word-break）也行发生说明：设置或检索当当前行超过指定容器的边界时是否断开转行。
+    </pre>
+</body>
+
+</html>

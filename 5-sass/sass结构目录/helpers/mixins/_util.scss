@@ -26,6 +26,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+
 }
 
 //绝对居中
@@ -47,6 +49,11 @@
     margin: auto;
 }
 
+//垂直居中
+@mixin vertical-center(){
+    display:table-cell;
+    vertical-align:middle;
+}
 //随机边框颜色进行调试
 @mixin border($border-width:1) {
     $color: green blue purple red orange #81BC03 #D35D26 #0B8383 #AE9E69 #E09A91;

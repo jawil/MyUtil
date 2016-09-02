@@ -42,7 +42,10 @@ html,body {
     -webkit-user-select: none;
     user-select: none;
 }
-
+/* 解决IOS下滚动条滑动不流畅的问题 */
+/* div{
+-webkit-overflow-scrolling:touch;
+} */
 a {
     text-decoration: none;
 }
