@@ -31,6 +31,6 @@ node_modules
 .sass-cache/e80b499aec96606b83166e220ad0420acb2d7e3c/base.scssc
 *.DS_Store
 dist
-gulpfile.js
+#gulpfile.js
 dev
 
