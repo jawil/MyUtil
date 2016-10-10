@@ -118,9 +118,14 @@ input::-moz-placeholder,textarea::-moz-placeholder {
 /* 美化input type=number类型 */
 input[type=number] {
     -moz-appearance:textfield;
+    -webkit-appearance:textfield;
+    appearance:textfield;
 }
-input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button {
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -moz-appearance: none;
     -webkit-appearance: none;
+    appearance: none;
     margin: 0;
 }
 

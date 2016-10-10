@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" href="alertify.core.css">
+    <link rel="stylesheet" href="alertify.default.css">
+    <script src="alertify.min.js"></script>
+</head>
+
+<body>
+    <script>
+    alertify.alert('Hi! 這是訊息框，請按下 ok!');
+alertify.confirm('這是確認框，你有兩個選擇：', function (e) {
+  if (e) {
+    alertify.log('你按下了 ok');
+  } else {
+    alertify.log('你按下了 cancel');
+  }
+});
+    </script>
+</body>
+
+</html>
