@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" href="">
+    <style>
+    html {
+        height: 100%;
+    }
+
+    body {
+        border: 1px solid red;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #sliderWrap {
+        width: 100%;
+        max-width: 414px;
+        height: 160px;
+        position: relative;
+        font-size: 0;
+        overflow: hidden;
+    }
+
+    #sliderWrap .slider-content {
+        width: 500%;
+        height: 100%;
+        transition: 0.5s;
+        margin: 0;
+        padding: 0;
+    }
+
+    #sliderWrap .slider-content li {
+        width: 20%;
+        height: 100%;
+        list-style: none;
+        display: inline-block;
+    }
+
+    #sliderWrap .slider-content li img {
+        width: 100%;
+        height: 100%;
+        vertical-align: top;
+    }
+
+    #sliderWrap .slider-flag {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        bottom: 3%;
+        left: 50%;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+    }
+
+    #sliderWrap .slider-flag li {
+        width: 6px;
+        height: 6px;
+        border-radius: 3px;
+        background-color: green;
+        display: inline-block;
+        margin: 0 4px;
+    }
+
+    #sliderWrap .slider-flag li.active {
+        background-color: red;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="sliderWrap">
+        <ul class="slider-content">
+            <li>
+                <a href="javascript:void (0)"><img src="http://qiniu.xiaochedong.com/prod/banner/r30.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href="javascript:void (0)"><img src="http://qiniu.xiaochedong.com/prod/tpl/22/main.png" alt=""></a>
+            </li>
+            <li>
+                <a href="javascript:void (0)"><img src="http://qiniu.xiaochedong.com/prod/tpl/16/main.png" alt=""></a>
+            </li>
+            <li>
+                <a href="javascript:void (0)"><img src="http://qiniu.xiaochedong.com/prod/tpl/20/main.png" alt=""></a>
+            </li>
+        </ul>
+        <ul class="slider-flag">
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <script>
+    ! function(window) {
+
+        function moblieSlider(el, json) {
+            this.element = el;
+            this.json = json || {};
+            this.sliderWrap = null;
+            this.sliderContent = null;
+            this.sliderFlag = null;
+            this.index = 0;
+            this.iWidth = null;
+            this.length = null;
+            this.settings = {
+                sliderWrap: '', //轮播图id
+                auto: 1, //自动播放 1或0
+                interval: 3000, //** 停顿时间
+                imgurl: '' //图片地址
+            };
+            this.init_data();
+        }
+
+        moblieSlider.prototype = {
+
+            init_data: function() { //初始化数据
+                document.addEventListener('touchstart', //阻止默认事件
+                    function(ev) {
+                        ev.preventDefault();
+                    });
+                this.get_element();
+                this.settings.auto === 1 && this.auto_play();
+                this.touch_event();
+            },
+
+            render_tree: function() { //动态生成dom树
+
+            },
+
+            get_element: function() { //获取元素对象
+                var self = this;
+                this.sliderWrap = document.querySelector(this.element);
+                this.sliderContent = this.sliderWrap.querySelectorAll('ul')[0];
+                this.sliderContent.innerHTML += this.sliderContent.innerHTML;
+                this.sliderFlag = this.sliderWrap.querySelectorAll('ul')[1];
+                this.iWidth = this.sliderWrap.offsetWidth;
+                this.length = this.sliderContent.children.length;
+                this.sliderContent.style.width = this.length + '00%';
+                Array.prototype.slice.call(this.sliderContent.children).forEach(function(element, index) {
+                    element.style.width = 1 / self.length * 100 + '%';
+                });
+                for (var attr in this.json) { //设置的参数代替默认的参数
+                    this.settings[attr] = this.json[attr];
+                }
+            },
+
+            set_css: function() { //设置css样式
+
+            },
+
+            auto_play: function() { //自动播放
+                var self = this;
+                clearInterval(this.autotimer);
+                this.autotimer = setInterval(function() {
+                    self.index++;
+                    self.sliderContent.style.transition = ".5s";
+                    self.set_position(self.sliderContent, -self.index * self.iWidth);
+                    self.set_focusIcon(self.sliderFlag, self.index % (self.length / 2));
+                    setTimeout(function() {
+                        if (self.index === self.length - 1) {
+                            self.sliderContent.style.transition = "none";
+                            self.index = self.length / 2 - 1;
+                            self.set_position(self.sliderContent, -self.index * self.iWidth);
+                        }
+                    }, 600);
+                }, this.settings.interval);
+            },
+
+            touch_event: function() { //手指滑动轮播图
+                var self = this;
+                var isMove = true;
+                var isFirst = true;
+                var touchStart, touchMove, touchEnd, iStartPageX, iStartPageY;
+                touchStart = function(e) {
+                    clearInterval(self.autotimer);
+                    isMove = true;
+                    isFirst = true;
+                    iStartPageX = e.changedTouches[0].pageX;
+                    iStartPageY = e.changedTouches[0].pageY;
+                };
+                touchMove = function(e) {
+                    if (!isMove) {
+                        return;
+                    }
+                    var iDisX = (e.changedTouches[0].pageX - iStartPageX);
+                    var iDisY = (e.changedTouches[0].pageY - iStartPageY);
+                    if (isFirst) {
+                        isFirst = false;
+                        if (Math.abs(iDisY) > Math.abs(iDisX)) {//用户向下滑动就不会触发轮播图抖动
+                            isMove = false;
+                        }
+                    }
+                    if (isMove) {
+                        self.sliderContent.style.transition = 'none';
+                        (self.index === 0) && (self.index = self.length / 2);
+                        (self.index === self.length - 1) && (self.index = self.length / 2 - 1);
+                        self.set_position(self.sliderContent, -self.index * self.iWidth + iDisX);
+                    }
+                };
+                touchEnd = function(e) {
+                    var iDisX = e.changedTouches[0].pageX - iStartPageX;
+                    self.sliderContent.style.transition = '.5s';
+                    self.index = self.index - Math.round(iDisX / self.iWidth);
+                    self.set_position(self.sliderContent, -self.index * self.iWidth);
+                    self.set_focusIcon(self.sliderFlag, self.index % (self.length / 2));
+                    self.auto_play();
+                }
+                this.sliderContent.addEventListener("touchstart", touchStart, false);
+                this.sliderContent.addEventListener("touchmove", touchMove, false);
+                this.sliderContent.addEventListener("touchend", touchEnd, false);
+
+            },
+
+            set_position: function(obj, distance) { //更改轮播图位置
+                obj.style["webkitTransform"] = "translate3d(" + distance + "px, 0, 0)";
+                obj.style["transform"] = "translate3d(" + distance + "px, 0, 0)";
+            },
+
+            set_focusIcon: function(obj, x) { //设置轮播图ICON焦点
+                for (var i = 0; i < obj.children.length; i++) {
+                    obj.children[i].className = '';
+                }
+                obj.children[x].className = 'active';
+            }
+        }
+
+        window.moblieSlider = moblieSlider;
+    }(window);
+
+    new moblieSlider('#sliderWrap');
+    </script>
+</body>
+
+</html>
