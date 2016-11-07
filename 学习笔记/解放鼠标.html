@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <pre>
+一.Chrome 键盘快捷键
+
+1、标签页和窗口快捷键
+(1)打开新的浏览起窗口:ctrl+n;在隐身模式下打开浏览器新窗口:ctrl+shift+n;
+
+(2)打开新的标签页,并且跳转到该标签页:ctrl+t;重新打开最后关闭的标签页,并跳转到该标签页:ctrl+shift+t;
+
+(3)跳转到下一个打开的标签页:ctrl+tab;跳转到上一个打开的标签页:ctrl+shift+tab
+
+(4)跳转到特定页:ctrl+1和ctrl+8;
+
+(5)在新的标签页打开主页:alt+home
+
+(6)打开当前标签页浏览器记录的上一页:alt+向左箭头键;打开当前标签页的下一页:alt+向右箭头键
+
+(7)关闭当前标签页:ctrl+w或者ctrl+f4;关闭所有打开的标签页和浏览器:ctrl+shift+w
+
+(8)最小化当前窗口:alt+space+n;最大化当前窗口:alt+space+x
+
+(9)退出谷歌浏览器:alt+f4或者ctrl+shift+q
+
+
+
+2、功能快捷键
+(1)打开菜单:alt+e
+
+(2)显示或者隐藏书签栏:ctrl+shift+b
+
+(3)打开书签管理器:ctrl+shift+o
+
+(4)打开查找蓝搜索当前页:f3或者ctrl+f;跳转到与查找栏中搜索字词相匹配的下一条内容:ctrl+g;跳转到与查找栏中搜索字词相匹配的上一条内容:ctrl+shift+g
+
+(5)打开开发者工具:ctrl+shift+j或者f12;ctrl+shift+m切换到手机模式;ctrl+shift+c检查元素预览
+
+(6)打"清除数据选项":ctrl+shift+delete然后tab键最后enter回车键就可以清除浏览器数据啦
+
+
+
+3、地址栏快捷键
+(1)为网站名称添加 www. 和 .com，并在当前标签页中打开该网:输入网址然后ctrl+enter
+
+(2)为网站名称添加 www. 和 .com，并在新标签页中打开该网站:输入网址让后alt+enter
+
+(3)跳转到地址栏:ctrl+l或者alt+e或者f6
+
+(4)从页面的任意地址搜索:crtl+e或者ctrl+k
+
+
+
+4、网页快捷键
+(1)重新加载当前页:ctrl+r或者f5;重新加载当前页(忽略缓存的内容):ctrl+shift+r或者shitf+f5
+
+(2)显示当前页面的html源代码(不可修改):ctrl+u
+
+(3)将当前页保存为书签:ctrl+d
+
+
+
+
+
+二.Vimium插件快捷键
+j: 向下移动。
+k：向上移动。（不明白默认的<c-y>表示是啥用法，使用了c-y这三个键没有效果）
+h：向左移动。
+l：向右移动。
+zH：一直移动到左部。
+zL:一直移动到右部。
+gg：跳转到页面的顶部。
+G：跳转到页面的底部。
+d：向下翻页（相当于PageDown被按下了）
+u：向上翻页（相当于PageUp被按下了）
+r：重新载入该页（相当于F5刷新页面）
+gs：查看页面源代码
+yy：拷贝当前页面的URL到剪贴板
+yf：拷贝某一个URL到剪贴板（实际上是相当于输入了f，然后出现很多编码的URL，选择某个之后，相当于拷贝了某个，因为一个页面中可能有很多超链接）
+gu：跳转到父页面（比如http://www.douban.com/group/vim/，输入后跳转到父页面即http://www.douban.com/group/，所以不同于H的快捷键是回到上个历史页面）
+
+i：输入模式（如果发现命令不起作用，可能是进入输入模式了，此时按Esc回到命令模式）
+gi：将焦点集中到第一个输入框（输入gNi则焦点集中到第N个输入框）
+f：在当前的页面打开一个新的链接。
+F：在新的页面打开一个新的链接。
+<a-f>:在当前页面打开多个链接（没感觉使用到了多个标签，不过表示的是输入af）
+b：在当前页打开一个书签。（输入部分网址会自动进行搜索）
+B：在新的标签页打开一个书签
+gf：循环到当前页面的下一个框层（可能跟页面制作有关，目前没用到）
+
+
+v进入选中模式后按y复制，p在当前页面搜索，P在新页面搜索。
+p : 在当前标签页中打开剪切板中的链接 Open the clipboard’s URL in the current tab
+P : 在新的标签页中打开剪切板中的链接Open the clipboard’s URL in a new tab
+gu : Go up the URL hierarchy（例如，URL为http://blog.net/article/8021689 ，按下gu后，转到http://blog.net/article/，回到该网站该访问者主页）
+gU : Go to root of current URL hierarchy (类似gu，回到根URL页 http://blog.net)
+
+
+查找模式：（和Vim相似）
+/ : 查找
+n: 向下查找匹配内容
+N：向上查找匹配内容
+
+导航历史：
+H：回退上一个历史页面（相当于浏览器中的向左箭头）
+L：回到下一个历史页面（相当于浏览器的向右箭头）
+
+标签页操作：
+K，gt：跳转到右边的一个标签页
+J，gT：跳转到左边的一个标签页
+t：创建一个新的标签页
+x：关闭当前的标签页
+X：恢复刚刚关闭的标签页
+？：显示命令的帮助提示（再按一次关闭）
+
+    </pre>
+</body>
+</html>
